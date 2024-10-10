@@ -1,0 +1,38 @@
+C:\FNF Universe Engine>lime test windows 
+source/Achievements.hx:132: characters 30-54 : Warning : `FlxCamera.defaultCameras` is deprecated, use `FlxG.cameras.setDefaultDrawTarget` instead
+source/Achievements.hx:132: characters 30-54 : Warning : `FlxCamera.defaultCameras` is deprecated, use `FlxG.cameras.setDefaultDrawTarget` instead
+source/flixel/animation/FlxAnimationController.hx:691: characters 8-40 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:693: characters 31-60 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:691: characters 8-40 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:704: characters 8-40 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:706: characters 31-60 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:693: characters 31-60 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:704: characters 8-40 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:706: characters 31-60 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:768: characters 33-65 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:768: characters 33-65 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/flixel/animation/FlxAnimationController.hx:776: characters 16-45 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/modchart/modcharting/NotePositionData.hx:8: characters 61-77 : Warning : use `MyType.new` or `()->new MyType()` instead of `MyType`)
+source/flixel/animation/FlxAnimationController.hx:776: characters 16-45 : Warning : `framesHash` is deprecated, use `getByName()` or `exists()`
+source/modchart/modcharting/NotePositionData.hx:8: characters 61-77 : Warning : use `MyType.new` or `()->new MyType()` instead of `MyType`)
+
+Compiling group: haxe
+cl.exe -Iinclude -IC:/haxelib/discord_rpc/git/linc/ -IC:/haxelib/linc_luajit/git//linc/ -I C:/haxelib/hxCodec/2,5,1/lib/vlc/include/ -I C:/haxelib/hxCodec/2,5,1/lib/vlc/src/ -nologo /WX- /fp:precise -DHX_WINDOWS -GR -O2(optim-std) -Zi(debug) -FdC:\FNF Universe Engine\export\release\windows\obj\obj/msvc1964-nc/vc.pdb(debug) -Od(debug) -O2(release) -Os(optim-size) -FS -Oy- -c -EHs -GS- -IC:/haxelib/hxcpp/4,2,1/include -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_STACK_LINE(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=400(haxe) -D_CRT_SECURE_NO_DEPRECATE -D_ALLOW_MSC_VER_MISMATCH -D_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH -DHX_WIN_MAIN(main) -wd4996 ... tags=[haxe,static]
+ - src/AttachedSprite.cpp
+ - src/editors/MenuCharacterEditorState.cpp
+ - src/DialogueBoxPsych.cpp
+ - src/__ASSET__flixel_fonts_nokiafc22_ttf.cpp
+ - src/modchart/modcharting/CosecantYModifier.cpp
+ - src/__boot__.cpp
+ - src/__ASSET__flixel_flixel_ui_img_hilight_png.cpp
+ - src/WeekData.cpp
+ - src/PhillyGlowGradient.cpp
+ - src/modchart/modcharting/DrunkAngleModifier.cpp
+ - src/DialogueCharacter.cpp
+Error: WeekData.cpp
+include\PlayState.h(571): error C2059: syntax error: '}'
+include\PlayState.h(571): error C2143: syntax error: missing ';' before '}'
+include\PlayState.h(575): fatal error C1070: mismatched #if/#endif pair in file 'C:\FNF Universe Engine\export\release\windows\obj\include\PlayState.h'
+
+ - src/CutsceneHandler.cpp
+ - src/options/VisualsUISubState.cpp
