@@ -32,17 +32,20 @@ class UEHud extends BaseOptionsMenu
 		title = 'Universe HUD options';
 		rpcTitle = 'HUD options of the engine'; // for Discord Rich Presence
 
-		var option:Option = new Option('Universe Engine HUD', "If unchecked, it just goes back to scoreTxt, what more is there to explain? ", 'ueHud', 'bool', true);
+		var option:Option = new Option('Universe Engine HUD', "If unchecked, it just goes back to scoreTxt, what more is there to explain? ", 'ueHud', 'bool',
+			true);
 		addOption(option);
 
 		if (ClientPrefs.ueHud == true)
 		{
-			var option:Option = new Option('Hud Pos', "Don't even try to ask me to explain this", 'hudPosUE', 'string', 'LEFT', 
-				['LEFT', 'CENTER', 'RIGHT']);
+			var option:Option = new Option('Hud Pos', "Don't even try to ask me to explain this", 'hudPosUE', 'string', 'LEFT', ['LEFT', 'CENTER', 'RIGHT']);
 			addOption(option);
 
 			var option:Option = new Option('Song name and time follow', "If unchecked, The Song name and time doesn't follow the score, rating and misses.",
 				'sntf', 'bool', true);
+			addOption(option);
+
+			var option:Option = new Option("Hide UE's Timebar", ' If unchecked, the UE time bar is going to dissapear', 'huet', 'bool', false);
 			addOption(option);
 		}
 

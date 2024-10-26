@@ -47,6 +47,8 @@ import openfl.net.FileReference;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 
+import flixel.util.FlxStringUtil;
+
 using StringTools;
 
 #if sys
@@ -378,6 +380,7 @@ class ChartingState extends MusicBeatState
 			{name: "Note", label: 'Note'},
 			{name: "Events", label: 'Events'},
 			{name: "Charting", label: 'Charting'},
+			{name: "Note Spamming", label: 'Note Spamming'},
 		];
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
@@ -434,6 +437,7 @@ class ChartingState extends MusicBeatState
 		addNoteUI();
 		addEventsUI();
 		addChartingUI();
+		addNoteStackingUI();
 		updateHeads();
 		updateWaveform();
 		// UI_box.selected_tab = 4;
@@ -1108,6 +1112,176 @@ class ChartingState extends MusicBeatState
 		tab_group_note.add(noteTypeDropDown);
 
 		UI_box.addGroup(tab_group_note);
+	}
+
+	var check_stackActive:FlxUICheckBox;
+	var stepperStackNum:FlxUINumericStepper;
+	var stepperStackOffset:FlxUINumericStepper;
+	var stepperStackSideOffset:FlxUINumericStepper;
+	var stepperShrinkAmount:FlxUINumericStepper;
+
+	function addNoteStackingUI():Void
+	{
+		var tab_group_stacking = new FlxUI(null, UI_box);
+		tab_group_stacking.name = 'Note Spamming';
+
+		check_stackActive = new FlxUICheckBox(10, 10, null, null, "Enable EZ Spam Mode", 100);
+		check_stackActive.name = 'check_stackActive';
+
+		stepperStackNum = new FlxUINumericStepper(10, 30, 1, 1, 0, 999999, 4);
+		stepperStackNum.name = 'stack_count';
+		blockPressWhileTypingOnStepper.push(stepperStackNum);
+
+		var doubleSpamNum:FlxButton = new FlxButton(stepperStackNum.x, stepperStackNum.y + 20, 'x2 Amount', function()
+		{
+			stepperStackNum.value *= 2;
+		});
+		doubleSpamNum.setGraphicSize(Std.int(doubleSpamNum.width), Std.int(doubleSpamNum.height));
+		doubleSpamNum.color = FlxColor.GREEN;
+		doubleSpamNum.label.color = FlxColor.WHITE;
+
+		var halfSpamNum:FlxButton = new FlxButton(doubleSpamNum.x + doubleSpamNum.width + 20, doubleSpamNum.y, 'x0.5 Amount', function()
+		{
+			stepperStackNum.value /= 2;
+		});
+		halfSpamNum.setGraphicSize(Std.int(halfSpamNum.width), Std.int(halfSpamNum.height));
+		halfSpamNum.color = FlxColor.RED;
+		halfSpamNum.label.color = FlxColor.WHITE;
+
+		stepperStackOffset = new FlxUINumericStepper(10, 80, 1, 1, 0, 999999, 4);
+		stepperStackOffset.name = 'stack_offset';
+		blockPressWhileTypingOnStepper.push(stepperStackOffset);
+
+		var doubleSpamMult:FlxButton = new FlxButton(stepperStackOffset.x, stepperStackOffset.y + 20, 'x2 SM', function()
+		{
+			stepperStackOffset.value *= 2;
+		});
+		doubleSpamMult.color = FlxColor.GREEN;
+		doubleSpamMult.label.color = FlxColor.WHITE;
+
+		var halfSpamMult:FlxButton = new FlxButton(doubleSpamMult.x + doubleSpamMult.width + 20, doubleSpamMult.y, 'x0.5 SM', function()
+		{
+			stepperStackOffset.value /= 2;
+		});
+		halfSpamMult.setGraphicSize(Std.int(halfSpamMult.width), Std.int(halfSpamMult.height));
+		halfSpamMult.color = FlxColor.RED;
+		halfSpamMult.label.color = FlxColor.WHITE;
+
+		stepperStackSideOffset = new FlxUINumericStepper(10, 140, 1, 0, -9999, 9999);
+		stepperStackSideOffset.name = 'stack_sideways';
+		blockPressWhileTypingOnStepper.push(stepperStackSideOffset);
+
+		stepperShrinkAmount = new FlxUINumericStepper(10, stepperStackSideOffset.y + 30, 1, 1, 0, 8192, 4);
+		stepperShrinkAmount.name = 'shrinker_amount';
+		blockPressWhileTypingOnStepper.push(stepperShrinkAmount);
+
+		var doubleShrinker:FlxButton = new FlxButton(stepperShrinkAmount.x, stepperShrinkAmount.y + 20, 'x2 SH', function()
+		{
+			stepperShrinkAmount.value *= 2;
+		});
+		doubleShrinker.color = FlxColor.GREEN;
+		doubleShrinker.label.color = FlxColor.WHITE;
+
+		var halfShrinker:FlxButton = new FlxButton(doubleShrinker.x + doubleShrinker.width + 20, doubleShrinker.y, 'x0.5 SH', function()
+		{
+			stepperShrinkAmount.value /= 2;
+		});
+		halfShrinker.setGraphicSize(Std.int(halfShrinker.width), Std.int(halfShrinker.height));
+		halfShrinker.color = FlxColor.RED;
+		halfShrinker.label.color = FlxColor.WHITE;
+
+		var shrinkNotesButton:FlxButton = new FlxButton(10, doubleShrinker.y + 30, "Stretch Notes", function()
+		{
+			var minimumTime:Float = sectionStartTime();
+			var sectionEndTime:Float = sectionStartTime(1);
+			for (i in 0..._song.notes[curSec].sectionNotes.length)
+			{
+				var note:Array<Dynamic> = _song.notes[curSec].sectionNotes[i];
+				if (note[2] > 0)
+					note[2] *= stepperShrinkAmount.value;
+				var originalStartTime:Float = note[0]; // Original start time (in seconds)
+				originalStartTime = originalStartTime - sectionStartTime();
+
+				var stretchedStartTime:Float = originalStartTime * stepperShrinkAmount.value;
+
+				var newStartTime:Float = sectionStartTime() + stretchedStartTime;
+
+				note[0] = Math.max(newStartTime, minimumTime);
+				if (note[0] < minimumTime)
+					note[0] = minimumTime;
+				_song.notes[curSec].sectionNotes[i] = note;
+			}
+			updateGrid(false);
+		});
+
+		var stepperShiftSteps:FlxUINumericStepper = new FlxUINumericStepper(10, shrinkNotesButton.y + 30, 1, 1, -8192, 8192, 4);
+		stepperShiftSteps.name = 'shifter_amount';
+		blockPressWhileTypingOnStepper.push(stepperShiftSteps);
+
+		var shiftNotesButton:FlxButton = new FlxButton(10, stepperShiftSteps.y + 20, "Shift Notes", function()
+		{
+			for (i in 0..._song.notes[curSec].sectionNotes.length)
+			{
+				_song.notes[curSec].sectionNotes[i][0] += (stepperShiftSteps.value) * (15000 / Conductor.bpm);
+			}
+			updateGrid(false);
+		});
+		shiftNotesButton.setGraphicSize(Std.int(shiftNotesButton.width), Std.int(shiftNotesButton.height));
+
+		// ok im adding way too many spamcharting features LOL
+
+		var stepperDuplicateAmount:FlxUINumericStepper = new FlxUINumericStepper(10, shiftNotesButton.y + 30, 1, 1, 0, 32, 4);
+		stepperDuplicateAmount.name = 'duplicater_amount';
+		blockPressWhileTypingOnStepper.push(stepperDuplicateAmount);
+
+		var dupeNotesButton:FlxButton = new FlxButton(10, stepperDuplicateAmount.y + 20, "Duplicate Notes", function()
+		{
+			var copiedNotes:Array<Dynamic> = [];
+			for (i in 0..._song.notes[curSec].sectionNotes.length)
+			{
+				var note:Array<Dynamic> = _song.notes[curSec].sectionNotes[i];
+				copiedNotes.push(note);
+			}
+			for (_i in 1...Std.int(stepperDuplicateAmount.value) + 1)
+			{
+				for (i in 0...copiedNotes.length)
+				{
+					final copiedNote:Array<Dynamic> = [copiedNotes[i][0], copiedNotes[i][1], copiedNotes[i][2], copiedNotes[i][3]];
+					copiedNote[0] += (stepperShiftSteps.value * _i) * (15000 / Conductor.bpm);
+					// yeah.. unfortunately this relies on the value of the Shift Notes stepper.. stupid but it works, so im gonna keep it this way until i find a better solution
+					_song.notes[curSec].sectionNotes.push(copiedNote);
+				}
+			}
+			_song.notes[curSec].sectionNotes.length <= 30000 ? updateGrid(false) : changeSection(curSec +
+				1); // if there's now more than 30,000 notes in the same section then uh.. change to the next section so you don't suffer a crash
+		});
+		dupeNotesButton.setGraphicSize(Std.int(dupeNotesButton.width), Std.int(dupeNotesButton.height));
+
+		tab_group_stacking.add(check_stackActive);
+		tab_group_stacking.add(stepperStackNum);
+		tab_group_stacking.add(stepperStackOffset);
+		tab_group_stacking.add(stepperStackSideOffset);
+		tab_group_stacking.add(stepperShrinkAmount);
+		tab_group_stacking.add(stepperShiftSteps);
+		tab_group_stacking.add(stepperDuplicateAmount);
+		tab_group_stacking.add(doubleSpamNum);
+		tab_group_stacking.add(halfSpamNum);
+		tab_group_stacking.add(doubleSpamMult);
+		tab_group_stacking.add(halfSpamMult);
+		tab_group_stacking.add(doubleShrinker);
+		tab_group_stacking.add(halfShrinker);
+		tab_group_stacking.add(shrinkNotesButton);
+		tab_group_stacking.add(shiftNotesButton);
+		tab_group_stacking.add(dupeNotesButton);
+
+		tab_group_stacking.add(new FlxText(100, 30, 0, "Spam Count"));
+		tab_group_stacking.add(new FlxText(100, 80, 0, "Spam Multiplier"));
+		tab_group_stacking.add(new FlxText(100, 140, 0, "Spam Scroll Amount"));
+		tab_group_stacking.add(new FlxText(100, stepperShrinkAmount.y, 0, "Stretch Amount"));
+		tab_group_stacking.add(new FlxText(100, stepperShiftSteps.y, 0, "Steps to Shift By"));
+		tab_group_stacking.add(new FlxText(100, stepperDuplicateAmount.y, 0, "Amount of Duplicates"));
+
+		UI_box.addGroup(tab_group_stacking);
 	}
 
 	var eventDropDown:FlxUIDropDownMenuCustom;
@@ -1791,6 +1965,16 @@ class ChartingState extends MusicBeatState
 				{
 					FlxG.log.add('added note');
 					addNote();
+					var addCount:Float = 0;
+					if (check_stackActive.checked)
+					{
+						addCount = stepperStackNum.value * stepperStackOffset.value - 1;
+					}
+					for (i in 0...Std.int(addCount))
+					{
+						addNote(curSelectedNote[0] + (15000 / Conductor.bpm) / stepperStackOffset.value,
+							curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
+					}
 				}
 			}
 		}
@@ -2227,7 +2411,9 @@ class ChartingState extends MusicBeatState
 			+ curStep
 			+ "\n\nBeat Snap: "
 			+ quantization
-			+ "th";
+			+ "th \n"
+			+ FlxStringUtil.formatMoney(CoolUtil.getNoteAmount(_song), false)
+			+ ' Notes';
 
 		var playedSound:Array<Bool> = [false, false, false, false]; // Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note)
@@ -2276,21 +2462,22 @@ class ChartingState extends MusicBeatState
 						}
 
 						data = note.noteData;
-						if (note.mustPress && lilBuddiesBox.checked) {
-							if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader) 
+						if (note.mustPress && lilBuddiesBox.checked)
+						{
+							if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader)
 							{
 								lilBf.color = note.rgbShader.r;
 							}
 							lilBf.animation.play("" + (data % 4), true);
-							}
-							if (!note.mustPress && lilBuddiesBox.checked) 
+						}
+						if (!note.mustPress && lilBuddiesBox.checked)
+						{
+							if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader)
 							{
-								if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader) 
-								{
-									lilOpp.color = note.rgbShader.r;
-								}
-								lilOpp.animation.play("" + (data % 4), true);
+								lilOpp.color = note.rgbShader.r;
 							}
+							lilOpp.animation.play("" + (data % 4), true);
+						}
 						if (note.mustPress != _song.notes[curSec].mustHitSection)
 						{
 							data += 4;
@@ -2315,7 +2502,8 @@ class ChartingState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function resetBuddies() {
+	function resetBuddies()
+	{
 		lilBf.animation.play("idle");
 		lilOpp.animation.play("idle");
 	}
@@ -2736,7 +2924,7 @@ class ChartingState extends MusicBeatState
 		if (_song.notes[sec] != null)
 		{
 			if (FlxG.sound.music.playing)
-			resetBuddies();
+				resetBuddies();
 			lilBf.color = lilOpp.color = FlxColor.WHITE;
 
 			curSec = sec;
@@ -2876,13 +3064,25 @@ class ChartingState extends MusicBeatState
 		}
 	}
 
-	function updateGrid():Void
+	function updateGrid(?andNext:Bool = true, ?onlyEvents:Bool = false):Void
 	{
 		curRenderedNotes.clear();
 		curRenderedSustains.clear();
 		curRenderedNoteType.clear();
 		nextRenderedNotes.clear();
 		nextRenderedSustains.clear();
+
+		if (andNext)
+		{
+			nextRenderedNotes.forEach(event ->
+			{
+				if (event.noteData == -1)
+				{
+					nextRenderedNotes.remove(event, true);
+					event.destroy();
+				}
+			});
+		}
 
 		if (_song.notes[curSec].changeBPM && _song.notes[curSec].bpm > 0)
 		{

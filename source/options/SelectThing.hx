@@ -22,6 +22,8 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxGridOverlay;
 
 using StringTools;
 
@@ -52,6 +54,8 @@ class SelectThing extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		ShortcutMenuSubState.inShortcutMenu = false;
+
 		if (!PauseSubState.inPause)
 		{
 			FlxG.sound.destroy(true);
@@ -67,17 +71,11 @@ class SelectThing extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		if (ClientPrefs.bd == true)
-		{
-			var bd:FlxSprite = new FlxSprite(0, 400).loadGraphic(Paths.image('blackDots'));
-			bd.scrollFactor.set(0, 0);
-			bd.setGraphicSize(Std.int(bd.width * 1.175));
-			bd.updateHitbox();
-			bd.screenCenter(X);
-			bd.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bd);
-			FlxTween.tween(bd, {y: 200}, 1, {ease: FlxEase.smootherStepInOut});
-		}
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(20, 20);
+		grid.alpha = 0;
+		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+		add(grid);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -111,31 +109,40 @@ class SelectThing extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		if (controls.UI_UP_P)
+		if (!ShortcutMenuSubState.inShortcutMenu)
 		{
-			changeSelection(-1);
-		}
-		if (controls.UI_DOWN_P)
-		{
-			changeSelection(1);
+			if (controls.UI_UP_P)
+			{
+				changeSelection(-1);
+			}
+			if (controls.UI_DOWN_P)
+			{
+				changeSelection(1);
+			}
+
+			if (controls.BACK)
+			{
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				if (PauseSubState.inPause)
+				{
+					PauseSubState.inPause = false;
+					StageData.loadDirectory(PlayState.SONG);
+					LoadingState.loadAndSwitchState(new PlayState());
+					FlxG.sound.music.volume = 0;
+				}
+				else
+					MusicBeatState.switchState(new MainMenuState());
+			}
+			if (controls.ACCEPT)
+			{
+				openSelectedSubstate(options[curSelected]);
+			}
 		}
 
-		if (controls.BACK)
+		if (FlxG.keys.justPressed.TAB)
 		{
-			FlxG.sound.play(Paths.sound('cancelMenu'));
-			if (PauseSubState.inPause)
-			{
-				PauseSubState.inPause = false;
-				StageData.loadDirectory(PlayState.SONG);
-				LoadingState.loadAndSwitchState(new PlayState());
-				FlxG.sound.music.volume = 0;
-			}
-			else
-				MusicBeatState.switchState(new MainMenuState());
-		}
-		if (controls.ACCEPT)
-		{
-			openSelectedSubstate(options[curSelected]);
+			ShortcutMenuSubState.inShortcutMenu = true;
+			openSubState(new ShortcutMenuSubState());
 		}
 	}
 

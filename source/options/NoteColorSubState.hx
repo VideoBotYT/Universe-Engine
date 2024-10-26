@@ -174,15 +174,13 @@ class NotesSubState extends MusicBeatSubstate
 		NUMPADZERO => '0', NUMPADONE => '1', NUMPADTWO => '2', NUMPADTHREE => '3', NUMPADFOUR => '4', NUMPADFIVE => '5', NUMPADSIX => '6',
 		NUMPADSEVEN => '7', NUMPADEIGHT => '8', NUMPADNINE => '9', A => 'A', B => 'B', C => 'C', D => 'D', E => 'E', F => 'F'];
 
-	override function update(elapsed:Float) {
+	override function update(elapsed) {
 		if (controls.BACK) {
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			close();
 			return;
 		}
-
-		super.update(elapsed);
 
 		if(hexTypeNum > -1)
 		{
@@ -403,6 +401,7 @@ class NotesSubState extends MusicBeatSubstate
 			FlxG.sound.play(Paths.sound('cancelMenu'), 0.6);
 			updateColors();
 		}
+		super.update(elapsed);
 	}
 
 	function pointerOverlaps(obj:Dynamic)

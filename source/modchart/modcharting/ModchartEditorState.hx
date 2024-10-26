@@ -205,6 +205,22 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		ReverseStrumsModifier,
 		GlitchSpeedModifier,
 		ExtraBoomModifier,
+		ZigZagXModifier,
+		ZigZagYModifier,
+		ZigZagZModifier,
+		SawToothXModifier,
+		SawToothYModifier,
+		SawToothZModifier,
+		BeatAngleModifier,
+		BeatScaleModifier,
+		BeatScaleXModifier,
+		BeatScaleYModifier,
+		BeatSkewModifier,
+		BeatSkewXModifier,
+		BeatSkewYModifier,
+		SquareXModifier,
+		SquareYModifier,
+		SquareZModifier,
 		WaveLaneModifier,
 		XModifier,
 		YModifier,
@@ -1841,6 +1857,40 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		var explainString:String = '';
 
 		switch modifiersName {
+			case 'ZigZagXModifier':
+				explainString = 'Modifier used to make the notes go zig-zag on the X axes';
+			case 'ZigZagYModifier':
+				explainString = 'Modifier used to make the notes go zig-zag on the Y axes';
+			case 'ZigZagZModifier':
+				explainString = 'Modifier used to make the notes go zig-zag on the Z axes';
+			case 'SawToothXModifier':
+				explainString = 'Modifier used to make the notes go saw-tooth on the X axes';
+			case 'SawToothYModifier':
+				explainString = 'Modifier used to make the notes go saw-tooth on the Y axes';
+			case 'SawToothZModifier':
+				explainString = 'Modifier used to make the notes go saw-tooth on the Z axes';
+			case 'SquareXModifier':
+				explainString = 'Modifier used to make the notes go square on the X axes';
+			case 'SquareYModifier':
+				explainString = 'Modifier used to make the notes go square on the Y axes';
+			case 'SquareZModifier':
+				explainString = 'Modifier used to make the notes go square on the Z axes';
+			case 'BeatAngleModifier':
+				explainString = 'Modifier similar to the Beat (X,Y,Z) but then for the angles';
+			case 'BeatScaleModifier':
+				explainString = 'Modifier similar to the Beat (X,Y,Z) but then for the scale';
+			case 'BeatScaleXModifier':
+				explainString = 'Modifier similar to the Beat (X,Y,Z) but then for the scale X';
+			case 'BeatScaleYModifier':
+				explainString = 'Modifier similar to the Beat (X,Y,Z) but then for the scale Y';
+			case 'BeatSkewModifier':
+				explainString = 'Modifier similar to the Beat (X,Y,Z) but then for the skew';
+			case 'BeatSkewXModifier':
+				explainString = 'Modifier similar to the Beat (X,Y,Z) but then for the skew X';
+			case 'BeatSkewYModifier':
+				explainString = 'Modifier similar to the Beat (X,Y,Z) but then for the skew Y';
+			case 'WaveLaneModifier':
+				explainString = 'Modifier similar to WaveAngleModifier but then rotates the lane with it';
 			case 'DrunkXModifier':
 				explainString = "Modifier used to do a wave at X poss of the notes and targets";
 			case 'DrunkYModifier':

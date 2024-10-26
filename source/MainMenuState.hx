@@ -20,13 +20,16 @@ import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+import flixel.FlxSubState;
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxGridOverlay;
 
 using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var ueVersion:String = '0.1.0';
-	public static var psychEngineVersion:String = '0.6.2'; // This is also used for Discord RPC
+	public static var ueVersion:String = '0.2.1';
+	public static var psychEngineVersion:String = '0.6.3'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -52,6 +55,8 @@ class MainMenuState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+
+		ShortcutMenuSubState.inShortcutMenu = false;
 
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
@@ -90,19 +95,6 @@ class MainMenuState extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-
-		if (ClientPrefs.bd == true)
-		{
-			var bd:FlxSprite = new FlxSprite(0, 200).loadGraphic(Paths.image('blackDots'));
-			bd.scrollFactor.set(0, 0);
-			bd.setGraphicSize(Std.int(bd.width * 1.175));
-			bd.updateHitbox();
-			bd.screenCenter(X);
-			bd.antialiasing = ClientPrefs.globalAntialiasing;
-			bd.alpha = 0.8;
-			add(bd);
-			FlxTween.tween(bd, {y: 300}, 1, {ease: FlxEase.smootherStepInOut});
-		}
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
@@ -153,18 +145,29 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Universe Engine v: " + ueVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 92, 0, "Universe Engine v: " + ueVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat(Paths.font('funkin.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v: " + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 72, 0, "Psych Engine v: " + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat(Paths.font('funkin.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v: " + Application.current.meta.get('version'), 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 52, 0, "Friday Night Funkin' v: " + Application.current.meta.get('version'), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat(Paths.font('funkin.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+
+		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 30).makeGraphic(FlxG.width, 30, 0xFF000000);
+		textBG.scrollFactor.set();
+		textBG.alpha = 0.6;
+		add(textBG);
+		var leText:String = "Press TAB to open the shortcut menu";
+		var size:Int = 18;
+		var text:FlxText = new FlxText(textBG.x - 4, textBG.y + 4, FlxG.width, leText, size);
+		text.setFormat(Paths.font("funkin.ttf"), size, FlxColor.WHITE, RIGHT);
+		text.scrollFactor.set();
+		add(text);
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -212,7 +215,7 @@ class MainMenuState extends MusicBeatState
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
-		if (!selectedSomethin)
+		if (!selectedSomethin && !ShortcutMenuSubState.inShortcutMenu)
 		{
 			if (controls.UI_UP_P)
 			{
@@ -294,6 +297,12 @@ class MainMenuState extends MusicBeatState
 				MusicBeatState.switchState(new MasterEditorMenu());
 			}
 			#end
+
+			if (FlxG.keys.justPressed.TAB)
+			{
+				openSubState(new ShortcutMenuSubState());
+				ShortcutMenuSubState.inShortcutMenu = true;
+			}
 		}
 
 		super.update(elapsed);
@@ -330,5 +339,20 @@ class MainMenuState extends MusicBeatState
 				spr.centerOffsets();
 			}
 		});
+	}
+
+	override function openSubState(SubState:FlxSubState)
+	{
+		super.openSubState(SubState);
+	}
+
+	override function closeSubState()
+	{
+		super.closeSubState();
+	}
+
+	override public function onFocus():Void
+	{
+		super.onFocus();
 	}
 }

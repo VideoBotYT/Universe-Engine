@@ -349,6 +349,8 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
+	public static var playerIsCheating:Bool = false;
+
 	override public function create()
 	{
 		// trace('Playback Rate: ' + playbackRate);
@@ -1472,6 +1474,25 @@ class PlayState extends MusicBeatState
 		CustomFadeTransition.nextCamera = camOther;
 	}
 
+	public function changeTheSettingsBitch()
+	{
+		healthGain = ClientPrefs.getGameplaySetting('healthgain', 1);
+		healthLoss = ClientPrefs.getGameplaySetting('healthloss', 1);
+		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
+		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
+		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		playbackRate = ClientPrefs.getGameplaySetting('songspeed', 1);
+		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype', 'multiplicative');
+
+		switch (songSpeedType)
+		{
+			case "multiplicative":
+				songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1);
+			case "constant":
+				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
+		}
+	}
+
 	#if (!flash && sys)
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
 
@@ -2189,7 +2210,7 @@ class PlayState extends MusicBeatState
 
 	public static var startOnTime:Float = 0;
 
-	function cacheCountdown()
+	public function cacheCountdown()
 	{
 		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 		var introImagesArray:Array<String> = switch (stageUI)
@@ -2472,7 +2493,7 @@ class PlayState extends MusicBeatState
 			+ ratingName
 			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
-		if (ClientPrefs.scoreZoom && !miss && !cpuControlled)
+		if (ClientPrefs.scoreZoom && !miss && !cpuControlled && ClientPrefs.gameplaySettings.get('modchart'))
 		{
 			if (scoreTxtTween != null)
 			{
@@ -3077,7 +3098,7 @@ class PlayState extends MusicBeatState
 
 	public var paused:Bool = false;
 	public var canReset:Bool = true;
-	var startedCountdown:Bool = false;
+	public var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
 
@@ -4545,11 +4566,11 @@ class PlayState extends MusicBeatState
 		score = daRating.score;
 
 		/*if (daRating.noteSplash && !note.noteSplashDisabled)
-		{
-			spawnNoteSplashOnNote(note);
+			{
+				spawnNoteSplashOnNote(note);
 		}*/
 
-		if (!practiceMode && !cpuControlled)
+		if (!practiceMode && !cpuControlled && ClientPrefs.gameplaySettings.get('modchart'))
 		{
 			songScore += score;
 			if (!note.ratingDisabled)
@@ -5042,10 +5063,10 @@ class PlayState extends MusicBeatState
 
 			/*boyfriend.stunned = true;
 	
-										// get stunned for 1/60 of a second, makes you able to
-										new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
-										{
-											boyfriend.stunned = false;
+																// get stunned for 1/60 of a second, makes you able to
+																new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
+																{
+																	boyfriend.stunned = false;
 			});*/
 
 			if (boyfriend.hasMissAnimations)
@@ -5136,8 +5157,8 @@ class PlayState extends MusicBeatState
 			{
 				noteMiss(note);
 				/*if (!note.noteSplashDisabled && !note.isSustainNote)
-				{
-					spawnNoteSplashOnNote(note);
+					{
+						spawnNoteSplashOnNote(note);
 				}*/
 
 				if (!note.noMissAnimation)
@@ -5243,45 +5264,44 @@ class PlayState extends MusicBeatState
 	}
 
 	/*public function spawnNoteSplashOnNote(note:Note)
-	{
-		if (ClientPrefs.noteSplashes && note != null)
-		{
-			var strum:StrumNote = playerStrums.members[note.noteData];
-			if (strum != null)
 			{
-				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+				if (ClientPrefs.noteSplashes && note != null)
+				{
+					var strum:StrumNote = playerStrums.members[note.noteData];
+					if (strum != null)
+					{
+						spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+					}
+				}
 			}
-		}
-	}
-
-	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
-	{
-		var skin:String = 'noteSplashes';
-		if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
-			skin = PlayState.SONG.splashSkin;
-
-		var hue:Float = 0;
-		var sat:Float = 0;
-		var brt:Float = 0;
-		if (data > -1 && data < ClientPrefs.arrowHSV.length)
-		{
-			hue = ClientPrefs.arrowHSV[data][0] / 360;
-			sat = ClientPrefs.arrowHSV[data][1] / 100;
-			brt = ClientPrefs.arrowHSV[data][2] / 100;
-			if (note != null)
+	
+			public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
 			{
-				skin = note.noteSplashTexture;
-				hue = note.noteSplashHue;
-				sat = note.noteSplashSat;
-				brt = note.noteSplashBrt;
-			}
-		}
-
-		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
-		grpNoteSplashes.add(splash);
+				var skin:String = 'noteSplashes';
+				if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
+					skin = PlayState.SONG.splashSkin;
+	
+				var hue:Float = 0;
+				var sat:Float = 0;
+				var brt:Float = 0;
+				if (data > -1 && data < ClientPrefs.arrowHSV.length)
+				{
+					hue = ClientPrefs.arrowHSV[data][0] / 360;
+					sat = ClientPrefs.arrowHSV[data][1] / 100;
+					brt = ClientPrefs.arrowHSV[data][2] / 100;
+					if (note != null)
+					{
+						skin = note.noteSplashTexture;
+						hue = note.noteSplashHue;
+						sat = note.noteSplashSat;
+						brt = note.noteSplashBrt;
+					}
+				}
+	
+				var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+				splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+				grpNoteSplashes.add(splash);
 	}*/
-
 	var fastCarCanDrive:Bool = true;
 
 	function resetFastCar():Void

@@ -25,6 +25,9 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
 
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxGridOverlay;
+
 using StringTools;
 
 class OptionsState extends MusicBeatState
@@ -70,13 +73,11 @@ class OptionsState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		var bd:FlxSprite = new FlxSprite(0, 200).loadGraphic(Paths.image('blackDots'));
-		bd.scrollFactor.set(0, 0);
-		bd.setGraphicSize(Std.int(bd.width * 1.175));
-		bd.updateHitbox();
-		bd.screenCenter(X);
-		bd.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bd);
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(20, 20);
+		grid.alpha = 0;
+		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+		add(grid);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);

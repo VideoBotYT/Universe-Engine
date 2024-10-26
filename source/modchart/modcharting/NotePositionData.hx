@@ -25,6 +25,7 @@ class NotePositionData implements IFlxDestroyable
     public var incomingAngleX:Float;
     public var incomingAngleY:Float;
     public var strumTime:Float;
+
     public function new() {}
     public function destroy() {}
     public static function get() :  NotePositionData

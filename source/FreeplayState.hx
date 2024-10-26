@@ -22,6 +22,8 @@ import WeekData;
 import sys.FileSystem;
 #end
 import flixel.tweens.FlxEase;
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxGridOverlay;
 
 using StringTools;
 
@@ -54,10 +56,14 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	public var cheatText:FlxText = new FlxText(FlxG.width / 2 - 100, FlxG.height - 92, 0, "Scores won't save bc of cheating", 32);
+
 	override function create()
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+
+		ShortcutMenuSubState.inShortcutMenu = false;
 
 		persistentUpdate = true;
 		PlayState.isStoryMode = false;
@@ -111,6 +117,12 @@ class FreeplayState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 		bg.screenCenter();
+
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(40, 20);
+		grid.alpha = 0;
+		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+		add(grid);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -205,18 +217,11 @@ class FreeplayState extends MusicBeatState
 		text.scrollFactor.set();
 		add(text);
 
-		if (ClientPrefs.bd == true)
-		{
-			var bd:FlxSprite = new FlxSprite(0, 200).loadGraphic(Paths.image('blackDots'));
-			bd.scrollFactor.set(0, 0);
-			bd.setGraphicSize(Std.int(bd.width * 1.175));
-			bd.updateHitbox();
-			bd.screenCenter(X);
-			bd.antialiasing = ClientPrefs.globalAntialiasing;
-			bd.alpha = 0.6;
-			add(bd);
-			FlxTween.tween(bd, {y: 400}, 1, {ease: FlxEase.smootherStepInOut});
-		}
+		cheatText.scrollFactor.set();
+		cheatText.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, CENTER);
+		add(cheatText);
+		cheatText.alpha = 0;
+
 		super.create();
 	}
 
@@ -263,6 +268,10 @@ class FreeplayState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		var bot:Bool = ClientPrefs.gameplaySettings.get('botplay');
+		var practice:Bool = ClientPrefs.gameplaySettings.get('practice');
+		var modchart:Bool = ClientPrefs.gameplaySettings.get('modchart');
+
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -300,7 +309,16 @@ class FreeplayState extends MusicBeatState
 		if (FlxG.keys.pressed.SHIFT)
 			shiftMult = 3;
 
-		if (songs.length > 1)
+		if (bot || practice || !modchart)
+		{
+			FlxTween.tween(cheatText, {alpha: 1}, 1);
+		}
+		else
+		{
+			FlxTween.tween(cheatText, {alpha: 0}, 1);
+		}
+
+		if (songs.length > 1 && !ShortcutMenuSubState.inShortcutMenu)
 		{
 			if (upP)
 			{
@@ -334,6 +352,12 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 
+		if (FlxG.keys.justPressed.TAB)
+		{
+			openSubState(new ShortcutMenuSubState());
+			ShortcutMenuSubState.inShortcutMenu = true;
+		}
+
 		if (controls.UI_LEFT_P)
 			changeDiff(-1);
 		else if (controls.UI_RIGHT_P)
@@ -341,7 +365,7 @@ class FreeplayState extends MusicBeatState
 		else if (upP || downP)
 			changeDiff();
 
-		if (controls.BACK)
+		if (controls.BACK && !ShortcutMenuSubState.inShortcutMenu)
 		{
 			persistentUpdate = false;
 			if (colorTween != null)
@@ -352,7 +376,7 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if (ctrl)
+		if (ctrl && !ShortcutMenuSubState.inShortcutMenu)
 		{
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
@@ -382,7 +406,7 @@ class FreeplayState extends MusicBeatState
 				#end
 			}
 		}
-		else if (accepted)
+		else if (accepted && !ShortcutMenuSubState.inShortcutMenu)
 		{
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);

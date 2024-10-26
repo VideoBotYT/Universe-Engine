@@ -55,10 +55,13 @@ class ClientPrefs
 	public static var cc:Bool = true;
 	public static var sh:Bool = true;
 	public static var ec:Bool = true;
-	public static var bd:Bool = true;
 	public static var snm:Bool = false;
 	public static var tng:Bool = true;
 	public static var ib:Bool = true;
+	public static var cm:Bool = false;
+	public static var huet:Bool = false;
+	public static var css:String = 'GF Sounds';
+	public static var dcm:Bool = false;
 
 	public static var noteSkin:String = 'Default';
 	public static var noteColorStyle:String = 'Normal';
@@ -152,10 +155,13 @@ class ClientPrefs
 		FlxG.save.data.cc = cc;
 		FlxG.save.data.sh = sh;
 		FlxG.save.data.ec = ec;
-		FlxG.save.data.bd = bd;
 		FlxG.save.data.snm = snm;
 		FlxG.save.data.tng = tng;
 		FlxG.save.data.ib = ib;
+		FlxG.save.data.cm = cm;
+		FlxG.save.data.huet = huet;
+		FlxG.save.data.css = css;
+		FlxG.save.data.dcm = dcm;
 
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.middleScroll = middleScroll;
@@ -197,7 +203,7 @@ class ClientPrefs
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v2', 'ninjamuffin99'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
+		save.bind('controls_v2', 'universe'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		save.data.customControls = keyBinds;
 		save.flush();
 		FlxG.log.add("Settings saved!");
@@ -258,26 +264,45 @@ class ClientPrefs
 		{
 			dhb = FlxG.save.data.dhb;
 		}
-		if (FlxG.save.data.cc != null) {
+		if (FlxG.save.data.cc != null)
+		{
 			cc = FlxG.save.data.cc;
 		}
-		if (FlxG.save.data.sh != null) {
+		if (FlxG.save.data.sh != null)
+		{
 			sh = FlxG.save.data.sh;
 		}
-		if (FlxG.save.data.ec != null) {
+		if (FlxG.save.data.ec != null)
+		{
 			ec = FlxG.save.data.ec;
 		}
-		if (FlxG.save.data.bd != null) {
-			bd = FlxG.save.data.bd;
-		}
-		if (FlxG.save.data.snm != null) {
+		if (FlxG.save.data.snm != null)
+		{
 			snm = FlxG.save.data.snm;
 		}
-		if (FlxG.save.data.tng != null) {
+		if (FlxG.save.data.tng != null)
+		{
 			tng = FlxG.save.data.tng;
 		}
-		if (FlxG.save.data.ib != null) {
+		if (FlxG.save.data.ib != null)
+		{
 			ib = FlxG.save.data.ib;
+		}
+		if (FlxG.save.data.cm != null)
+		{
+			cm = FlxG.save.data.cm;
+		}
+		if (FlxG.save.data.huet != null)
+		{
+			huet = FlxG.save.data.huet;
+		}
+		if (FlxG.save.data.css != null)
+		{
+			css = FlxG.save.data.css;
+		}
+		if (FlxG.save.data.dcm != null)
+		{
+			dcm = FlxG.save.data.dcm;
 		}
 
 		if (FlxG.save.data.downScroll != null)
@@ -439,7 +464,7 @@ class ClientPrefs
 			comboStacking = FlxG.save.data.comboStacking;
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v2', 'ninjamuffin99');
+		save.bind('controls_v2', 'universe');
 		if (save != null && save.data.customControls != null)
 		{
 			var loadedControls:Map<String, Array<FlxKey>> = save.data.customControls;

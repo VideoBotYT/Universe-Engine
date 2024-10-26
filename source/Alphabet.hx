@@ -43,10 +43,19 @@ class Alphabet extends FlxSpriteGroup
 	{
 		super(x, y);
 
+		var r = ~/r/g;
+
 		this.startPosition.x = x;
 		this.startPosition.y = y;
 		this.bold = bold;
-		this.text = text;
+		if (ClientPrefs.cm == true)
+		{
+			this.text = r.replace(text, 'w');
+		}
+		else
+		{
+			this.text = text;
+		}
 	}
 
 	public function setAlignmentFromString(align:String)
@@ -447,6 +456,7 @@ class AlphaCharacter extends FlxSprite
 	}
 
 	public var curLetter:Letter = null;
+
 	public function setupAlphaCharacter(x:Float, y:Float, ?character:String = null, ?bold:Null<Bool> = null)
 	{
 		this.x = x;

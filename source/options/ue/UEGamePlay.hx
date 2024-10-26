@@ -60,10 +60,20 @@ class UEGamePlay extends BaseOptionsMenu
 		var option:Option = new Option('Every 100 combo', 'If every 100 combo, it does a cool thing :D', 'ec', 'bool', true);
 		addOption(option);
 
+		if (ClientPrefs.ec)
+		{
+			var option:Option = new Option('100 Combo sound', 'Select a sound that plays everytime you have 100 combo count', 'css', 'string',
+				'GF Sounds', ['GF Sounds', 'Click Text']);
+			addOption(option);
+		}
+
 		var option:Option = new Option('Shake on miss', "If unchecked, screen doesn't shake on miss", 'snm', 'bool', false);
 		addOption(option);
 
 		var option:Option = new Option('Taunt on Go!', "If unchecked, doesn't taunt on go!", 'tng', 'bool', true);
+		addOption(option);
+
+		var option:Option = new Option('Darken CamGame', 'If checked, it darkens the camGame, so its easier to read modcharts.', 'dcm', 'bool', false);
 		addOption(option);
 
 		super();

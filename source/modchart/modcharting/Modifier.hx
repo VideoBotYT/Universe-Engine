@@ -445,6 +445,175 @@ class ExtraBoomModifier extends Modifier
 	}
 }
 
+class ZigZagXModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		var mult:Float = NoteMovement.arrowSizes[lane] * subValues.get('mult').value;
+		var mm:Float = mult * 2;
+		var ppp:Float = Math.abs(curPos * 0.45) + (mult / 2);
+		var funny:Float = (ppp + mult) % mm;
+		var result:Float = funny - mult;
+
+		if (ppp % mm * 2 >= mm)
+			result *= -1;
+		result -= mult / 2;
+
+		noteData.x += result * currentValue;
+	}
+}
+
+class ZigZagYModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		var mult:Float = NoteMovement.arrowSizes[lane] * subValues.get('mult').value;
+		var mm:Float = mult * 2;
+		var ppp:Float = Math.abs(curPos * 0.45) + (mult / 2);
+		var funny:Float = (ppp + mult) % mm;
+		var result:Float = funny - mult;
+
+		if (ppp % mm * 2 >= mm)
+			result *= -1;
+		result -= mult / 2;
+
+		noteData.y += result * currentValue;
+	}
+}
+
+class ZigZagZModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		var mult:Float = NoteMovement.arrowSizes[lane] * subValues.get('mult').value;
+		var mm:Float = mult * 2;
+		var ppp:Float = Math.abs(curPos * 0.45) + (mult / 2);
+		var funny:Float = (ppp + mult) % mm;
+		var result:Float = funny - mult;
+
+		if (ppp % mm * 2 >= mm)
+			result *= -1;
+		result -= mult / 2;
+
+		noteData.z += result * currentValue;
+	}
+}
+
+class SawToothXModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		var mult:Float = NoteMovement.arrowSizes[lane] * subValues.get('mult').value;
+		noteData.x += ((curPos * 0.45) % mult / 2) * currentValue;
+	}
+}
+
+class SawToothYModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		var mult:Float = NoteMovement.arrowSizes[lane] * subValues.get('mult').value;
+		noteData.y += ((curPos * 0.45) % mult / 2) * currentValue;
+	}
+}
+
+class SawToothZModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		var mult:Float = NoteMovement.arrowSizes[lane] * subValues.get('mult').value;
+		noteData.z += ((curPos * 0.45) % mult / 2) * currentValue;
+	}
+}
+
+class SquareXModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('yoffset', new ModifierSubValue(0.0));
+		subValues.set('xoffset', new ModifierSubValue(0.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.x += squareMath(curPos, subValues.get('mult').value, subValues.get('yoffset').value, subValues.get('xoffset').value, lane) * currentValue;
+	}
+
+	public static function squareMath(curPos:Float, mult:Float, timeOffset:Float, xOffset:Float, lane:Int):Float
+	{
+		var mult:Float = mult / (NoteMovement.arrowSizes[lane]);
+		var timeOffset:Float = timeOffset;
+		var xOffset:Float = xOffset;
+		var xVal:Float = FlxMath.fastSin(((curPos * 0.45) + timeOffset) * Math.PI * mult);
+		xVal = Math.floor(xVal) + 0.5 + xOffset;
+
+		return xVal * NoteMovement.arrowSizes[lane];
+	}
+}
+
+class SquareYModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('yoffset', new ModifierSubValue(0.0));
+		subValues.set('xoffset', new ModifierSubValue(0.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.y += SquareXModifier.squareMath(curPos, subValues.get('mult').value, subValues.get('yoffset').value, subValues.get('xoffset').value,
+			lane) * currentValue;
+	}
+}
+
+class SquareZModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('yoffset', new ModifierSubValue(0.0));
+		subValues.set('xoffset', new ModifierSubValue(0.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.z += SquareXModifier.squareMath(curPos, subValues.get('mult').value, subValues.get('yoffset').value, subValues.get('xoffset').value,
+			lane) * currentValue;
+	}
+}
+
 class WaveLaneModifier extends Modifier
 {
 	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
@@ -967,9 +1136,15 @@ class ShrinkModifier extends Modifier
 
 class BeatXModifier extends Modifier
 {
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
 	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
 	{
-		noteData.x += currentValue * getShift(noteData, lane, curPos, pf);
+		noteData.x += currentValue * getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value);
 	}
 
 	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
@@ -977,7 +1152,7 @@ class BeatXModifier extends Modifier
 		noteMath(noteData, lane, 0, pf);
 	}
 
-	public static function getShift(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int):Float
+	public static function getShift(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int, speed:Float, mult:Float):Float
 	{
 		var fAccelTime = 0.2;
 		var fTotalTime = 0.5;
@@ -990,7 +1165,9 @@ class BeatXModifier extends Modifier
 		// fTotalTime /= fDiv;
 
 		/* offset by VisualDelayEffect seconds */
-		var fBeat = Modifier.beat + fAccelTime;
+		var time = Modifier.beat * speed;
+		var posMult = mult;
+		var fBeat = time + fAccelTime;
 		// fBeat /= fDiv;
 
 		var bEvenBeat = (Math.floor(fBeat) % 2) != 0;
@@ -1021,16 +1198,22 @@ class BeatXModifier extends Modifier
 		if (bEvenBeat)
 			fAmount *= -1;
 
-		var fShift = 20.0 * fAmount * FlxMath.fastSin((curPos * 0.01) + (Math.PI / 2.0));
+		var fShift = 20.0 * fAmount * FlxMath.fastSin((curPos * 0.01 * posMult) + (Math.PI / 2.0));
 		return fShift;
 	}
 }
 
 class BeatYModifier extends Modifier
 {
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
 	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
 	{
-		noteData.y += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf);
+		noteData.y += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value);
 	}
 
 	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
@@ -1041,9 +1224,154 @@ class BeatYModifier extends Modifier
 
 class BeatZModifier extends Modifier
 {
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
 	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
 	{
-		noteData.z += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf);
+		noteData.z += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value);
+	}
+
+	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
+	{
+		noteMath(noteData, lane, 0, pf);
+	}
+}
+
+class BeatAngleModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.angle += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value);
+	}
+
+	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
+	{
+		noteMath(noteData, lane, 0, pf);
+	}
+}
+
+class BeatScaleModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.scaleX *= (1
+			+ ((currentValue * 0.01) * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value)));
+		noteData.scaleY *= (1
+			+ ((currentValue * 0.01) * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value)));
+	}
+
+	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
+	{
+		noteMath(noteData, lane, 0, pf);
+	}
+}
+
+class BeatScaleXModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.scaleX *= (1
+			+ ((currentValue * 0.01) * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value)));
+	}
+
+	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
+	{
+		noteMath(noteData, lane, 0, pf);
+	}
+}
+
+class BeatScaleYModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.scaleY *= (1
+			+ ((currentValue * 0.01) * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value)));
+	}
+
+	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
+	{
+		noteMath(noteData, lane, 0, pf);
+	}
+}
+
+class BeatSkewModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.skewX += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value);
+		noteData.skewY += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value);
+	}
+
+	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
+	{
+		noteMath(noteData, lane, 0, pf);
+	}
+}
+
+class BeatSkewXModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.skewX += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value);
+	}
+
+	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
+	{
+		noteMath(noteData, lane, 0, pf);
+	}
+}
+
+class BeatSkewYModifier extends Modifier
+{
+	override function setupSubValues()
+	{
+		subValues.set('mult', new ModifierSubValue(1.0));
+		subValues.set('speed', new ModifierSubValue(1.0));
+	}
+
+	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
+	{
+		noteData.skewY += currentValue * BeatXModifier.getShift(noteData, lane, curPos, pf, subValues.get('speed').value, subValues.get('mult').value);
 	}
 
 	override function strumMath(noteData:NotePositionData, lane:Int, pf:Int)
@@ -2189,36 +2517,6 @@ class TornadoModifier extends Modifier
 		var offsetX = (-FlxMath.fastCos((phaseShift - columnPhaseShift)) + 1) / 2 * Note.swagWidth * 3 - returnReceptorToZeroOffsetX;
 
 		noteData.x += offsetX * currentValue;
-	}
-}
-
-class ZigZagModifier extends Modifier
-{
-	override function setupSubValues()
-	{
-		baseValue = 0.0;
-		currentValue = 1.0;
-		subValues.set('amplitude', new ModifierSubValue(1.0));
-		subValues.set('longitude', new ModifierSubValue(1.0));
-	}
-
-	override function noteMath(noteData:NotePositionData, lane:Int, curPos:Float, pf:Int)
-	{
-		// thank you an ammar for the math LOL
-
-		var d = subValues.get('amplitude').value;
-		var c = subValues.get('longitude').value;
-
-		var a = c * (-1 + 2 * mod(Math.floor((d * curPos)), 2));
-		var b = -c * mod(Math.floor((d * curPos)), 2);
-		var x = ((d * curPos) - Math.floor((d * curPos))) * a + b + (c / 2);
-
-		noteData.x += x * currentValue;
-	}
-
-	function mod(a:Float, b:Float):Float
-	{
-		return (a / b);
 	}
 }
 

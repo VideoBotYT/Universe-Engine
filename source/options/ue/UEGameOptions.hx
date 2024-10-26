@@ -35,7 +35,7 @@ class UEGameOptions extends BaseOptionsMenu
 		var option:Option = new Option('Main Menu Music', 'Change the main menu song', 'mmm', 'string', 'freakymenu', [
 			'freakyMenu',
 			'FunkinParadise',
-			"An Ammar's Creativity V4",
+			"AAC V4",
 			'VS Impostor V4',
 			'VS Shaggy',
 			'VS Nonsense V2'
@@ -45,8 +45,19 @@ class UEGameOptions extends BaseOptionsMenu
 		var option:Option = new Option('Fancy Title', 'Title bounce', 'ft', 'bool', false);
 		addOption(option);
 
-		var Option:Option = new Option('Black Dots', 'When checked it shows black dots in the background', 'bd', 'bool', true);
-		addOption(Option);
+		var option:Option = new Option('Cute Mode', if (ClientPrefs.cm == true)
+		{
+			'i coded this UwU';
+		} else
+		{
+			'What is this option i never coded this';
+		}, 'cm', 'bool', false);
+		addOption(option);
+		option.onChange = restart;
+
+		var option:Option = new Option('Check for Updates', 'On Release builds, turn this on to check for updates when you start the game.',
+			'checkForUpdates', 'bool', true);
+		addOption(option);
 
 		super();
 	}
@@ -91,5 +102,18 @@ class UEGameOptions extends BaseOptionsMenu
 	function onChangeHitSound()
 	{
 		FlxG.sound.play(Paths.sound(ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+	}
+
+	function restart()
+	{
+		ClientPrefs.saveSettings();
+		TitleState.initialized = false;
+		TitleState.closedState = false;
+		if (FreeplayState.vocals != null)
+		{
+			FreeplayState.vocals.fadeOut(0.3);
+			FreeplayState.vocals = null;
+		}
+		FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
 	}
 }

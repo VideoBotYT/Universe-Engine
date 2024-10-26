@@ -19,6 +19,9 @@ import sys.io.File;
 #end
 import lime.utils.Assets;
 
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxGridOverlay;
+
 using StringTools;
 
 class CreditsState extends MusicBeatState
@@ -48,6 +51,12 @@ class CreditsState extends MusicBeatState
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		add(bg);
 		bg.screenCenter();
+
+		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(20, 20);
+		grid.alpha = 0;
+		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+		add(grid);
 		
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -82,8 +91,8 @@ class CreditsState extends MusicBeatState
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 			['Universe Engine Team'],
-			['Uwenalil', 'uwenalil', 'First DEV, In charge of the LUA  files', 'https://www.youtube.com/channel/UCCrpusmIel39v0gUm3s3O2g', '00FF00'],
-			['Video Bot', 'videobot', 'Second DEV, In charge of the HX files', 'https://www.youtube.com/@videobot2009', '14FFFF'],
+			['uwenalil', 'uwenalil', 'First DEV, In charge of the LUA files \n The easy crap', 'https://www.youtube.com/channel/UCCrpusmIel39v0gUm3s3O2g', '00FF00'],
+			['Video Bot', 'videobot', 'Second DEV, In charge of the HX files \n The hard crap', 'https://www.youtube.com/@videobot2009', '14FFFF'],
 			[''],
 			['Stuff used by the engine (UE)'],
 			['Edwhak', 'Edwhak', 'Modchart Tool', '', '00FF00'],
@@ -92,9 +101,12 @@ class CreditsState extends MusicBeatState
 			['Unholywanderer', 'Gamebanana', 'Smooth HP', 'https://gamebanana.com/members/1908754', '00FFFF'],
 			['Kiruwu', 'Gamebanana', 'Weekend 1 Port', 'https://gamebanana.com/mods/512609', 'B3715F'],
 			['Spelo', 'YouTube', 'Play Both Sides', 'https://www.youtube.com/watch?v=xmUQUi8rd9M', 'FFFFFF'],
+			["Friday Night Troubleshootin'", 'fnt', 'Fancy title background', 'https://gamejolt.com/games/troubleshootin/644581', '7000da'],
 			[''],
 			['Special Thanks (UE)'],
 			['Blitz', 'noicon', 'Discord RPC Logo', 'https://www.youtube.com/@fireballfurby', '00FFFF'],
+			['Dinus Game', 'Dinus Game', 'FreakyMenu Universe Engine music', 'https://gamebanana.com/members/2053946', '27FF27'],
+			['JS Engine', 'jor', 'Most of the code of UE comes from JS', 'https://gamebanana.com/tools/13575', '32CD32'],
 			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],

@@ -234,6 +234,11 @@ class FunkinLua {
 		set('UEshakeMiss', ClientPrefs.snm);
 		set('UEtauntGo', ClientPrefs.tng);
 		set('UEiconBop', ClientPrefs.ib);
+		set('UEhidetimeBar', ClientPrefs.huet);
+		set('modchart', ClientPrefs.gameplaySettings.get('modchart'));
+		set('UE100comboSounds', ClientPrefs.css);
+		set('UEdarkenCamGame', ClientPrefs.dcm);
+		set('UEcute', ClientPrefs.cm);
 
 		#if windows
 		set('buildTarget', 'windows');
