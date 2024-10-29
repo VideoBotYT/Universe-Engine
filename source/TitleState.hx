@@ -132,7 +132,6 @@ class TitleState extends MusicBeatState
 
 		ClientPrefs.loadPrefs();
 
-		
 		if (ClientPrefs.checkForUpdates && !closedState)
 		{
 			trace('checking for update');
@@ -277,26 +276,29 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(titleJSON.bpm);
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menuBG'));
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		bg.setGraphicSize(Std.int(bg.width * 2));
-		bg.updateHitbox();
-		bg.screenCenter();
-		add(bg);
-		bg.shader = swagShader.shader;
-
-		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-
-		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-		logoBl.animation.play('bump');
-		logoBl.updateHitbox();
-		if (ClientPrefs.ft == true)
+		if (ClientPrefs.mmm != "AAC V4")
 		{
-			logoBl.y = FlxG.height / 2 - 450;
-			logoBl.screenCenter(X);
-			logoBl.scale.set(1.1, 1.1);
+			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menuBG'));
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.setGraphicSize(Std.int(bg.width * 2));
+			bg.updateHitbox();
+			bg.screenCenter();
+			add(bg);
+			bg.shader = swagShader.shader;
+
+			logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
+			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+
+			logoBl.antialiasing = ClientPrefs.globalAntialiasing;
+			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+			logoBl.animation.play('bump');
+			logoBl.updateHitbox();
+			if (ClientPrefs.ft)
+			{
+				logoBl.y = FlxG.height / 2 - 450;
+				logoBl.screenCenter(X);
+				logoBl.scale.set(1.1, 1.1);
+			}
 		}
 		// logoBl.color = FlxColor.BLACK;
 
@@ -336,46 +338,80 @@ class TitleState extends MusicBeatState
 				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		}
-		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
-		if (ClientPrefs.ft == true)
+		if (ClientPrefs.mmm != "AAC V4")
 		{
-			gfDance.screenCenter(X);
-			gfDance.y = FlxG.height / 2 - 200;
-			gfDance.scale.set(0.75, 0.75);
-		}
-		if (ClientPrefs.ft == true)
-		{
-			var fancyBG:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('fancyTitleBG'));
-			fancyBG.updateHitbox();
-			fancyBG.screenCenter();
-			fancyBG.antialiasing = ClientPrefs.globalAntialiasing;
-			fancyBG.setGraphicSize(Std.int(fancyBG.width * 1.175));
-			add(fancyBG);
+			gfDance.antialiasing = ClientPrefs.globalAntialiasing;
+			if (ClientPrefs.ft == true)
+			{
+				gfDance.screenCenter(X);
+				gfDance.y = FlxG.height / 2 - 200;
+				gfDance.scale.set(0.75, 0.75);
+			}
+			if (ClientPrefs.ft == true)
+			{
+				var fancyBG:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('fancyTitleBG'));
+				fancyBG.updateHitbox();
+				fancyBG.screenCenter();
+				fancyBG.antialiasing = ClientPrefs.globalAntialiasing;
+				fancyBG.setGraphicSize(Std.int(fancyBG.width * 1.175));
+				add(fancyBG);
+			}
+
+			add(logoBl);
+			logoBl.shader = swagShader.shader;
+			if (ClientPrefs.ft == true)
+			{
+				var darkBG:FlxSprite = new FlxSprite(0, 0);
+				darkBG.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+				darkBG.alpha = 0.5;
+				darkBG.screenCenter();
+				add(darkBG);
+
+				var fancyLogoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
+				fancyLogoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+				fancyLogoBl.antialiasing = ClientPrefs.globalAntialiasing;
+				fancyLogoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+				fancyLogoBl.animation.play('bump');
+				fancyLogoBl.updateHitbox();
+				fancyLogoBl.screenCenter(X);
+				logoBl.y = FlxG.height / 2 - 450;
+				add(fancyLogoBl);
+				fancyLogoBl.shader = swagShader.shader;
+			}
+			add(gfDance);
+			gfDance.shader = swagShader.shader;
 		}
 
-		add(logoBl);
-		logoBl.shader = swagShader.shader;
-		if (ClientPrefs.ft == true)
+		if (ClientPrefs.mmm == "AAC V4")
 		{
-			var darkBG:FlxSprite = new FlxSprite(0, 0);
-			darkBG.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-			darkBG.alpha = 0.5;
-			darkBG.screenCenter();
-			add(darkBG);
+			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/introBG'));
+			bg.updateHitbox();
+			bg.screenCenter();
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.setGraphicSize(Std.int(bg.width * 1.175));
+			add(bg);
 
-			var fancyLogoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
-			fancyLogoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-			fancyLogoBl.antialiasing = ClientPrefs.globalAntialiasing;
-			fancyLogoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-			fancyLogoBl.animation.play('bump');
-			fancyLogoBl.updateHitbox();
-			fancyLogoBl.screenCenter(X);
-			logoBl.y = FlxG.height / 2 - 450;
-			add(fancyLogoBl);
-			fancyLogoBl.shader = swagShader.shader;
+			var FNF:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/FNF'));
+			FNF.updateHitbox();
+			FNF.screenCenter(X);
+			FNF.y = FlxG.height / 2 - 370;
+			FNF.antialiasing = ClientPrefs.globalAntialiasing;
+			add(FNF);
+
+			var AA:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/An Ammar'));
+			AA.updateHitbox();
+			AA.screenCenter(X);
+			AA.y = FlxG.height / 2 - 360;
+			AA.antialiasing = ClientPrefs.globalAntialiasing;
+			add(AA);
+
+			var creativity:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/Creativity'));
+			creativity.updateHitbox();
+			creativity.screenCenter(X);
+			creativity.y = FlxG.height / 2 - 350;
+			creativity.antialiasing = ClientPrefs.globalAntialiasing;
+			add(creativity);
 		}
-		add(gfDance);
-		gfDance.shader = swagShader.shader;
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if (desktop && MODS_ALLOWED)
@@ -544,7 +580,7 @@ class TitleState extends MusicBeatState
 				titleText.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], timer);
 			}
 
-			if (pressedEnter && ! ExitState.inExit)
+			if (pressedEnter && !ExitState.inExit)
 			{
 				titleText.color = FlxColor.WHITE;
 				titleText.alpha = 1;
@@ -640,7 +676,7 @@ class TitleState extends MusicBeatState
 				swagShader.hue += elapsed * 0.1;
 		}
 
-		if (ClientPrefs.ft == true)
+		if (ClientPrefs.ft && ClientPrefs.mmm != "AAC V4")
 		{
 			swagShader.hue += elapsed * 0.1;
 		}
@@ -704,7 +740,7 @@ class TitleState extends MusicBeatState
 				gfDance.animation.play('danceLeft');
 		}
 
-		if (skippedIntro && ClientPrefs.ft == true && !ExitState.inExit)
+		if (skippedIntro && ClientPrefs.ft && !ExitState.inExit || ClientPrefs.mmm == "AAC V4" && skippedIntro)
 		{
 			FlxTween.tween(FlxG.camera, {zoom: 1.05}, 0.3, {ease: FlxEase.expoInOut, type: BACKWARD});
 		}

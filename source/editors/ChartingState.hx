@@ -46,7 +46,6 @@ import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
-
 import flixel.util.FlxStringUtil;
 
 using StringTools;
@@ -1644,6 +1643,11 @@ class ChartingState extends MusicBeatState
 		tab_group_chart.add(sliderRate);
 		#end
 
+		var resetSpeed:FlxButton = new FlxButton(sliderRate.x * 2 - 100, sliderRate.y + 50, 'Reset', function()
+		{
+			playbackSpeed = 1.0;
+		});
+
 		tab_group_chart.add(new FlxText(metronomeStepper.x, metronomeStepper.y - 15, 0, 'BPM:'));
 		tab_group_chart.add(new FlxText(metronomeOffsetStepper.x, metronomeOffsetStepper.y - 15, 0, 'Offset (ms):'));
 		tab_group_chart.add(new FlxText(instVolume.x, instVolume.y - 15, 0, 'Inst Volume'));
@@ -1666,6 +1670,7 @@ class ChartingState extends MusicBeatState
 		tab_group_chart.add(playSoundBf);
 		tab_group_chart.add(playSoundDad);
 		tab_group_chart.add(lilBuddiesBox);
+		tab_group_chart.add(resetSpeed);
 		UI_box.addGroup(tab_group_chart);
 	}
 
@@ -2413,7 +2418,9 @@ class ChartingState extends MusicBeatState
 			+ quantization
 			+ "th \n"
 			+ FlxStringUtil.formatMoney(CoolUtil.getNoteAmount(_song), false)
-			+ ' Notes';
+			+ ' Notes\n'
+			+ "\nRendered Notes: " + FlxStringUtil.formatMoney(Math.abs(curRenderedNotes.length + nextRenderedNotes.length), false)
+			+ "\nSection Notes: " + FlxStringUtil.formatMoney(_song.notes[curSec].sectionNotes.length, false);
 
 		var playedSound:Array<Bool> = [false, false, false, false]; // Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note)
@@ -2451,7 +2458,7 @@ class ChartingState extends MusicBeatState
 					{
 						if ((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress))
 						{
-							var soundToPlay = 'hitsound';
+							var soundToPlay = ClientPrefs.ht;
 							if (_song.player1 == 'gf')
 							{ // Easter egg
 								soundToPlay = 'GF_' + Std.string(data + 1);

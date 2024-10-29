@@ -28,7 +28,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var ueVersion:String = '0.2.1';
+	public static var ueVersion:String = '0.2.2';
 	public static var psychEngineVersion:String = '0.6.3'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -88,13 +88,28 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-		bg.scrollFactor.set(0, yScroll);
-		bg.setGraphicSize(Std.int(bg.width * 1.175));
-		bg.updateHitbox();
-		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bg);
+
+		if (ClientPrefs.cm)
+		{
+			var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+			bg.scrollFactor.set(0, yScroll);
+			bg.setGraphicSize(Std.int(bg.width * 1.175));
+			bg.updateHitbox();
+			bg.screenCenter();
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.color = 0xFFfd719b;
+			add(bg);
+		}
+		else
+		{
+			var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+			bg.scrollFactor.set(0, yScroll);
+			bg.setGraphicSize(Std.int(bg.width * 1.175));
+			bg.updateHitbox();
+			bg.screenCenter();
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			add(bg);
+		}
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);

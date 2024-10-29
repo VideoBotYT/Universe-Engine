@@ -80,6 +80,16 @@ class StoryMenuState extends MusicBeatState
 		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
 		bgSprite = new FlxSprite(0, 56);
 		bgSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		if (ClientPrefs.cm)
+		{
+			bgSprite.color = 0xFFfd719b;
+		}
+		else
+		{
+			bgSprite.color = 0xFFF9CF51;
+		}
+
+		var bgCute:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFfd719b);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -169,7 +179,14 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.antialiasing = ClientPrefs.globalAntialiasing;
 		difficultySelectors.add(rightArrow);
 
-		add(bgYellow);
+		if (ClientPrefs.cm)
+		{
+			add(bgCute);
+		}
+		else
+		{
+			add(bgYellow);
+		}
 		add(bgSprite);
 		add(grpWeekCharacters);
 

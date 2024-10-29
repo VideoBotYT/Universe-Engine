@@ -296,6 +296,11 @@ class FreeplayState extends MusicBeatState
 			ratingSplit[1] += '0';
 		}
 
+		if (ClientPrefs.cm)
+		{
+			bg.color = 0xFFfd719b;
+		}
+
 		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
 		positionHighscore();
 

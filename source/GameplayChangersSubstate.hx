@@ -114,7 +114,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
 
-		var option:GameplayOption = new GameplayOption('Shut Down on miss', 'sd', 'bool', false);
+		var option:GameplayOption = new GameplayOption('Crash on miss', 'sd', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
 

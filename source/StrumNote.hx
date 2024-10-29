@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import shaders.RGBPalette.RGBShaderReference;
-
 import flixel.util.FlxColor;
 import flixel.addons.effects.FlxSkewedSprite;
 
@@ -44,29 +43,33 @@ class StrumNote extends FlxSkewedSprite
 	{
 		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(leData));
 		rgbShader.enabled = false;
-		if(PlayState.SONG != null && PlayState.SONG.disableNoteRGB) useRGBShader = false;
-		
+		if (PlayState.SONG != null && PlayState.SONG.disableNoteRGB)
+			useRGBShader = false;
+
 		var arr:Array<FlxColor> = ClientPrefs.arrowRGB[leData];
-		if(PlayState.isPixelStage) arr = ClientPrefs.arrowRGBPixel[leData];
+		if (PlayState.isPixelStage)
+			arr = ClientPrefs.arrowRGBPixel[leData];
 
 		noteData = leData;
 		this.player = player;
 		this.noteData = leData;
 		super(x, y);
 
-		if(leData <= arr.length)
+		if (leData <= arr.length)
+		{
+			@:bypassAccessor
 			{
-				@:bypassAccessor
-				{
-					rgbShader.r = arr[0];
-					rgbShader.g = arr[1];
-					rgbShader.b = arr[2];
-				}
+				rgbShader.r = arr[0];
+				rgbShader.g = arr[1];
+				rgbShader.b = arr[2];
 			}
+		}
 
 		var skin:String = 'NOTE_assets';
-		if(PlayState.SONG != null && PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
-		else skin = Note.defaultNoteSkin;
+		if (PlayState.SONG != null && PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1)
+			skin = PlayState.SONG.arrowSkin;
+		else
+			skin = Note.defaultNoteSkin;
 		texture = skin; // Load texture and anims
 
 		scrollFactor.set();
@@ -191,5 +194,35 @@ class StrumNote extends FlxSkewedSprite
 		}
 		if (useRGBShader)
 			rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
+	}
+
+	public function updateRGBColors(?r:FlxColor, ?g:FlxColor, ?b:FlxColor)
+	{
+		if (rgbShader != null)
+		{
+			rgbShader.r = r;
+			rgbShader.g = g;
+			rgbShader.b = b;
+		}
+	}
+
+	public function resetRGB()
+	{
+		if (rgbShader != null && animation.curAnim != null && animation.curAnim.name == 'static')
+		{
+			switch (ClientPrefs.noteColorStyle)
+			{
+				case 'Quant-Based', 'Rainbow', 'Char-Based':
+					rgbShader.r = 0xFFF9393F;
+					rgbShader.g = 0xFFFFFFFF;
+					rgbShader.b = 0xFF651038;
+				case 'Grayscale':
+					rgbShader.r = 0xFFA0A0A0;
+					rgbShader.g = FlxColor.WHITE;
+					rgbShader.b = 0xFF424242;
+				default:
+			}
+			rgbShader.enabled = false;
+		}
 	}
 }

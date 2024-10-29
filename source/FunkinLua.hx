@@ -225,7 +225,6 @@ class FunkinLua {
 		set('UEsnTimeFollow', ClientPrefs.sntf);
 		set('UEhitsound', ClientPrefs.ht);
 		set('UEDetachedHB', ClientPrefs.dhb);
-		set('UEsd', ClientPrefs.gameplaySettings.get('sd'));
 		set('UEcCounter', ClientPrefs.cc);
 		set('UESmoothHP', ClientPrefs.sh);
 		set('UEe100C', ClientPrefs.ec);
@@ -239,6 +238,8 @@ class FunkinLua {
 		set('UE100comboSounds', ClientPrefs.css);
 		set('UEdarkenCamGame', ClientPrefs.dcm);
 		set('UEcute', ClientPrefs.cm);
+		set('UEmmm', ClientPrefs.mmm);
+		set('UEir', ClientPrefs.keyBinds.get('is'));
 
 		#if windows
 		set('buildTarget', 'windows');
