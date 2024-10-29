@@ -75,6 +75,8 @@ class FunkinLua {
 	#if hscript
 	public static var hscript:HScript = null;
 	#end
+
+	public static var ir = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('is'));
 	
 	public function new(script:String) {
 		#if LUA_ALLOWED
@@ -229,6 +231,7 @@ class FunkinLua {
 		set('UESmoothHP', ClientPrefs.sh);
 		set('UEe100C', ClientPrefs.ec);
 		set('UEhealthDrain', ClientPrefs.gameplaySettings.get('hd'));
+		set('UEsd', ClientPrefs.gameplaySettings.get('sd'));
 		set('UEsustainOneNote', ClientPrefs.gameplaySettings.get('sn'));
 		set('UEshakeMiss', ClientPrefs.snm);
 		set('UEtauntGo', ClientPrefs.tng);
@@ -239,7 +242,7 @@ class FunkinLua {
 		set('UEdarkenCamGame', ClientPrefs.dcm);
 		set('UEcute', ClientPrefs.cm);
 		set('UEmmm', ClientPrefs.mmm);
-		set('UEir', ClientPrefs.keyBinds.get('is'));
+		set('UEir', ir);
 
 		#if windows
 		set('buildTarget', 'windows');
