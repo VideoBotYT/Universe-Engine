@@ -2620,9 +2620,20 @@ class PlayState extends MusicBeatState
 		curSong = songData.song;
 
 		if (SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+		{
+			try
+			{
+				vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+			}
+			catch(e:Dynamic)
+			{
+				vocals = new FlxSound();
+			}
+		}
 		else
+		{
 			vocals = new FlxSound();
+		}
 
 		vocals.pitch = playbackRate;
 		FlxG.sound.list.add(vocals);

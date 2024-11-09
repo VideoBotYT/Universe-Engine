@@ -91,7 +91,7 @@ class ClientPrefs
 		'modchart' => true,
 		'pbs' => false,
 		'sd' => false,
-		'hd' => true,
+		'hd' => false, /// Bro. why was this defaulted to on?
 		'sn' => true
 	];
 

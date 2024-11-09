@@ -1633,7 +1633,7 @@ class ChartingState extends MusicBeatState
 		blockPressWhileTypingOnStepper.push(instVolume);
 
 		voicesVolume = new FlxUINumericStepper(instVolume.x + 100, instVolume.y, 0.1, 1, 0, 1, 1);
-		voicesVolume.value = vocals.volume;
+		voicesVolume.value = vocals != null ? vocals.volume : 1;
 		voicesVolume.name = 'voices_volume';
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 
@@ -1682,12 +1682,19 @@ class ChartingState extends MusicBeatState
 			// vocals.stop();
 		}
 
-		var file:Dynamic = Paths.voices(currentSongName);
-		vocals = new FlxSound();
-		if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file))
+		try
 		{
-			vocals.loadEmbedded(file);
-			FlxG.sound.list.add(vocals);
+			var file:Dynamic = Paths.voices(currentSongName);
+			vocals = new FlxSound();
+			if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file))
+			{
+				vocals.loadEmbedded(file);
+				FlxG.sound.list.add(vocals);
+			}
+		}
+		catch(e:Dynamic)
+		{
+			vocals = null;
 		}
 		generateSong();
 		FlxG.sound.music.pause();
@@ -1716,7 +1723,8 @@ class ChartingState extends MusicBeatState
 			curSec = 0;
 			updateGrid();
 			updateSectionUI();
-			vocals.play();
+			if (vocals != null)
+				vocals.play();
 		};
 	}
 
@@ -1798,7 +1806,9 @@ class ChartingState extends MusicBeatState
 			}
 			else if (wname == 'voices_volume')
 			{
-				vocals.volume = nums.value;
+				if (vocals != null)
+					vocals.volume = nums.value;
+					
 			}
 		}
 		else if (id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText))
@@ -2403,7 +2413,8 @@ class ChartingState extends MusicBeatState
 			playbackSpeed = 3;
 
 		FlxG.sound.music.pitch = playbackSpeed;
-		vocals.pitch = playbackSpeed;
+		if (vocals != null)
+			vocals.pitch = playbackSpeed;
 
 		bpmTxt.text = Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2))
 			+ " / "
