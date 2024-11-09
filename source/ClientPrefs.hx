@@ -68,6 +68,7 @@ class ClientPrefs
 	public static var darkmode:Bool = false;
 	public static var elfunyshak:Bool = false;
 	public static var ueresultscreen:Bool = true;
+	public static var uems:Bool = true;
 
 	public static var noteSkin:String = 'Default';
 	public static var noteColorStyle:String = 'Normal';
@@ -97,8 +98,8 @@ class ClientPrefs
 		'modchart' => true,
 		'pbs' => false,
 		'sd' => false,
-		'hd' => true,
-		'sn' => true,
+		'hd' => false, // ermm,,,
+		'sn' => false, // this is shitty
 		'hdp2' => false
 	];
 
@@ -176,6 +177,7 @@ class ClientPrefs
 		FlxG.save.data.darkmode = darkmode;
 		FlxG.save.data.elfunyshak = elfunyshak;
 		FlxG.save.data.ueresultscreen = ueresultscreen;
+		FlxG.save.data.uems = uems;
 
 		FlxG.save.data.arrowRGB = arrowRGB;
 		FlxG.save.data.arrowRGBPixel = arrowRGBPixel;
@@ -352,6 +354,10 @@ class ClientPrefs
 		if (FlxG.save.data.ueresultscreen != null)
 		{
 			ueresultscreen = FlxG.save.data.ueresultscreen;
+		}
+		if (FlxG.save.data.uems != null)
+		{
+			uems = FlxG.save.data.uems;
 		}
 
 		// Normal Psych Stuff

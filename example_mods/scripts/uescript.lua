@@ -7,9 +7,7 @@ function onCreatePost()
     addLuaScript(UEenginescriptlocateFORCE.."DifficultyLVL")
     addLuaScript(UEenginescriptlocateFORCE.."Song Name")
     addLuaScript(UEenginescriptlocateFORCE.."Trail Double Note")
-    addLuaScript(UEenginescriptlocateFORCE.."Miss Sounds")
     addLuaScript(UEenginescriptlocateFORCE.."fire")
-    addLuaScript(UEenginescriptlocateFORCE.."ImmediateRestart")
     addLuaScript(UEenginescriptlocateFORCE.."baldi")
     
     -- Options << << << << <<
@@ -26,7 +24,8 @@ function onCreatePost()
     if UEdarkenCamGame then addLuaScript(UEenginescriptlocateOPTIONS..'Darken CamGame') end
     if UEstrumsplash then addLuaScript(UEenginescriptlocateOPTIONS.."Strum Splash") end
     if UEresultscreen then addLuaScript(UEenginescriptlocateOPTIONS.."Results Screen") end
-
+    if UEmisssounds then addLuaScript(UEenginescriptlocateOPTIONS.."Miss Sounds") end
+    
     -- GP mods << << << << <<
     if UEplayBothSides then addLuaScript(UEenginescriptlocateGP..'Play Both Sides') end
     if UEhealthDrain then addLuaScript(UEenginescriptlocateGP..'Health Drain') end

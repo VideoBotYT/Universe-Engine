@@ -1,11 +1,11 @@
 {
 	"storyName": "Daddy Dearest Erect",
 	"difficulties": "Erect, Nightmare",
-	"hideFreeplay": false,
+	"hideFreeplay": true,
 	"weekBackground": "stage",
 	"weekBefore": "tutorial",
 	"startUnlocked": true,
-	"hideStoryMode": false,
+	"hideStoryMode": true,
 	"weekCharacters": [
 		"dad",
 		"bf",

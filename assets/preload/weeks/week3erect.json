@@ -1,11 +1,11 @@
 {
 	"storyName": "PICO ERECT",
 	"difficulties": "Erect, Nightmare",
-	"hideFreeplay": false,
+	"hideFreeplay": true,
 	"weekBackground": "philly",
 	"weekBefore": "week2",
 	"startUnlocked": true,
-	"hideStoryMode": false,
+	"hideStoryMode": true,
 	"weekCharacters": [
 		"pico",
 		"bf",

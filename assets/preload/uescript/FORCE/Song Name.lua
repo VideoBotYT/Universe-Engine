@@ -1,8 +1,9 @@
 UEtheypopup = 160
 UEtheygone = 570
 UEtheypopuphi = 1
+UEtheypopuppos = 10
 function onCreatePost(value1)
-    makeLuaText("UE song name popup", songName.. "\n" ..difficultyName.. "\n" ..bpm.. " BPM", 0, -1000, UEtheypopup)
+    makeLuaText("UE song name popup", songName.. "\n " ..difficultyName.. "\n  " ..bpm.. " BPM", 0, -1000, UEtheypopup)
     setTextSize("UE song name popup", 31)
     setTextAlignment("UE song name popup", "left")
     setObjectCamera("UE song name popup", 'other')
@@ -33,10 +34,10 @@ function onCreatePost(value1)
 end
 
 function onSongStart()
-    doTweenX("UE song name popup hi", "UE song name popup", 30, UEtheypopuphi, "expoOut")
-    --doTweenX("UE difficulty popup hi", "UE difficulty popup", 30, UEtheypopuphi, "expoOut")
-    doTweenX("UE info 1 hi", "UE info 1", 30, UEtheypopuphi, "expoOut")
-    doTweenX("UE info 2 hi", "UE info 2", 30, UEtheypopuphi, "expoOut")
+    doTweenX("UE song name popup hi", "UE song name popup", UEtheypopuppos, UEtheypopuphi, "expoOut")
+    --doTweenX("UE difficulty popup hi", "UE difficulty popup", UEtheypopuppos, UEtheypopuphi, "expoOut")
+    doTweenX("UE info 1 hi", "UE info 1", UEtheypopuppos, UEtheypopuphi, "expoOut")
+    doTweenX("UE info 2 hi", "UE info 2", UEtheypopuppos, UEtheypopuphi, "expoOut")
     runTimer("UE they go bye", 3, 1)
     runTimer("UE text remove bye", 10, 1)
 end
@@ -58,7 +59,7 @@ end
 
 function onEvent(name, value1, value2)
     if name == "Song Name Info" then
-        setTextString("UE info 1", value1)
-        setTextString("UE info 2", value2)
+        setTextString("UE info 1", "   "..value1)
+        setTextString("UE info 2", "    "..value2)
     end
 end

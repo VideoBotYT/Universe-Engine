@@ -244,6 +244,7 @@ class FunkinLua
 		set('UEir', ir);
 		set('UEstrumsplash', ClientPrefs.uess);
 		set('UEresultscreen', ClientPrefs.ueresultscreen);
+		set('UEmisssounds', ClientPrefs.uems);
 
 		// UE gamepler
 		set('UEhealthDrain', ClientPrefs.gameplaySettings.get('hd'));

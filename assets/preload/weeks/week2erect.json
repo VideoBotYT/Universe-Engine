@@ -1,7 +1,7 @@
 {
 	"storyName": "Spooky Month Erect",
 	"difficulties": "Erect, Nightmare",
-	"hideFreeplay": false,
+	"hideFreeplay": true,
 	"weekBackground": "halloween",
 	"weekBefore": "week1",
 	"startUnlocked": true,
@@ -25,7 +25,7 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
+	"hideStoryMode": true,
 	"weekCharacters": [
 		"spooky",
 		"bf",

@@ -75,8 +75,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
 		option.scrollSpeed = 1;
-		option.minValue = 0.5;
-		//option.maxValue = 10.0; //no limitations :)
+		option.minValue = -1;
+		option.maxValue = 1000000.0; //had to put a limit cause when hold right, it no go fast :(
 		option.changeValue = 0.05;
 		option.displayFormat = '%vX';
 		option.decimals = 2;
@@ -131,12 +131,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		optionsArray.push(option);
 		//descText = new FlxText(50, 600, 1180, "Crashes your game on miss! Used to be shut down on miss but replaced :(", 32);
 
-		var option:GameplayOption = new GameplayOption('Health Drain', 'hd', 'bool', true);
+		var option:GameplayOption = new GameplayOption('Health Drain', 'hd', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
 		//descText = new FlxText(50, 600, 1180, "Opponent note hit, you lose health.", 32);
 
-		var option:GameplayOption = new GameplayOption('Sustain 1 note', 'sn', 'bool', true);
+		var option:GameplayOption = new GameplayOption('Sustain 1 note', 'sn', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
 		//descText = new FlxText(50, 600, 1180, "Really bad version of sustain as one note.", 32);
@@ -241,6 +241,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
+		var shiftMult:Int = 1;
+		if (FlxG.keys.pressed.SHIFT)
+			shiftMult = 10;
+
 		if (controls.UI_UP_P)
 		{
 			changeSelection(-1);
@@ -288,6 +292,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 							if (curOption.type != 'string')
 							{
 								add = controls.UI_LEFT ? -curOption.changeValue : curOption.changeValue;
+							}
+							if (FlxG.keys.pressed.SHIFT)
+							{
+								add = controls.UI_LEFT ? -shiftMult : shiftMult;
 							}
 
 							switch (curOption.type)

@@ -1,7 +1,7 @@
 {
 	"storyName": "Tankman Erect",
 	"difficulties": "Erect, Nightmare",
-	"hideFreeplay": false,
+	"hideFreeplay": true,
 	"weekBackground": "tank",
 	"weekBefore": "week6",
 	"freeplayColor": [
@@ -26,6 +26,6 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
+	"hideStoryMode": true,
 	"weekName": "Week 7 Erect"
 }

@@ -1,7 +1,7 @@
 {
 	"storyName": "RED SNOW ERECT",
 	"difficulties": "Erect, Nightmare",
-	"hideFreeplay": false,
+	"hideFreeplay": true,
 	"weekBackground": "christmas",
 	"weekBefore": "week4",
 	"startUnlocked": true,
@@ -30,6 +30,6 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
+	"hideStoryMode": true,
 	"weekName": "Week 5 Erect"
 }

@@ -1,3 +1,46 @@
+<h1 align="center">
+  <br>
+  <a href="https://github.com/VideoBotYT/Universe-Engine"><img src="assets/exclude/images/universe.png" alt="universe" width="150"></a>
+  <br>
+  <b>Universe Engine</b>
+  <br>
+</h1>
+<h3 align="center">
+  <b>Welcome to universe engine.</b>
+</h3>
+
+README.md Borrowed and modified from [JS ENGINE](https://github.com/JordanSantiagoYT/FNF-JS-Engine)
+CHANGELOG.md is now the universe engine changelog.
+
+# Hello!
+
+Welcome to universe engine!
+probably one of the most advanced engine I've ever made lol.
+
+This engine includes some new features like a modcharting tool annd some other cool stuff!
+
+I won't go over what has been added since [Gamejolt page](https://gamejolt.com/games/universeengine/935086) already has all the features listed
+
+Heres some working libs that I use (uwenalil) that will make the engine work.
+* haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp (FIXES NO COLOR BUG)
+* haxelib install hxCodec 2.5.1 (FIXES VIDEO CRASH)
+* haxelib install lime 8.0.1 (FIXES TEXT SCREEN CENTER BUG) (optional!)
+
+If you have the voices.ogg problem when compiling, open a issue and ill send my haxelib libraries.
+If you have any bugs trying to compile this engine, please do submit a Issue!
+
+# THANK YOU FOR USING THIS ENGINE!
+seriously, thank you, I've never made an engine this popular <3
+
+# IF YOU HAVE ANY QUESTIONS/BUGS/CRASHES.
+please do post an issue! this helps us keeps bugs out in our engine!
+
+modcharting tool my beloved <3<3
+also probably one of the most high effort I've ever made lol
+
+<details>
+  <summary><h2>Psych engine credits and other stuff</h2></summary>
+
 # Friday Night Funkin' - Psych Engine
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 

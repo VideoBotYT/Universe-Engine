@@ -1,7 +1,7 @@
 {
 	"storyName": "hating simulator ft. moawling ERECT",
 	"difficulties": "Erect, Nightmare",
-	"hideFreeplay": false,
+	"hideFreeplay": true,
 	"weekBackground": "school",
 	"weekBefore": "week5",
 	"startUnlocked": true,
@@ -39,6 +39,6 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
+	"hideStoryMode": true,
 	"weekName": "Week 6 Erect"
 }

@@ -1,0 +1,32 @@
+{
+	"storyName": "Select erect",
+	"difficulties": "Erect, Nightmare",
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"songs": [
+		[
+			"Erect Songs",
+			"invis",
+			[
+				255,
+				113,
+				253
+			]
+		]
+	],
+	"weekCharacters": [
+		"",
+		"bf",
+		"gf"
+	],
+	"hiddenUntilUnlocked": false,
+	"weekName": "ErectSongs"
+}

@@ -67,6 +67,9 @@ class UEGamePlay extends BaseOptionsMenu
 		var option:Option = new Option('Strum Splashes', 'If unchecked, Strum splashes wont be visible anymore.', 'uess', 'bool', true);
 		addOption(option);
 
+		var option:Option = new Option('Miss Sounds', "If unchecked, Miss sounds won't play anymore.", 'uems', 'bool', true);
+		addOption(option);
+
 		super();
 	}
 
