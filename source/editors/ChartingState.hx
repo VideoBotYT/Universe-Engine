@@ -1694,8 +1694,7 @@ class ChartingState extends MusicBeatState
 		}
 		catch(e:Dynamic)
 		{
-			//trace("Song doesn't have a voices file!");
-			_song.needsVoices = false; // For PlayState so it doesn't ALSO die.
+			vocals = null;
 		}
 		generateSong();
 		FlxG.sound.music.pause();
