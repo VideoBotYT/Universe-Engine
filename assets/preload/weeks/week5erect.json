@@ -1,0 +1,35 @@
+{
+	"storyName": "RED SNOW ERECT",
+	"difficulties": "Erect, Nightmare",
+	"hideFreeplay": false,
+	"weekBackground": "christmas",
+	"weekBefore": "week4",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"parents-christmas",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"Cocoa",
+			"parents",
+			[
+				160,
+				209,
+				255
+			]
+		],
+		[
+			"Eggnog",
+			"parents",
+			[
+				160,
+				209,
+				255
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "Week 5 Erect"
+}

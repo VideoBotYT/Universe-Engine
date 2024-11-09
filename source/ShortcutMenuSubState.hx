@@ -24,6 +24,7 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 	var menuItemsOG:Array<String> = ['Title Screen', 'Menus', 'Modes', 'Options', 'Exit'];
 
 	var menuItemsExit:Array<String> = ['Exit Shortcut Menu', 'Exit Game', 'Back'];
+	//var menuItemsExit:Array<String> = ['Exit Game', 'Back'];
 	var menuItemsSongs:Array<String> = ['Story Mode', 'Freeplay', 'Back'];
 	var menuItemsMenu:Array<String> = ['Main Menu', 'Mods Menu', 'Back'];
 	var menuItemsOptions:Array<String> = ['Universe', 'Psych', 'Back'];
@@ -66,7 +67,28 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
+		var canceled = controls.BACK;
 
+		if (canceled)
+		{
+			inShortcutMenu = false;
+			for (i in 0...grpMenuShit.members.length)
+			{
+				var obj = grpMenuShit.members[0];
+				obj.kill();
+				grpMenuShit.remove(obj, true);
+				obj.destroy();
+			}
+			FlxTween.tween(bg, {alpha: 0}, 1.5, {ease: FlxEase.quartInOut});
+			FlxTween.tween(grid, {alpha: 0}, 1, {
+				ease: FlxEase.quadOut,
+				onComplete: function(twn:FlxTween)
+				{
+					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+					close();
+				}
+			});
+		}
 		if (upP)
 		{
 			changeSelection(-1);
@@ -82,7 +104,7 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 			{
 				case 'Title Screen':
 					FlxG.switchState(new TitleState());
-					FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 					inShortcutMenu = false;
 				case 'Menus':
 					menuItems = menuItemsMenu;
@@ -116,10 +138,10 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 							ease: FlxEase.quadOut,
 							onComplete: function(twn:FlxTween)
 							{
-								FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+								FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 								close();
 							}
-						});
+					});
 					case 'Exit Game':
 						persistentUpdate = false;
 						openSubState(new ExitState());
@@ -137,7 +159,7 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 						inShortcutMenu = false;
 					case 'Freeplay':
 						FlxG.switchState(new FreeplayState());
-						FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 						inShortcutMenu = false;
 					case 'Back':
 						menuItems = menuItemsOG;
@@ -150,11 +172,11 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 				{
 					case 'Main Menu':
 						FlxG.switchState(new MainMenuState());
-						FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 						inShortcutMenu = false;
 					case 'Mods Menu':
 						FlxG.switchState(new ModsMenuState());
-						FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 						inShortcutMenu = false;
 					case 'Back':
 						menuItems = menuItemsOG;

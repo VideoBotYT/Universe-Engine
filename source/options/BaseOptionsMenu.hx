@@ -24,7 +24,6 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
-
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 
@@ -60,11 +59,24 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		DiscordClient.changePresence(rpcTitle, null);
 		#end
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFea71fd;
-		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bg);
+		if (ClientPrefs.darkmode)
+		{
+			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
+			bg.color = 0xFFea71fd;
+			bg.screenCenter();
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.updateHitbox();
+			add(bg);
+		}
+		else
+		{
+			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+			bg.color = 0xFFea71fd;
+			bg.screenCenter();
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.updateHitbox();
+			add(bg);
+		}
 
 		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
 		grid.velocity.set(20, 20);
@@ -105,6 +117,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			/*optionText.forceX = 300;
 				optionText.yMult = 90; */
 			optionText.targetY = i;
+			optionText.color = 0xFFFFFFFF;
 			grpOptions.add(optionText);
 
 			if (optionsArray[i].type == 'bool')
@@ -152,6 +165,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
+		var shiftMult:Int = 1;
 		if (controls.UI_UP_P)
 		{
 			changeSelection(-1);
@@ -189,6 +203,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			{
 				if (controls.UI_LEFT || controls.UI_RIGHT)
 				{
+					if (FlxG.keys.pressed.SHIFT)
+						shiftMult = 10;
+
 					var pressed = (controls.UI_LEFT_P || controls.UI_RIGHT_P);
 					if (holdTime > 0.5 || pressed)
 					{
@@ -197,7 +214,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 							var add:Dynamic = null;
 							if (curOption.type != 'string')
 							{
-								add = controls.UI_LEFT ? -curOption.changeValue : curOption.changeValue;
+								add = controls.UI_LEFT ? shiftMult * -curOption.changeValue : shiftMult * curOption.changeValue;
 							}
 
 							switch (curOption.type)

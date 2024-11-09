@@ -85,10 +85,9 @@ class FPS extends TextField
 			text = "FPS: " + currentFPS;
 			var memoryMegas:Float = 0;
 			
-			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-			text += "\nMemory: " + memoryMegas + " MB";
-			#end
+			text += " - Memory: " + memoryMegas + " MB";
+			text += " - SPF: " + Math.floor((1/currentFPS)*100)/100 + " MS";
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)

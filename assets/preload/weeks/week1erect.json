@@ -1,0 +1,44 @@
+{
+	"storyName": "Daddy Dearest Erect",
+	"difficulties": "Erect, Nightmare",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"Bopeebo",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Fresh",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Dad Battle",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"weekName": "Week 1 Erect"
+}

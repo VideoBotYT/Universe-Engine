@@ -32,28 +32,6 @@ class UEGamePlay extends BaseOptionsMenu
 		title = 'Universe Gameplay options';
 		rpcTitle = 'Gameplay options of the engine'; // for Discord Rich Presence
 
-		var option:Option = new Option('Keystrokes', "If checked, you can see the keystrokes", 'keystrokes', 'bool', true);
-		addOption(option);
-
-		if (ClientPrefs.keystrokes == true)
-		{
-			var option:Option = new Option('Keystrokes Alpha', 'Keystrokes Alpha, max 50%', 'keyA', 'percent', 0.3);
-			addOption(option);
-			option.maxValue = 0.5;
-
-			var option:Option = new Option('Keystrokes Fade Time', 'Keystrokes Fade time, max 25%', 'keyFT', 'percent', 0.15);
-			addOption(option);
-			option.maxValue = 0.25;
-
-			var option:Option = new Option('Keystrokes X Position', 'Keystrokes X Pos, max 640', 'keyXPos', 'int', 90);
-			addOption(option);
-			option.maxValue = 640;
-
-			var option:Option = new Option('Keystrokes Y Position', 'Keystrokes Y Pos, max 720', 'keyYPos', 'int', 330);
-			addOption(option);
-			option.maxValue = 720;
-		}
-
 		var option:Option = new Option('Smooth HP', 'If there was any bug moving the position X health icons, turn this off!', 'sh', 'bool', true);
 		addOption(option);
 
@@ -62,8 +40,8 @@ class UEGamePlay extends BaseOptionsMenu
 
 		if (ClientPrefs.ec)
 		{
-			var option:Option = new Option('100 Combo sound', 'Select a sound that plays everytime you have 100 combo count', 'css', 'string',
-				'GF Sounds', ['GF Sounds', 'Click Text']);
+			var option:Option = new Option('100 Combo sound', 'Select a sound that plays everytime you have 100 combo count', 'css', 'string', 'GF Sounds',
+				['GF Sounds', 'Click Text']);
 			addOption(option);
 		}
 
@@ -74,6 +52,19 @@ class UEGamePlay extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Darken CamGame', 'If checked, it darkens the camGame, so its easier to read modcharts.', 'dcm', 'bool', false);
+		addOption(option);
+
+		var option:Option = new Option('Long note Transparency', 'How much the transparency for the long notes be.', 'longnotet', 'percent', 0.6);
+		addOption(option);
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		option.scrollSpeed = 1.6;
+
+		var option:Option = new Option('Results Screen', 'If unchecked, the results screen wont appear on end song.', 'ueresultscreen', 'bool', true);
+		addOption(option);
+
+		var option:Option = new Option('Strum Splashes', 'If unchecked, Strum splashes wont be visible anymore.', 'uess', 'bool', true);
 		addOption(option);
 
 		super();
@@ -94,7 +85,7 @@ class UEGamePlay extends BaseOptionsMenu
 	override function destroy()
 	{
 		if (changedMusic)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 		super.destroy();
 	}
 
@@ -118,6 +109,6 @@ class UEGamePlay extends BaseOptionsMenu
 
 	function onChangeHitSound()
 	{
-		FlxG.sound.play(Paths.sound(ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
 	}
 }

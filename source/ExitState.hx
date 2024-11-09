@@ -117,7 +117,7 @@ class ExitState extends MusicBeatSubstate
 			}
 			else
 			{
-				FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 			}
 			inExit = false;
 			close();

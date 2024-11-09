@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="systemEyes.png">
+<SubTexture name="Left0000" x="0" y="38" width="79" height="22" frameX="-11" frameY="-14" frameWidth="106" frameHeight="65" />
+<SubTexture name="Right0000" x="0" y="0" width="106" height="38" frameX="0" frameY="0" frameWidth="106" frameHeight="65" />
+</TextureAtlas>

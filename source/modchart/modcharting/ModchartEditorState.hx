@@ -78,11 +78,13 @@ import modchart.modcharting.ModchartFile;
 
 using StringTools;
 
-class ModchartEditorEvent extends FlxSprite {
+class ModchartEditorEvent extends FlxSprite
+{
 	#if ((PSYCH || LEATHER))
 	public var data:Array<Dynamic>;
 
-	public function new(data:Array<Dynamic>) {
+	public function new(data:Array<Dynamic>)
+	{
 		this.data = data;
 		super(-300, 0);
 		#if LEATHER
@@ -100,7 +102,8 @@ class ModchartEditorEvent extends FlxSprite {
 		antialiasing = true;
 	}
 
-	public function getBeatTime():Float {
+	public function getBeatTime():Float
+	{
 		return data[ModchartFile.EVENT_DATA][ModchartFile.EVENT_TIME];
 	}
 	#end
@@ -111,7 +114,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 {
 	var hasUnsavedChanges:Bool = false;
 
-	override function closeSubState() {
+	override function closeSubState()
+	{
 		persistentUpdate = true;
 		super.closeSubState();
 	}
@@ -120,18 +124,21 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	private var curDecStep:Float = 0;
 	private var curDecBeat:Float = 0;
 
-	override private function updateBeat():Void {
+	override private function updateBeat():Void
+	{
 		curBeat = Math.floor(curStep / Conductor.timeScale[1]);
 		curDecBeat = curDecStep / Conductor.timeScale[1];
 	}
 
-	override private function updateCurStep():Void {
+	override private function updateCurStep():Void
+	{
 		var lastChange:BPMChangeEvent = {
 			stepTime: 0,
 			songTime: 0,
 			bpm: 0
 		}
-		for (i in 0...Conductor.bpmChangeMap.length) {
+		for (i in 0...Conductor.bpmChangeMap.length)
+		{
 			if (Conductor.songPosition >= Conductor.bpmChangeMap[i].songTime)
 				lastChange = Conductor.bpmChangeMap[i];
 		}
@@ -144,7 +151,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		var lastTimeChange:TimeScaleChangeEvent = dumb;
 
-		for (i in 0...Conductor.timeScaleChangeMap.length) {
+		for (i in 0...Conductor.timeScaleChangeMap.length)
+		{
 			if (Conductor.songPosition >= Conductor.timeScaleChangeMap[i].songTime)
 				lastTimeChange = Conductor.timeScaleChangeMap[i];
 		}
@@ -177,7 +185,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	public var arrow_Type_Sprites:Map<String, FlxFramesCollection> = [];
 	#end
 
-	public static function getBPMFromSeconds(time:Float) {
+	public static function getBPMFromSeconds(time:Float)
+	{
 		#if PSYCH
 		return Conductor.getBPMFromSeconds(time);
 		#else
@@ -186,7 +195,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			songTime: 0,
 			bpm: Conductor.bpm,
 		}
-		for (i in 0...Conductor.bpmChangeMap.length) {
+		for (i in 0...Conductor.bpmChangeMap.length)
+		{
 			if (time >= Conductor.bpmChangeMap[i].songTime)
 				lastChange = Conductor.bpmChangeMap[i];
 		}
@@ -320,12 +330,45 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		ArrowPath
 	];
 	public static var easeList:Array<String> = [
-		"backIn", "backInOut", "backOut", "bounceIn", "bounceInOut", "bounceOut", "circIn", "circInOut", "circOut", "cubeIn", "cubeInOut", "cubeOut",
-		"elasticIn", "elasticInOut", "elasticOut", "expoIn", "expoInOut", "expoOut", "linear", "quadIn", "quadInOut", "quadOut", "quartIn", "quartInOut",
-		"quartOut", "quintIn", "quintInOut", "quintOut", "sineIn", "sineInOut", "sineOut", "smoothStepIn", "smoothStepInOut", "smoothStepOut",
-		"smootherStepIn", "smootherStepInOut", "smootherStepOut",
+		"backIn",
+		"backInOut",
+		"backOut",
+		"bounceIn",
+		"bounceInOut",
+		"bounceOut",
+		"circIn",
+		"circInOut",
+		"circOut",
+		"cubeIn",
+		"cubeInOut",
+		"cubeOut",
+		"elasticIn",
+		"elasticInOut",
+		"elasticOut",
+		"expoIn",
+		"expoInOut",
+		"expoOut",
+		"linear",
+		"quadIn",
+		"quadInOut",
+		"quadOut",
+		"quartIn",
+		"quartInOut",
+		"quartOut",
+		"quintIn",
+		"quintInOut",
+		"quintOut",
+		"sineIn",
+		"sineInOut",
+		"sineOut",
+		"smoothStepIn",
+		"smoothStepInOut",
+		"smoothStepOut",
+		"smootherStepIn",
+		"smootherStepInOut",
+		"smootherStepOut",
 	];
-	
+
 	// used for indexing
 	public static var MOD_NAME = ModchartFile.MOD_NAME; // the modifier name
 	public static var MOD_CLASS = ModchartFile.MOD_CLASS; // the class/custom mod it uses
@@ -405,11 +448,13 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	var backupGpu:Bool;
 	#end
 
-	override public function new() {
+	override public function new()
+	{
 		super();
 	}
 
-	override public function create() {
+	override public function create()
+	{
 		// SCE Ed's and mine's engine already fixes this without this code.
 		#if (!SCEModchartingTools && (PSYCH && PSYCHVERSION >= "0.7.1"))
 		backupGpu = ClientPrefs.data.cacheOnGPU;
@@ -444,9 +489,22 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		CoolUtil.opponentModeActive = opponentMode;
 		#end
 
-		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menuDesat'));
-		bg.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
-		add(bg);
+		if (ClientPrefs.darkmode)
+		{
+			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
+			bg.alpha = 0.25;
+			bg.scrollFactor.set();
+			bg.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
+			add(bg);
+		}
+		else
+		{
+			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menuDesat'));
+			bg.alpha = 0.25;
+			bg.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			add(bg);
+		}
 
 		#if PSYCH
 		if (PlayState.isPixelStage) // Skew Kills Pixel Notes (How are you going to stretch already pixelated bit by bit notes?)
@@ -545,7 +603,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		add(grid);
 
-		for (i in 0...12) {
+		for (i in 0...12)
+		{
 			var beatText = new FlxText(-50, gridSize, 0, i + "", 32);
 			add(beatText);
 			beatTexts.push(beatText);
@@ -607,7 +666,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		setupEventUI();
 		setupPlayfieldUI();
 
-		var hideNotes:FlxButton = new FlxButton(0, FlxG.height, 'Show/Hide Notes', function() {
+		var hideNotes:FlxButton = new FlxButton(0, FlxG.height, 'Show/Hide Notes', function()
+		{
 			// camHUD.visible = !camHUD.visible;
 			playfieldRenderer.visible = !playfieldRenderer.visible;
 		});
@@ -617,12 +677,16 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		add(hideNotes);
 
 		var hidenHud:Bool = false;
-		var hideUI:FlxButton = new FlxButton(FlxG.width, FlxG.height, 'Show/Hide UI', function() {
+		var hideUI:FlxButton = new FlxButton(FlxG.width, FlxG.height, 'Show/Hide UI', function()
+		{
 			hidenHud = !hidenHud;
-			if (hidenHud) {
+			if (hidenHud)
+			{
 				UI_box.alpha = 0;
 				debugText.alpha = 0;
-			} else {
+			}
+			else
+			{
 				UI_box.alpha = 1;
 				debugText.alpha = 1;
 			}
@@ -634,7 +698,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	}
 
 	#if (!SCEModchartingTools && (PSYCH && PSYCHVERSION >= "0.7.1"))
-	override public function destroy() {
+	override public function destroy()
+	{
 		ClientPrefs.data.cacheOnGPU = backupGpu;
 		super.destroy();
 	}
@@ -645,13 +710,18 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	var dirtyUpdateModifiers:Bool = false;
 	var totalElapsed:Float = 0;
 
-	override public function update(elapsed:Float) {
+	override public function update(elapsed:Float)
+	{
 		#if SCEModchartingTools
-		if (finishedSetUpQuantStuff) {
-			if (ClientPrefs.data.quantNotes && !PlayState.SONG.disableStrumRGB) {
+		if (finishedSetUpQuantStuff)
+		{
+			if (ClientPrefs.data.quantNotes && !PlayState.SONG.disableStrumRGB)
+			{
 				var group:FlxTypedGroup<StrumArrow> = playerStrums;
-				for (this2 in group) {
-					if (this2.animation.curAnim.name == 'static') {
+				for (this2 in group)
+				{
+					if (this2.animation.curAnim.name == 'static')
+					{
 						this2.rgbShader.r = 0xFFFFFFFF;
 						this2.rgbShader.b = 0xFF808080;
 					}
@@ -662,10 +732,13 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		totalElapsed += elapsed;
 		highlight.alpha = 0.8 + FlxMath.fastSin(totalElapsed * 5) * 0.15;
 		super.update(elapsed);
-		if (inst.time < 0) {
+		if (inst.time < 0)
+		{
 			inst.pause();
 			inst.time = 0;
-		} else if (inst.time > inst.length) {
+		}
+		else if (inst.time > inst.length)
+		{
 			inst.pause();
 			inst.time = 0;
 		}
@@ -675,17 +748,20 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		grid.x = -curDecStep * gridSize;
 		line.x = gridSize * 4;
 
-		for (i in 0...beatTexts.length) {
+		for (i in 0...beatTexts.length)
+		{
 			beatTexts[i].x = -songPosPixelPos + (gridSize * 4 * (i + 1)) - 16;
 			beatTexts[i].text = "" + (Math.floor(Conductor.songPosition / Conductor.crochet) + i);
 		}
 		var eventIsSelected:Bool = false;
-		for (i in 0...eventSprites.members.length) {
+		for (i in 0...eventSprites.members.length)
+		{
 			var pos = grid.x + (eventSprites.members[i].getBeatTime() * gridSize * 4) + (gridSize * 4);
 			// var dec = eventSprites.members[i].beatTime-Math.floor(eventSprites.members[i].beatTime);
 			eventSprites.members[i].x = pos; // + (dec*4*gridSize);
 			if (highlightedEvent != null)
-				if (eventSprites.members[i].data == highlightedEvent) {
+				if (eventSprites.members[i].data == highlightedEvent)
+				{
 					eventIsSelected = true;
 					selectedEventBox.x = pos;
 				}
@@ -694,7 +770,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		var blockInput = false;
 		for (i in textBlockers)
-			if (i.hasFocus) {
+			if (i.hasFocus)
+			{
 				blockInput = true;
 				#if (PSYCH && PSYCHVERSION >= "0.7")
 				ClientPrefs.toggleVolumeKeys(false);
@@ -709,7 +786,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			if (i.dropPanel.visible)
 				blockInput = true;
 
-		if (!blockInput) {
+		if (!blockInput)
+		{
 			#if (PSYCH && PSYCHVERSION >= "0.7")
 			ClientPrefs.toggleVolumeKeys(true);
 			#elseif (PSYCH && !(PSYCHVERSION >= "0.7"))
@@ -717,8 +795,10 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 			#end
-			if (FlxG.keys.justPressed.SPACE) {
-				if (inst.playing) {
+			if (FlxG.keys.justPressed.SPACE)
+			{
+				if (inst.playing)
+				{
 					inst.pause();
 					if (vocals != null)
 						vocals.pause();
@@ -727,15 +807,19 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 						opponentVocals.pause();
 					#end
 					playfieldRenderer.editorPaused = true;
-				} else {
-					if (vocals != null) {
+				}
+				else
+				{
+					if (vocals != null)
+					{
 						vocals.play();
 						vocals.pause();
 						vocals.time = inst.time;
 						vocals.play();
 					}
 					#if (PSYCH && PSYCHVERSION >= "0.7.3")
-					if (opponentVocals != null) {
+					if (opponentVocals != null)
+					{
 						opponentVocals.play();
 						opponentVocals.pause();
 						opponentVocals.time = inst.time;
@@ -751,7 +835,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			var shiftThing:Int = 1;
 			if (FlxG.keys.pressed.SHIFT)
 				shiftThing = 4;
-			if (FlxG.mouse.wheel != 0) {
+			if (FlxG.mouse.wheel != 0)
+			{
 				inst.pause();
 				if (vocals != null)
 					vocals.pause();
@@ -760,12 +845,14 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 					opponentVocals.pause();
 				#end
 				inst.time += (FlxG.mouse.wheel * Conductor.stepCrochet * 0.8 * shiftThing);
-				if (vocals != null) {
+				if (vocals != null)
+				{
 					vocals.pause();
 					vocals.time = inst.time;
 				}
 				#if (PSYCH && PSYCHVERSION >= "0.7.3")
-				if (opponentVocals != null) {
+				if (opponentVocals != null)
+				{
 					opponentVocals.pause();
 					opponentVocals.time = inst.time;
 				}
@@ -775,7 +862,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				dirtyUpdateEvents = true;
 			}
 
-			if (FlxG.keys.justPressed.D || FlxG.keys.justPressed.RIGHT) {
+			if (FlxG.keys.justPressed.D || FlxG.keys.justPressed.RIGHT)
+			{
 				inst.pause();
 				if (vocals != null)
 					vocals.pause();
@@ -787,7 +875,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				dirtyUpdateNotes = true;
 				dirtyUpdateEvents = true;
 			}
-			if (FlxG.keys.justPressed.A || FlxG.keys.justPressed.LEFT) {
+			if (FlxG.keys.justPressed.A || FlxG.keys.justPressed.LEFT)
+			{
 				inst.pause();
 				if (vocals != null)
 					vocals.pause();
@@ -833,12 +922,14 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		#end
 		#end
 
-		if (unspawnNotes[0] != null) {
+		if (unspawnNotes[0] != null)
+		{
 			var time:Float = 2000;
 			if (PlayState.SONG.speed < 1)
 				time /= PlayState.SONG.speed;
 
-			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time) {
+			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
+			{
 				var dunceNote:Note = unspawnNotes[0];
 				notes.insert(0, dunceNote);
 				#if PSYCH
@@ -851,14 +942,19 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		var noteKillOffset = 350 / PlayState.SONG.speed;
 
-		notes.forEachAlive(function(daNote:Note) {
-			if (Conductor.songPosition >= daNote.strumTime) {
+		notes.forEachAlive(function(daNote:Note)
+		{
+			if (Conductor.songPosition >= daNote.strumTime)
+			{
 				daNote.wasGoodHit = true;
 				#if (PSYCH && PSYCHVERSION >= "0.7")
 				var spr:StrumNoteType = null;
-				if (!daNote.mustPress) {
+				if (!daNote.mustPress)
+				{
 					spr = opponentStrums.members[daNote.noteData];
-				} else {
+				}
+				else
+				{
 					spr = playerStrums.members[daNote.noteData];
 				}
 				spr.playAnim("confirm", true);
@@ -871,18 +967,21 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				var strum = strumLineNotes.members[daNote.noteData + (daNote.mustPress ? NoteMovement.keyCount : 0)];
 				strum.playAnim("confirm", true);
 				strum.resetAnim = 0.15;
-				if (daNote.isSustainNote && !daNote.animation.curAnim.name.endsWith('end')) {
+				if (daNote.isSustainNote && !daNote.animation.curAnim.name.endsWith('end'))
+				{
 					strum.resetAnim = 0.3;
 				}
 				#end
-				if (!daNote.isSustainNote) {
+				if (!daNote.isSustainNote)
+				{
 					// daNote.kill();
 					notes.remove(daNote, true);
 					// daNote.destroy();
 				}
 			}
 
-			if (Conductor.songPosition > noteKillOffset + daNote.strumTime) {
+			if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
+			{
 				daNote.active = false;
 				daNote.visible = false;
 
@@ -898,13 +997,18 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				highlight.x = FlxG.mouse.x;
 			else
 				highlight.x = (Math.floor((FlxG.mouse.x - (grid.x % gridSize)) / gridSize) * gridSize) + (grid.x % gridSize);
-			if (FlxG.mouse.overlaps(eventSprites)) {
-				if (FlxG.mouse.justPressed) {
+			if (FlxG.mouse.overlaps(eventSprites))
+			{
+				if (FlxG.mouse.justPressed)
+				{
 					stackedHighlightedEvents = []; // reset stacked events
 				}
-				eventSprites.forEachAlive(function(event:ModchartEditorEvent) {
-					if (FlxG.mouse.overlaps(event)) {
-						if (FlxG.mouse.justPressed) {
+				eventSprites.forEachAlive(function(event:ModchartEditorEvent)
+				{
+					if (FlxG.mouse.overlaps(event))
+					{
+						if (FlxG.mouse.justPressed)
+						{
 							highlightedEvent = event.data;
 							stackedHighlightedEvents.push(event.data);
 							onSelectEvent();
@@ -914,11 +1018,15 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 							deleteEvent();
 					}
 				});
-				if (FlxG.mouse.justPressed) {
+				if (FlxG.mouse.justPressed)
+				{
 					updateStackedEventDataStepper();
 				}
-			} else {
-				if (FlxG.mouse.justPressed) {
+			}
+			else
+			{
+				if (FlxG.mouse.justPressed)
+				{
 					var timeFromMouse = ((highlight.x - grid.x) / gridSize / 4) - 1;
 					// trace(timeFromMouse);
 					var event = addNewEvent(timeFromMouse);
@@ -930,19 +1038,22 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			}
 		}
 
-		if (dirtyUpdateNotes) {
+		if (dirtyUpdateNotes)
+		{
 			clearNotesAfter(Conductor.songPosition + 2000); // so scrolling back doesnt lag shit
 			unspawnNotes = loadedNotes.copy();
 			clearNotesBefore(Conductor.songPosition);
 			dirtyUpdateNotes = false;
 		}
-		if (dirtyUpdateModifiers) {
+		if (dirtyUpdateModifiers)
+		{
 			playfieldRenderer.modifierTable.clear();
 			playfieldRenderer.modchart.loadModifiers();
 			dirtyUpdateEvents = true;
 			dirtyUpdateModifiers = false;
 		}
-		if (dirtyUpdateEvents) {
+		if (dirtyUpdateEvents)
+		{
 			playfieldRenderer.tweenManager.completeAll();
 			playfieldRenderer.eventManager.clearEvents();
 			playfieldRenderer.modifierTable.resetMods();
@@ -952,13 +1063,16 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			updateEventSprites();
 		}
 
-		if (playfieldRenderer.modchart.data.playfields != playfieldCountStepper.value) {
+		if (playfieldRenderer.modchart.data.playfields != playfieldCountStepper.value)
+		{
 			playfieldRenderer.modchart.data.playfields = Std.int(playfieldCountStepper.value);
 			playfieldRenderer.modchart.loadPlayfields();
 		}
 
-		if (FlxG.keys.justPressed.ESCAPE) {
-			var exitFunc = function() {
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			var exitFunc = function()
+			{
 				#if (PSYCH && PSYCHVERSION >= "0.7")
 				ClientPrefs.toggleVolumeKeys(true);
 				#elseif (PSYCH && !(PSYCHVERSION >= "0.7"))
@@ -982,18 +1096,22 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				#end
 				LoadingState.loadAndSwitchState(new PlayState());
 			};
-			if (hasUnsavedChanges) {
+			if (hasUnsavedChanges)
+			{
 				persistentUpdate = false;
 				openSubState(new ModchartEditorExitSubstate(exitFunc));
-			} else
+			}
+			else
 				exitFunc();
 		}
 
 		var curBpmChange = getBPMFromSeconds(Conductor.songPosition);
-		if (curBpmChange.songTime <= 0) {
+		if (curBpmChange.songTime <= 0)
+		{
 			curBpmChange.bpm = PlayState.SONG.bpm; // start bpm
 		}
-		if (curBpmChange.bpm != Conductor.bpm) {
+		if (curBpmChange.bpm != Conductor.bpm)
+		{
 			// trace('changed bpm to ' + curBpmChange.bpm);
 			#if (PSYCH && PSYCHVERSION >= "0.7")
 			Conductor.bpm = curBpmChange.bpm;
@@ -1012,10 +1130,13 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			+ "\n";
 
 		var leText = "Active Modifiers: \n";
-		for (modName => mod in playfieldRenderer.modifierTable.modifiers) {
-			if (mod.currentValue != mod.baseValue) {
+		for (modName => mod in playfieldRenderer.modifierTable.modifiers)
+		{
+			if (mod.currentValue != mod.baseValue)
+			{
 				leText += modName + ": " + FlxMath.roundDecimal(mod.currentValue, 2);
-				for (subModName => subMod in mod.subValues) {
+				for (subModName => subMod in mod.subValues)
+				{
 					leText += "    " + subModName + ": " + FlxMath.roundDecimal(subMod.value, 2);
 				}
 				leText += "\n";
@@ -1025,16 +1146,20 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		activeModifiersText.text = leText;
 	}
 
-	function addNewEvent(time:Float) {
+	function addNewEvent(time:Float)
+	{
 		var event:Array<Dynamic> = ['ease', [time, 1, 'cubeInOut', ','], [false, 1, 1]];
 		if (highlightedEvent != null) // copy over current event data (without acting as a reference)
 		{
 			event[EVENT_TYPE] = highlightedEvent[EVENT_TYPE];
-			if (event[EVENT_TYPE] == 'ease') {
+			if (event[EVENT_TYPE] == 'ease')
+			{
 				event[EVENT_DATA][EVENT_EASETIME] = highlightedEvent[EVENT_DATA][EVENT_EASETIME];
 				event[EVENT_DATA][EVENT_EASE] = highlightedEvent[EVENT_DATA][EVENT_EASE];
 				event[EVENT_DATA][EVENT_EASEDATA] = highlightedEvent[EVENT_DATA][EVENT_EASEDATA];
-			} else {
+			}
+			else
+			{
 				event[EVENT_DATA][EVENT_SETDATA] = highlightedEvent[EVENT_TYPE][EVENT_SETDATA];
 			}
 			event[EVENT_REPEAT][EVENT_REPEATBOOL] = highlightedEvent[EVENT_REPEAT][EVENT_REPEATBOOL];
@@ -1046,7 +1171,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		return event;
 	}
 
-	function updateEventSprites() {
+	function updateEventSprites()
+	{
 		// var i = eventSprites.length - 1;
 		// while (i >= 0) {
 		//     var daEvent:ModchartEditorEvent = eventSprites.members[i];
@@ -1063,9 +1189,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		//     --i;
 		// }
 		eventSprites.clear();
-		for (i in 0...playfieldRenderer.modchart.data.events.length) {
+		for (i in 0...playfieldRenderer.modchart.data.events.length)
+		{
 			var beat:Float = playfieldRenderer.modchart.data.events[i][1][0];
-			if (curBeat > beat - 5 && curBeat < beat + 5) {
+			if (curBeat > beat - 5 && curBeat < beat + 5)
+			{
 				var daEvent:ModchartEditorEvent = new ModchartEditorEvent(playfieldRenderer.modchart.data.events[i]);
 				eventSprites.add(daEvent);
 				// trace("added event sprite "+beat);
@@ -1073,11 +1201,14 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		}
 	}
 
-	function deleteEvent() {
+	function deleteEvent()
+	{
 		if (highlightedEvent == null)
 			return;
-		for (i in 0...playfieldRenderer.modchart.data.events.length) {
-			if (highlightedEvent == playfieldRenderer.modchart.data.events[i]) {
+		for (i in 0...playfieldRenderer.modchart.data.events.length)
+		{
+			if (highlightedEvent == playfieldRenderer.modchart.data.events[i])
+			{
 				playfieldRenderer.modchart.data.events.remove(playfieldRenderer.modchart.data.events[i]);
 				dirtyUpdateEvents = true;
 				break;
@@ -1086,21 +1217,26 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		updateEventSprites();
 	}
 
-	override public function beatHit() {
+	override public function beatHit()
+	{
 		updateEventSprites();
 		// trace("beat hit");
 		super.beatHit();
 	}
 
-	override public function draw() {
+	override public function draw()
+	{
 		super.draw();
 	}
 
-	public function clearNotesBefore(time:Float) {
+	public function clearNotesBefore(time:Float)
+	{
 		var i:Int = unspawnNotes.length - 1;
-		while (i >= 0) {
+		while (i >= 0)
+		{
 			var daNote:Note = unspawnNotes[i];
-			if (daNote.strumTime + 350 < time) {
+			if (daNote.strumTime + 350 < time)
+			{
 				daNote.active = false;
 				daNote.visible = false;
 				// daNote.ignoreNote = true;
@@ -1113,9 +1249,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		}
 
 		i = notes.length - 1;
-		while (i >= 0) {
+		while (i >= 0)
+		{
 			var daNote:Note = notes.members[i];
-			if (daNote.strumTime + 350 < time) {
+			if (daNote.strumTime + 350 < time)
+			{
 				daNote.active = false;
 				daNote.visible = false;
 				// daNote.ignoreNote = true;
@@ -1128,11 +1266,14 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		}
 	}
 
-	public function clearNotesAfter(time:Float) {
+	public function clearNotesAfter(time:Float)
+	{
 		var i = notes.length - 1;
-		while (i >= 0) {
+		while (i >= 0)
+		{
 			var daNote:Note = notes.members[i];
-			if (daNote.strumTime > time) {
+			if (daNote.strumTime > time)
+			{
 				daNote.active = false;
 				daNote.visible = false;
 				// daNote.ignoreNote = true;
@@ -1145,7 +1286,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		}
 	}
 
-	public function generateSong(songData:SwagSong):Void {
+	public function generateSong(songData:SwagSong):Void
+	{
 		var songData = PlayState.SONG;
 		Conductor.bpm = songData.bpm;
 
@@ -1158,8 +1300,10 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		#if (PSYCH && PSYCHVERSION >= "0.7.3")
 		opponentVocals = new FlxSound();
 		#end
-		try {
-			if (PlayState.SONG.needsVoices) {
+		try
+		{
+			if (PlayState.SONG.needsVoices)
+			{
 				#if LEATHER
 				vocals.loadEmbedded(Paths.voices(PlayState.SONG.song,
 					(PlayState.SONG.specialAudioName == null ? PlayState.storyDifficultyStr.toLowerCase() : PlayState.SONG.specialAudioName)));
@@ -1190,7 +1334,10 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 					opponentVocals.loadEmbedded(oppVocals);
 				#end
 			}
-		} catch (e:Dynamic) {}
+		}
+		catch (e:Dynamic)
+		{
+		}
 
 		FlxG.sound.list.add(vocals);
 		// vocals.pitch = playbackRate;
@@ -1199,25 +1346,32 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		#end
 
 		inst = new FlxSound();
-		try {
+		try
+		{
 			#if SCEModchartingTools
 			inst.loadEmbedded(Paths.inst((PlayState.SONG.instrumentalPrefix != null ? PlayState.SONG.instrumentalPrefix : ''), PlayState.SONG.songId,
 				(PlayState.SONG.vocalsSuffix != null ? PlayState.SONG.vocalsSuffix : '')));
 			#else
 			inst.loadEmbedded(Paths.inst(PlayState.SONG.song));
 			#end
-		} catch (e:Dynamic) {}
+		}
+		catch (e:Dynamic)
+		{
+		}
 		FlxG.sound.list.add(inst);
 
-		inst.onComplete = function() {
+		inst.onComplete = function()
+		{
 			inst.pause();
 			Conductor.songPosition = 0;
-			if (vocals != null) {
+			if (vocals != null)
+			{
 				vocals.pause();
 				vocals.time = 0;
 			}
 			#if (PSYCH && PSYCHVERSION >= "0.7.3")
-			if (opponentVocals != null) {
+			if (opponentVocals != null)
+			{
 				opponentVocals.pause();
 				opponentVocals.time = 0;
 			}
@@ -1238,8 +1392,10 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		// var songName:String = Paths.formatToSongPath(PlayState.SONG.song);
 
-		for (section in noteData) {
-			for (songNotes in section.sectionNotes) {
+		for (section in noteData)
+		{
+			for (songNotes in section.sectionNotes)
+			{
 				var daStrumTime:Float = songNotes[0];
 				#if LEATHER
 				var gottaHitNote:Bool = section.mustHitSection;
@@ -1285,7 +1441,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				swagNote.scrollFactor.set();
 
 				#if SCEFEATURES_ALLOWED
-				if (swagNote.texture.contains('pixel') || swagNote.noteSkin.contains('pixel')) {
+				if (swagNote.texture.contains('pixel') || swagNote.noteSkin.contains('pixel'))
+				{
 					swagNote.containsPixelTexture = true;
 				}
 				#end
@@ -1302,8 +1459,10 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				final susLength:Float = swagNote.sustainLength / Conductor.stepCrochet;
 				final floorSus:Int = Math.floor(susLength);
 
-				if (floorSus > 0) {
-					for (susNote in 0...floorSus + 1) {
+				if (floorSus > 0)
+				{
+					for (susNote in 0...floorSus + 1)
+					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
 						#if PSYCH
@@ -1331,7 +1490,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 							|| sustainNote.noteSkin.contains('pixel')
 							|| oldNote.texture.contains('pixel')
 							|| oldNote.noteSkin.contains('pixel'));
-						if (isNotePixel) {
+						if (isNotePixel)
+						{
 							oldNote.containsPixelTexture = true;
 							sustainNote.containsPixelTexture = true;
 						}
@@ -1343,7 +1503,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 						if (!PlayState.isPixelStage)
 						#end
 						{
-							if (oldNote.isSustainNote) {
+							if (oldNote.isSustainNote)
+							{
 								oldNote.scale.y *= Note.SUSTAIN_SIZE / oldNote.frameHeight;
 								oldNote.scale.y /= playbackSpeed;
 								oldNote.updateHitbox();
@@ -1352,14 +1513,16 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 							if (ClientPrefs.data.downScroll)
 								sustainNote.correctionOffset = 0;
 						}
-						else if (oldNote.isSustainNote) {
+						else if (oldNote.isSustainNote)
+						{
 							oldNote.scale.y /= playbackSpeed;
 							oldNote.updateHitbox();
 						}
 
 						if (sustainNote.mustPress)
 							sustainNote.x += FlxG.width / 2; // general offset
-						else if (ClientPrefs.data.middleScroll) {
+						else if (ClientPrefs.data.middleScroll)
+						{
 							sustainNote.x += 310;
 							if (daNoteData > 1) // Up and Right
 								sustainNote.x += FlxG.width / 2 + 25;
@@ -1367,7 +1530,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 						#else
 						if (sustainNote.mustPress)
 							sustainNote.x += FlxG.width / 2; // general offset
-						else if (ClientPrefs.middleScroll) {
+						else if (ClientPrefs.middleScroll)
+						{
 							sustainNote.x += 310;
 							if (daNoteData > 1) // Up and Right
 								sustainNote.x += FlxG.width / 2 + 25;
@@ -1378,7 +1542,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				}
 
 				#if PSYCH
-				if (swagNote.mustPress) {
+				if (swagNote.mustPress)
+				{
 					swagNote.x += FlxG.width / 2; // general offset
 				}
 				#if (PSYCHVERSION >= "0.7")
@@ -1402,11 +1567,13 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		generatedMusic = true;
 	}
 
-	function sortByTime(Obj1:Dynamic, Obj2:Dynamic):Int {
+	function sortByTime(Obj1:Dynamic, Obj2:Dynamic):Int
+	{
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.strumTime, Obj2.strumTime);
 	}
 
-	private function generateStaticArrows(player:Int):Void {
+	private function generateStaticArrows(player:Int):Void
+	{
 		var usedKeyCount = 4;
 		#if LEATHER
 		usedKeyCount = PlayState.SONG.keyCount;
@@ -1421,15 +1588,18 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		var TRUE_STRUM_X:Float = strumLineX;
 
 		#if (PSYCH && PSYCHVERSION >= "0.7")
-		if (PlayState.SONG.arrowSkin.contains('pixel')) {
+		if (PlayState.SONG.arrowSkin.contains('pixel'))
+		{
 			(ClientPrefs.data.middleScroll ? TRUE_STRUM_X += 3 : TRUE_STRUM_X += 2);
 		}
 		#end
 
-		for (i in 0...usedKeyCount) {
+		for (i in 0...usedKeyCount)
+		{
 			// FlxG.log.add(i);
 			var targetAlpha:Float = 1;
-			if (player < 1) {
+			if (player < 1)
+			{
 				#if (PSYCH && PSYCHVERSION >= "0.7")
 				if (ClientPrefs.data.middleScroll)
 					targetAlpha = 0.35;
@@ -1487,16 +1657,21 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#end
 
 			#if SCEModchartingTools
-			if (player == 1) {
+			if (player == 1)
+			{
 				if (opponentMode && !middleScroll)
 					opponentStrums.add(babyArrow);
 				else
 					playerStrums.add(babyArrow);
-			} else {
+			}
+			else
+			{
 				#if PSYCH
-				if (middleScroll) {
+				if (middleScroll)
+				{
 					babyArrow.x += 310;
-					if (i > 1) { // Up and Right
+					if (i > 1)
+					{ // Up and Right
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
 				}
@@ -1507,20 +1682,27 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 					opponentStrums.add(babyArrow);
 			}
 			#else
-			if (player == 1) {
+			if (player == 1)
+			{
 				playerStrums.add(babyArrow);
-			} else {
+			}
+			else
+			{
 				#if (PSYCH && PSYCHVERSION >= "0.7")
-				if (middleScroll) {
+				if (middleScroll)
+				{
 					babyArrow.x += 310;
-					if (i > 1) { // Up and Right
+					if (i > 1)
+					{ // Up and Right
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
 				}
 				#elseif (PSYCH && !(PSYCHVERSION >= "0.7"))
-				if (middleScroll) {
+				if (middleScroll)
+				{
 					babyArrow.x += 310;
-					if (i > 1) { // Up and Right
+					if (i > 1)
+					{ // Up and Right
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
 				}
@@ -1537,73 +1719,100 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	}
 
 	#if SCEModchartingTools
-	private function round(num:Float, numDecimalPlaces:Int) {
+	private function round(num:Float, numDecimalPlaces:Int)
+	{
 		var mult = 10 ^ (numDecimalPlaces > 0 ? numDecimalPlaces : 0);
 		return Math.floor(num * mult + 0.5) / mult;
 	}
 
-	public function setUpNoteQuant() {
+	public function setUpNoteQuant()
+	{
 		var bpmChanges = Conductor.bpmChangeMap;
 		var strumTime:Float = 0;
 		var currentBPM:Float = PlayState.SONG.bpm;
 		var newTime:Float = 0;
-		for (note in unspawnNotes) {
+		for (note in unspawnNotes)
+		{
 			strumTime = note.strumTime;
 			newTime = strumTime;
 			for (i in 0...bpmChanges.length)
-				if (strumTime > bpmChanges[i].songTime) {
+				if (strumTime > bpmChanges[i].songTime)
+				{
 					currentBPM = bpmChanges[i].bpm;
 					newTime = strumTime - bpmChanges[i].songTime;
 				}
-			if (note.quantColorsOnNotes && note.rgbShader.enabled) {
+			if (note.quantColorsOnNotes && note.rgbShader.enabled)
+			{
 				dataStuff = ((currentBPM * (newTime - ClientPrefs.data.noteOffset)) / 1000 / 60);
 				beat = round(dataStuff * 48, 0);
 
-				if (!note.isSustainNote) {
-					if (beat % (192 / 4) == 0) {
+				if (!note.isSustainNote)
+				{
+					if (beat % (192 / 4) == 0)
+					{
 						col = ClientPrefs.data.arrowRGBQuantize[0][0];
 						col2 = ClientPrefs.data.arrowRGBQuantize[0][2];
-					} else if (beat % (192 / 8) == 0) {
+					}
+					else if (beat % (192 / 8) == 0)
+					{
 						col = ClientPrefs.data.arrowRGBQuantize[1][0];
 						col2 = ClientPrefs.data.arrowRGBQuantize[1][2];
-					} else if (beat % (192 / 12) == 0) {
+					}
+					else if (beat % (192 / 12) == 0)
+					{
 						col = ClientPrefs.data.arrowRGBQuantize[2][0];
 						col2 = ClientPrefs.data.arrowRGBQuantize[2][2];
-					} else if (beat % (192 / 16) == 0) {
+					}
+					else if (beat % (192 / 16) == 0)
+					{
 						col = ClientPrefs.data.arrowRGBQuantize[3][0];
 						col2 = ClientPrefs.data.arrowRGBQuantize[3][2];
-					} else if (beat % (192 / 24) == 0) {
+					}
+					else if (beat % (192 / 24) == 0)
+					{
 						col = ClientPrefs.data.arrowRGBQuantize[4][0];
 						col2 = ClientPrefs.data.arrowRGBQuantize[4][2];
-					} else if (beat % (192 / 32) == 0) {
+					}
+					else if (beat % (192 / 32) == 0)
+					{
 						col = ClientPrefs.data.arrowRGBQuantize[5][0];
 						col2 = ClientPrefs.data.arrowRGBQuantize[5][2];
-					} else if (beat % (192 / 48) == 0) {
+					}
+					else if (beat % (192 / 48) == 0)
+					{
 						col = ClientPrefs.data.arrowRGBQuantize[6][0];
 						col2 = ClientPrefs.data.arrowRGBQuantize[6][2];
-					} else if (beat % (192 / 64) == 0) {
+					}
+					else if (beat % (192 / 64) == 0)
+					{
 						col = ClientPrefs.data.arrowRGBQuantize[7][0];
 						col2 = ClientPrefs.data.arrowRGBQuantize[7][2];
-					} else {
+					}
+					else
+					{
 						col = 0xFF7C7C7C;
 						col2 = 0xFF3A3A3A;
 					}
 					note.rgbShader.r = col;
 					note.rgbShader.g = ClientPrefs.data.arrowRGBQuantize[0][1];
 					note.rgbShader.b = col2;
-				} else {
+				}
+				else
+				{
 					note.rgbShader.r = note.prevNote.rgbShader.r;
 					note.rgbShader.g = note.prevNote.rgbShader.g;
 					note.rgbShader.b = note.prevNote.rgbShader.b;
 				}
 			}
 
-			for (this2 in opponentStrums) {
+			for (this2 in opponentStrums)
+			{
 				this2.rgbShader.r = 0xFFFFFFFF;
 				this2.rgbShader.b = 0xFF000000;
 				this2.rgbShader.enabled = false;
 			}
-			for (this2 in playerStrums) {
+			for (this2 in playerStrums)
+			{
 				this2.rgbShader.r = 0xFFFFFFFF;
 				this2.rgbShader.b = 0xFF000000;
 				this2.rgbShader.enabled = false;
@@ -1616,8 +1825,10 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	#end
 
 	#if (PSYCH && PSYCHVERSION >= "0.7.3")
-	function getVocalFromCharacter(char:String) {
-		try {
+	function getVocalFromCharacter(char:String)
+	{
+		try
+		{
 			var path:String = Paths.getPath(#if SCEModchartingTools 'data/characters/$char.json' #else 'characters/$char.json' #end, TEXT, null, true);
 			#if MODS_ALLOWED
 			var character:Dynamic = Json.parse(File.getContent(path));
@@ -1630,7 +1841,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	}
 	#end
 
-	public static function createGrid(CellWidth:Int, CellHeight:Int, Width:Int, Height:Int):BitmapData {
+	public static function createGrid(CellWidth:Int, CellHeight:Int, Width:Int, Height:Int):BitmapData
+	{
 		// How many cells can we fit into the width/height? (round it UP if not even, then trim back)
 		var Color1 = FlxColor.GRAY; // quant colors!!!
 		var Color2 = FlxColor.WHITE;
@@ -1648,9 +1860,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		// If there aren't an even number of cells in a row then we need to swap the lastColor value
 		var y:Int = 0;
 		var timesFilled:Int = 0;
-		while (y <= Height) {
+		while (y <= Height)
+		{
 			var x:Int = 0;
-			while (x <= Width) {
+			while (x <= Width)
+			{
 				if (timesFilled % 2 == 0)
 					lastColor = Color1;
 				else if (timesFilled % 2 == 1)
@@ -1679,7 +1893,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	var mods:Array<String> = [];
 	var subMods:Array<String> = [""];
 
-	function updateModList() {
+	function updateModList()
+	{
 		mods = [];
 		for (i in 0...playfieldRenderer.modchart.data.modifiers.length)
 			mods.push(playfieldRenderer.modchart.data.modifiers[i][MOD_NAME]);
@@ -1690,17 +1905,21 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			.makeStrIdLabelArray(mods, true));
 	}
 
-	function updateSubModList(modName:String) {
+	function updateSubModList(modName:String)
+	{
 		subMods = [""];
-		if (playfieldRenderer.modifierTable.modifiers.exists(modName)) {
-			for (subModName => subMod in playfieldRenderer.modifierTable.modifiers.get(modName).subValues) {
+		if (playfieldRenderer.modifierTable.modifiers.exists(modName))
+		{
+			for (subModName => subMod in playfieldRenderer.modifierTable.modifiers.get(modName).subValues)
+			{
 				subMods.push(subModName);
 			}
 		}
 		subModDropDown.setData(#if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end.makeStrIdLabelArray(subMods, true));
 	}
 
-	function setupModifierUI() {
+	function setupModifierUI()
+	{
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Modifiers";
 
@@ -1716,13 +1935,15 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#else
 			FlxUIDropDownMenuCustom
 			#end(25, 50, #if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end.makeStrIdLabelArray(mods, true),
-				function(mod:String) {
+				function(mod:String)
+				{
 					var modName = mods[Std.parseInt(mod)];
 					for (i in 0...playfieldRenderer.modchart.data.modifiers.length)
 						if (playfieldRenderer.modchart.data.modifiers[i][MOD_NAME] == modName)
 							currentModifier = playfieldRenderer.modchart.data.modifiers[i];
 
-					if (currentModifier != null) {
+					if (currentModifier != null)
+					{
 						// trace(currentModifier);
 						modNameInputText.text = currentModifier[MOD_NAME];
 						modClassInputText.text = currentModifier[MOD_CLASS];
@@ -1733,16 +1954,19 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 					}
 				});
 
-		var refreshModifiers:FlxButton = new FlxButton(25 + modifierDropDown.width + 10, modifierDropDown.y, 'Refresh Modifiers', function() {
+		var refreshModifiers:FlxButton = new FlxButton(25 + modifierDropDown.width + 10, modifierDropDown.y, 'Refresh Modifiers', function()
+		{
 			updateModList();
 		});
 		refreshModifiers.scale.y *= 1.5;
 		refreshModifiers.updateHitbox();
 
-		var saveModifier:FlxButton = new FlxButton(refreshModifiers.x, refreshModifiers.y + refreshModifiers.height + 20, 'Save Modifier', function() {
+		var saveModifier:FlxButton = new FlxButton(refreshModifiers.x, refreshModifiers.y + refreshModifiers.height + 20, 'Save Modifier', function()
+		{
 			var alreadyExists = false;
 			for (i in 0...playfieldRenderer.modchart.data.modifiers.length)
-				if (playfieldRenderer.modchart.data.modifiers[i][MOD_NAME] == modNameInputText.text) {
+				if (playfieldRenderer.modchart.data.modifiers[i][MOD_NAME] == modNameInputText.text)
+				{
 					playfieldRenderer.modchart.data.modifiers[i] = [
 						modNameInputText.text,
 						modClassInputText.text,
@@ -1753,7 +1977,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 					alreadyExists = true;
 				}
 
-			if (!alreadyExists) {
+			if (!alreadyExists)
+			{
 				playfieldRenderer.modchart.data.modifiers.push([
 					modNameInputText.text,
 					modClassInputText.text,
@@ -1767,9 +1992,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			hasUnsavedChanges = true;
 		});
 
-		var removeModifier:FlxButton = new FlxButton(saveModifier.x, saveModifier.y + saveModifier.height + 20, 'Remove Modifier', function() {
+		var removeModifier:FlxButton = new FlxButton(saveModifier.x, saveModifier.y + saveModifier.height + 20, 'Remove Modifier', function()
+		{
 			for (i in 0...playfieldRenderer.modchart.data.modifiers.length)
-				if (playfieldRenderer.modchart.data.modifiers[i][MOD_NAME] == modNameInputText.text) {
+				if (playfieldRenderer.modchart.data.modifiers[i][MOD_NAME] == modNameInputText.text)
+				{
 					playfieldRenderer.modchart.data.modifiers.remove(playfieldRenderer.modchart.data.modifiers[i]);
 				}
 			dirtyUpdateModifiers = true;
@@ -1792,7 +2019,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		scrollBlockers.push(modifierDropDown);
 
 		var modClassList:Array<String> = [];
-		for (i in 0...modifierList.length) {
+		for (i in 0...modifierList.length)
+		{
 			modClassList.push(Std.string(modifierList[i]).replace("modchart.modcharting.", ""));
 		}
 
@@ -1802,10 +2030,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#else
 			FlxUIDropDownMenuCustom
 			#end(modClassInputText.x, modClassInputText.y + 30, #if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end
-				.makeStrIdLabelArray(modClassList, true), function(mod:String) {
-					modClassInputText.text = modClassList[Std.parseInt(mod)];
-					if (modClassInputText.text != '')
-						explainText.text = ('Current Modifier: ${modClassInputText.text}, Explaination: ' + modifierExplain(modClassInputText.text));
+				.makeStrIdLabelArray(modClassList, true), function(mod:String)
+			{
+				modClassInputText.text = modClassList[Std.parseInt(mod)];
+				if (modClassInputText.text != '')
+					explainText.text = ('Current Modifier: ${modClassInputText.text}, Explaination: ' + modifierExplain(modClassInputText.text));
 			});
 		centerXToObject(modClassInputText, modClassDropDown);
 		var modTypeList = ["All", "Player", "Opponent", "Lane"];
@@ -1815,8 +2044,9 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#else
 			FlxUIDropDownMenuCustom
 			#end(modTypeInputText.x, modClassInputText.y + 30, #if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end
-				.makeStrIdLabelArray(modTypeList, true), function(mod:String) {
-					modTypeInputText.text = modTypeList[Std.parseInt(mod)];
+				.makeStrIdLabelArray(modTypeList, true), function(mod:String)
+			{
+				modTypeInputText.text = modTypeList[Std.parseInt(mod)];
 			});
 		centerXToObject(modTypeInputText, modTypeDropDown);
 		centerXToObject(modTypeInputText, explainText);
@@ -1853,10 +2083,12 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	}
 
 	// Thanks to glowsoony for the idea lol
-	function modifierExplain(modifiersName:String):String {
+	function modifierExplain(modifiersName:String):String
+	{
 		var explainString:String = '';
 
-		switch modifiersName {
+		switch modifiersName
+		{
 			case 'ZigZagXModifier':
 				explainString = 'Modifier used to make the notes go zig-zag on the X axes';
 			case 'ZigZagYModifier':
@@ -2080,7 +2312,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 	function findCorrectModData(data:Array<Dynamic>) // the data is stored at different indexes based on the type (maybe should have kept them the same)
 	{
-		switch (data[EVENT_TYPE]) {
+		switch (data[EVENT_TYPE])
+		{
 			case "ease":
 				return data[EVENT_DATA][EVENT_EASEDATA];
 			case "set":
@@ -2089,8 +2322,10 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		return null;
 	}
 
-	function setCorrectModData(data:Array<Dynamic>, dataStr:String) {
-		switch (data[EVENT_TYPE]) {
+	function setCorrectModData(data:Array<Dynamic>, dataStr:String)
+	{
+		switch (data[EVENT_TYPE])
+		{
 			case "ease":
 				data[EVENT_DATA][EVENT_EASEDATA] = dataStr;
 			case "set":
@@ -2100,11 +2335,13 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	}
 
 	// TODO: fix this shit
-	function convertModData(data:Array<Dynamic>, newType:String) {
+	function convertModData(data:Array<Dynamic>, newType:String)
+	{
 		switch (data[EVENT_TYPE]) // convert stuff over i guess
 		{
 			case "ease":
-				if (newType == 'set') {
+				if (newType == 'set')
+				{
 					trace('converting ease to set');
 					var temp:Array<Dynamic> = [
 						newType,
@@ -2114,7 +2351,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 					data = temp.copy();
 				}
 			case "set":
-				if (newType == 'ease') {
+				if (newType == 'ease')
+				{
 					trace('converting set to ease');
 					var temp:Array<Dynamic> = [
 						newType,
@@ -2129,9 +2367,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		return data;
 	}
 
-	function updateEventModData(shitToUpdate:String, isMod:Bool) {
+	function updateEventModData(shitToUpdate:String, isMod:Bool)
+	{
 		var data = getCurrentEventInData();
-		if (data != null) {
+		if (data != null)
+		{
 			var dataStr:String = findCorrectModData(data);
 			var dataSplit = dataStr.split(',');
 			// the way the data works is it goes "value,mod,value,mod,....." and goes on forever, so it has to deconstruct and reconstruct to edit it and shit
@@ -2142,9 +2382,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		}
 	}
 
-	function getEventModData(isMod:Bool):String {
+	function getEventModData(isMod:Bool):String
+	{
 		var data = getCurrentEventInData();
-		if (data != null) {
+		if (data != null)
+		{
 			var dataStr:String = findCorrectModData(data);
 			var dataSplit = dataStr.split(',');
 			return dataSplit[(getEventModIndex() * 2) + (isMod ? 1 : 0)];
@@ -2152,9 +2394,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		return "";
 	}
 
-	function stringifyEventModData(dataSplit:Array<String>):String {
+	function stringifyEventModData(dataSplit:Array<String>):String
+	{
 		var dataStr = "";
-		for (i in 0...dataSplit.length) {
+		for (i in 0...dataSplit.length)
+		{
 			dataStr += dataSplit[i];
 			if (i < dataSplit.length - 1)
 				dataStr += ',';
@@ -2162,9 +2406,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		return dataStr;
 	}
 
-	function addNewModData() {
+	function addNewModData()
+	{
 		var data = getCurrentEventInData();
-		if (data != null) {
+		if (data != null)
+		{
 			var dataStr:String = findCorrectModData(data);
 			dataStr += ",,"; // just how it works lol
 			data = setCorrectModData(data, dataStr);
@@ -2172,9 +2418,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		return data;
 	}
 
-	function removeModData() {
+	function removeModData()
+	{
 		var data = getCurrentEventInData();
-		if (data != null) {
+		if (data != null)
+		{
 			if (selectedEventDataStepper.max > 0) // dont remove if theres only 1
 			{
 				var dataStr:String = findCorrectModData(data);
@@ -2204,7 +2452,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	var builtInModDropDown:#if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end;
 	var stackedEventStepper:FlxUINumericStepper;
 
-	function setupEventUI() {
+	function setupEventUI()
+	{
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Events";
 
@@ -2212,9 +2461,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		repeatCheckbox = new FlxUICheckBox(950, 50, null, null, "Repeat Event?");
 		repeatCheckbox.checked = false;
-		repeatCheckbox.callback = function() {
+		repeatCheckbox.callback = function()
+		{
 			var data = getCurrentEventInData();
-			if (data != null) {
+			if (data != null)
+			{
 				data[EVENT_REPEAT][EVENT_REPEATBOOL] = repeatCheckbox.checked;
 				highlightedEvent = data;
 				dirtyUpdateEvents = true;
@@ -2229,10 +2480,12 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		centerXToObject(repeatCheckbox, repeatCountStepper);
 
 		eventModInputText = new FlxUIInputText(25, 50, 160, '', 8);
-		eventModInputText.callback = function(str:String, str2:String) {
+		eventModInputText.callback = function(str:String, str2:String)
+		{
 			updateEventModData(eventModInputText.text, true);
 			var data = getCurrentEventInData();
-			if (data != null) {
+			if (data != null)
+			{
 				highlightedEvent = data;
 				eventDataInputText.text = highlightedEvent[EVENT_DATA][EVENT_EASEDATA];
 				dirtyUpdateEvents = true;
@@ -2240,10 +2493,12 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			}
 		};
 		eventValueInputText = new FlxUIInputText(25 + 200, 50, 160, '', 8);
-		eventValueInputText.callback = function(str:String, str2:String) {
+		eventValueInputText.callback = function(str:String, str2:String)
+		{
 			updateEventModData(eventValueInputText.text, false);
 			var data = getCurrentEventInData();
-			if (data != null) {
+			if (data != null)
+			{
 				highlightedEvent = data;
 				eventDataInputText.text = highlightedEvent[EVENT_DATA][EVENT_EASEDATA];
 				dirtyUpdateEvents = true;
@@ -2257,9 +2512,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		stackedEventStepper = new FlxUINumericStepper(25 + 400, 200, 1, 0, 0, 0, 0);
 		stackedEventStepper.name = "stackedEvent";
 
-		var addStacked:FlxButton = new FlxButton(stackedEventStepper.x, stackedEventStepper.y + 30, 'Add', function() {
+		var addStacked:FlxButton = new FlxButton(stackedEventStepper.x, stackedEventStepper.y + 30, 'Add', function()
+		{
 			var data = getCurrentEventInData();
-			if (data != null) {
+			if (data != null)
+			{
 				var event = addNewEvent(data[EVENT_DATA][EVENT_TIME]);
 				highlightedEvent = event;
 				onSelectEvent();
@@ -2275,39 +2532,46 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#else
 			FlxUIDropDownMenuCustom
 			#end(25 + 500, 50, #if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end
-				.makeStrIdLabelArray(eventTypes, true), function(mod:String) {
-					var et = eventTypes[Std.parseInt(mod)];
-					trace(et);
-					var data = getCurrentEventInData();
-					if (data != null) {
-						// if (data[EVENT_TYPE] != et)
-						data = convertModData(data, et);
-						highlightedEvent = data;
-						trace(highlightedEvent);
-					}
-					eventEaseInputText.alpha = 1;
-					eventTimeInputText.alpha = 1;
-					if (et != 'ease') {
-						eventEaseInputText.alpha = 0.5;
-						eventTimeInputText.alpha = 0.5;
-					}
-					dirtyUpdateEvents = true;
-					hasUnsavedChanges = true;
+				.makeStrIdLabelArray(eventTypes, true), function(mod:String)
+			{
+				var et = eventTypes[Std.parseInt(mod)];
+				trace(et);
+				var data = getCurrentEventInData();
+				if (data != null)
+				{
+					// if (data[EVENT_TYPE] != et)
+					data = convertModData(data, et);
+					highlightedEvent = data;
+					trace(highlightedEvent);
+				}
+				eventEaseInputText.alpha = 1;
+				eventTimeInputText.alpha = 1;
+				if (et != 'ease')
+				{
+					eventEaseInputText.alpha = 0.5;
+					eventTimeInputText.alpha = 0.5;
+				}
+				dirtyUpdateEvents = true;
+				hasUnsavedChanges = true;
 			});
 		eventEaseInputText = new FlxUIInputText(25 + 650, 50 + 100, 160, '', 8);
 		eventTimeInputText = new FlxUIInputText(25 + 650, 50, 160, '', 8);
-		eventEaseInputText.callback = function(str:String, str2:String) {
+		eventEaseInputText.callback = function(str:String, str2:String)
+		{
 			var data = getCurrentEventInData();
-			if (data != null) {
+			if (data != null)
+			{
 				if (data[EVENT_TYPE] == 'ease')
 					data[EVENT_DATA][EVENT_EASE] = eventEaseInputText.text;
 			}
 			dirtyUpdateEvents = true;
 			hasUnsavedChanges = true;
 		}
-		eventTimeInputText.callback = function(str:String, str2:String) {
+		eventTimeInputText.callback = function(str:String, str2:String)
+		{
 			var data = getCurrentEventInData();
-			if (data != null) {
+			if (data != null)
+			{
 				if (data[EVENT_TYPE] == 'ease')
 					data[EVENT_DATA][EVENT_EASETIME] = eventTimeInputText.text;
 			}
@@ -2321,11 +2585,12 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#else
 			FlxUIDropDownMenuCustom
 			#end(25, eventEaseInputText.y + 30, #if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end
-				.makeStrIdLabelArray(easeList, true), function(ease:String) {
-					var easeStr = easeList[Std.parseInt(ease)];
-					eventEaseInputText.text = easeStr;
-					eventEaseInputText.callback("", ""); // make sure it updates
-					hasUnsavedChanges = true;
+				.makeStrIdLabelArray(easeList, true), function(ease:String)
+			{
+				var easeStr = easeList[Std.parseInt(ease)];
+				eventEaseInputText.text = easeStr;
+				eventEaseInputText.callback("", ""); // make sure it updates
+				hasUnsavedChanges = true;
 			});
 		centerXToObject(eventEaseInputText, easeDropDown);
 
@@ -2335,7 +2600,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#else
 			FlxUIDropDownMenuCustom
 			#end(25, 50 + 20, #if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end.makeStrIdLabelArray(mods, true),
-				function(mod:String) {
+				function(mod:String)
+				{
 					var modName = mods[Std.parseInt(mod)];
 					eventModInputText.text = modName;
 					updateSubModList(modName);
@@ -2350,13 +2616,17 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#else
 			FlxUIDropDownMenuCustom
 			#end(25, 50 + 80, #if (PSYCH && PSYCHVERSION >= "0.7") FlxUIDropDownMenu #else FlxUIDropDownMenuCustom #end.makeStrIdLabelArray(subMods, true),
-				function(mod:String) {
+				function(mod:String)
+				{
 					var modName = subMods[Std.parseInt(mod)];
 					var splitShit = eventModInputText.text.split(":"); // use to get the normal mod
 
-					if (modName == "") {
+					if (modName == "")
+					{
 						eventModInputText.text = splitShit[0]; // remove the sub mod
-					} else {
+					}
+					else
+					{
 						eventModInputText.text = splitShit[0] + ":" + modName;
 					}
 
@@ -2367,9 +2637,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		eventDataInputText = new FlxUIInputText(25, 300, 300, '', 8);
 		// eventDataInputText.resize(300, 300);
-		eventDataInputText.callback = function(str:String, str2:String) {
+		eventDataInputText.callback = function(str:String, str2:String)
+		{
 			var data = getCurrentEventInData();
-			if (data != null) {
+			if (data != null)
+			{
 				data[EVENT_DATA][EVENT_EASEDATA] = eventDataInputText.text;
 				highlightedEvent = data;
 				dirtyUpdateEvents = true;
@@ -2377,9 +2649,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			}
 		};
 
-		var add:FlxButton = new FlxButton(0, selectedEventDataStepper.y + 30, 'Add', function() {
+		var add:FlxButton = new FlxButton(0, selectedEventDataStepper.y + 30, 'Add', function()
+		{
 			var data = addNewModData();
-			if (data != null) {
+			if (data != null)
+			{
 				highlightedEvent = data;
 				updateSelectedEventDataStepper();
 				eventDataInputText.text = highlightedEvent[EVENT_DATA][EVENT_EASEDATA];
@@ -2389,9 +2663,11 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				hasUnsavedChanges = true;
 			}
 		});
-		var remove:FlxButton = new FlxButton(0, selectedEventDataStepper.y + 50, 'Remove', function() {
+		var remove:FlxButton = new FlxButton(0, selectedEventDataStepper.y + 50, 'Remove', function()
+		{
 			var data = removeModData();
-			if (data != null) {
+			if (data != null)
+			{
 				highlightedEvent = data;
 				updateSelectedEventDataStepper();
 				eventDataInputText.text = highlightedEvent[EVENT_DATA][EVENT_EASEDATA];
@@ -2457,8 +2733,10 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	{
 		if (highlightedEvent == null)
 			return null;
-		for (i in 0...playfieldRenderer.modchart.data.events.length) {
-			if (playfieldRenderer.modchart.data.events[i] == highlightedEvent) {
+		for (i in 0...playfieldRenderer.modchart.data.events.length)
+		{
+			if (playfieldRenderer.modchart.data.events[i] == highlightedEvent)
+			{
 				return playfieldRenderer.modchart.data.events[i];
 			}
 		}
@@ -2469,7 +2747,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	function getMaxEventModDataLength() // used for the stepper so it doesnt go over max and break something
 	{
 		var data = getCurrentEventInData();
-		if (data != null) {
+		if (data != null)
+		{
 			var dataStr:String = findCorrectModData(data);
 			var dataSplit = dataStr.split(',');
 			return Math.floor((dataSplit.length / 2) - 1);
@@ -2490,13 +2769,15 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		stackedEventStepper.value = stackedEventStepper.max; // when you select an event, if theres stacked events it should be the one at the end of the list so just set it to the end
 	}
 
-	function getEventModIndex() {
+	function getEventModIndex()
+	{
 		return Math.floor(selectedEventDataStepper.value);
 	}
 
 	var eventTypes:Array<String> = ["ease", "set"];
 
-	function onSelectEvent(fromStackedEventStepper = false) {
+	function onSelectEvent(fromStackedEventStepper = false)
+	{
 		// update texts and stuff
 		updateSelectedEventDataStepper();
 		eventTimeStepper.value = Std.parseFloat(highlightedEvent[EVENT_DATA][EVENT_TIME]);
@@ -2504,7 +2785,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		eventEaseInputText.alpha = 0.5;
 		eventTimeInputText.alpha = 0.5;
-		if (highlightedEvent[EVENT_TYPE] == 'ease') {
+		if (highlightedEvent[EVENT_TYPE] == 'ease')
+		{
 			eventEaseInputText.alpha = 1;
 			eventTimeInputText.alpha = 1;
 			eventEaseInputText.text = highlightedEvent[EVENT_DATA][EVENT_EASE];
@@ -2521,20 +2803,25 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		dirtyUpdateEvents = true;
 	}
 
-	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
-		if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
+	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
+	{
+		if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
+		{
 			var nums:FlxUINumericStepper = cast sender;
 			var wname = nums.name;
-			switch (wname) {
+			switch (wname)
+			{
 				case "selectedEventMod": // stupid steppers which dont have normal callbacks
-					if (highlightedEvent != null) {
+					if (highlightedEvent != null)
+					{
 						eventDataInputText.text = highlightedEvent[EVENT_DATA][EVENT_EASEDATA];
 						eventModInputText.text = getEventModData(true);
 						eventValueInputText.text = getEventModData(false);
 					}
 				case "repeatBeatGap":
 					var data = getCurrentEventInData();
-					if (data != null) {
+					if (data != null)
+					{
 						data[EVENT_REPEAT][EVENT_REPEATBEATGAP] = repeatBeatGapStepper.value;
 						highlightedEvent = data;
 						hasUnsavedChanges = true;
@@ -2542,14 +2829,16 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 					}
 				case "repeatCount":
 					var data = getCurrentEventInData();
-					if (data != null) {
+					if (data != null)
+					{
 						data[EVENT_REPEAT][EVENT_REPEATCOUNT] = repeatCountStepper.value;
 						highlightedEvent = data;
 						hasUnsavedChanges = true;
 						dirtyUpdateEvents = true;
 					}
 				case "stackedEvent":
-					if (highlightedEvent != null) {
+					if (highlightedEvent != null)
+					{
 						// trace(stackedHighlightedEvents);
 						highlightedEvent = stackedHighlightedEvents[Std.int(stackedEventStepper.value)];
 						onSelectEvent(true);
@@ -2560,7 +2849,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 	var playfieldCountStepper:FlxUINumericStepper;
 
-	function setupPlayfieldUI() {
+	function setupPlayfieldUI()
+	{
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Playfields";
 
@@ -2575,13 +2865,15 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 	var sliderRate:FlxUISlider;
 
-	function setupEditorUI() {
+	function setupEditorUI()
+	{
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Editor";
 
 		sliderRate = new FlxUISlider(this, 'playbackSpeed', 20, 120, 0.1, 3, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderRate.nameLabel.text = 'Playback Rate';
-		sliderRate.callback = function(val:Float) {
+		sliderRate.callback = function(val:Float)
+		{
 			dirtyUpdateEvents = true;
 		};
 
@@ -2590,7 +2882,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		songSlider.maxLabel.visible = false;
 		songSlider.minLabel.visible = false;
 		songSlider.nameLabel.text = 'Song Time';
-		songSlider.callback = function(fuck:Float) {
+		songSlider.callback = function(fuck:Float)
+		{
 			vocals.time = inst.time;
 			#if (PSYCH && PSYCHVERSION >= "0.7.3")
 			if (opponentVocals != null)
@@ -2603,7 +2896,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 		var check_mute_inst = new FlxUICheckBox(10, 20, null, null, "Mute Instrumental (in editor)", 100);
 		check_mute_inst.checked = false;
-		check_mute_inst.callback = function() {
+		check_mute_inst.callback = function()
+		{
 			var vol:Float = 1;
 
 			if (check_mute_inst.checked)
@@ -2613,7 +2907,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		};
 		var check_mute_vocals = new FlxUICheckBox(check_mute_inst.x + 120, check_mute_inst.y, null, null, "Mute Main Vocals (in editor)", 100);
 		check_mute_vocals.checked = false;
-		check_mute_vocals.callback = function() {
+		check_mute_vocals.callback = function()
+		{
 			var vol:Float = 1;
 			if (check_mute_vocals.checked)
 				vol = 0;
@@ -2624,7 +2919,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		#if (PSYCH && PSYCHVERSION >= "0.7.3")
 		var check_mute_opponent_vocals = new FlxUICheckBox(check_mute_inst.x + 120, check_mute_inst.y + 40, null, null, "Mute Opp. Vocals (in editor)", 100);
 		check_mute_opponent_vocals.checked = false;
-		check_mute_opponent_vocals.callback = function() {
+		check_mute_opponent_vocals.callback = function()
+		{
 			var vol:Float = 1;
 			if (check_mute_opponent_vocals.checked)
 				vol = 0;
@@ -2634,11 +2930,13 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		};
 		#end
 
-		var resetSpeed:FlxButton = new FlxButton(sliderRate.x + 300, sliderRate.y, 'Reset', function() {
+		var resetSpeed:FlxButton = new FlxButton(sliderRate.x + 300, sliderRate.y, 'Reset', function()
+		{
 			playbackSpeed = 1.0;
 		});
 
-		var saveJson:FlxUIButton = new FlxUIButton(20, 300, 'Save Modchart', function() {
+		var saveJson:FlxUIButton = new FlxUIButton(20, 300, 'Save Modchart', function()
+		{
 			saveModchartJson(this);
 		});
 		addUI(tab_group, "saveJson", saveJson, 'Save Modchart', 'Saves the modchart to a .json file which can be stored and loaded later.');
@@ -2654,7 +2952,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		UI_box.addGroup(tab_group);
 	}
 
-	function addUI(tab_group:FlxUI, name:String, ui:FlxSprite, title:String = "", body:String = "", anchor:Anchor = null) {
+	function addUI(tab_group:FlxUI, name:String, ui:FlxSprite, title:String = "", body:String = "", anchor:Anchor = null)
+	{
 		tooltips.add(ui, {
 			title: title,
 			body: body,
@@ -2679,7 +2978,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		obj2.x = obj1.x + (obj1.width / 2) - (obj2.width / 2);
 	}
 
-	function makeLabel(obj:FlxSprite, offsetX:Float, offsetY:Float, textStr:String) {
+	function makeLabel(obj:FlxSprite, offsetX:Float, offsetY:Float, textStr:String)
+	{
 		var text = new FlxText(0, obj.y + offsetY, 0, textStr);
 		centerXToObject(obj, text);
 		text.x += offsetX;
@@ -2688,7 +2988,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 
 	var _file:FileReference;
 
-	public function saveModchartJson(?instance:ModchartMusicBeatState = null):Void {
+	public function saveModchartJson(?instance:ModchartMusicBeatState = null):Void
+	{
 		if (instance == null)
 			instance = PlayState.instance;
 
@@ -2697,7 +2998,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		// data = data.replace(" ", "");
 		#if sys
 		// sys.io.File.saveContent("modchart.json", data.trim());
-		if ((data != null) && (data.length > 0)) {
+		if ((data != null) && (data.length > 0))
+		{
 			_file = new FileReference();
 			_file.addEventListener(#if desktop openfl.events.Event.SELECT #else openfl.events.Event.COMPLETE #end, onSaveComplete);
 			_file.addEventListener(openfl.events.Event.CANCEL, onSaveCancel);
@@ -2709,7 +3011,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		hasUnsavedChanges = false;
 	}
 
-	function onSaveComplete(_):Void {
+	function onSaveComplete(_):Void
+	{
 		_file.removeEventListener(#if desktop openfl.events.Event.SELECT #else openfl.events.Event.COMPLETE #end, onSaveComplete);
 		_file.removeEventListener(openfl.events.Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
@@ -2719,7 +3022,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	/**
 	 * Called when the save file dialog is cancelled.
 	 */
-	function onSaveCancel(_):Void {
+	function onSaveCancel(_):Void
+	{
 		_file.removeEventListener(#if desktop openfl.events.Event.SELECT #else openfl.events.Event.COMPLETE #end, onSaveComplete);
 		_file.removeEventListener(openfl.events.Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
@@ -2729,7 +3033,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	/**
 	 * Called if there is an error while saving the gameplay recording.
 	 */
-	function onSaveError(_):Void {
+	function onSaveError(_):Void
+	{
 		_file.removeEventListener(#if desktop openfl.events.Event.SELECT #else openfl.events.Event.COMPLETE #end, onSaveComplete);
 		_file.removeEventListener(openfl.events.Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
@@ -2737,15 +3042,18 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 	}
 }
 
-class ModchartEditorExitSubstate extends MusicBeatSubstate {
+class ModchartEditorExitSubstate extends MusicBeatSubstate
+{
 	var exitFunc:Void->Void;
 
-	override public function new(funcOnExit:Void->Void) {
+	override public function new(funcOnExit:Void->Void)
+	{
 		exitFunc = funcOnExit;
 		super();
 	}
 
-	override public function create() {
+	override public function create()
+	{
 		super.create();
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -2760,7 +3068,8 @@ class ModchartEditorExitSubstate extends MusicBeatSubstate {
 		warning.y -= 150;
 		add(warning);
 
-		var goBackButton:FlxUIButton = new FlxUIButton(0, 500, 'Go Back', function() {
+		var goBackButton:FlxUIButton = new FlxUIButton(0, 500, 'Go Back', function()
+		{
 			close();
 		});
 		goBackButton.scale.set(2.5, 2.5);
@@ -2770,7 +3079,8 @@ class ModchartEditorExitSubstate extends MusicBeatSubstate {
 		goBackButton.x = (FlxG.width * 0.3) - (goBackButton.width * 0.5);
 		add(goBackButton);
 
-		var exit:FlxUIButton = new FlxUIButton(0, 500, 'Exit without saving', function() {
+		var exit:FlxUIButton = new FlxUIButton(0, 500, 'Exit without saving', function()
+		{
 			exitFunc();
 		});
 		exit.scale.set(2.5, 2.5);

@@ -41,8 +41,15 @@ class UEHitSound extends BaseOptionsMenu
 		option.decimals = 1;
 		option.onChange = onChangeHitsoundVolume;
 
-		var option:Option = new Option('Hitsound Type:', 'Change the hitsound type', 'ht', 'string', 'classic',
-			['classic', 'water', 'waterboom', 'heartbeat', 'fire in the hole', 'universe']);
+		var option:Option = new Option('Hitsound Type:', 'Change the hitsound type', 'ht', 'string', 'classic', [
+			'Classic',
+			'Water',
+			'Waterboom',
+			'Heartbeat',
+			'Fire in the hole',
+			'Universe',
+			'Baldi'
+		]);
 		addOption(option);
 		option.onChange = onChangeHitSound;
 
@@ -64,7 +71,7 @@ class UEHitSound extends BaseOptionsMenu
 	override function destroy()
 	{
 		if (changedMusic)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 		super.destroy();
 	}
 
@@ -88,11 +95,11 @@ class UEHitSound extends BaseOptionsMenu
 
 	function onChangeHitSound()
 	{
-		FlxG.sound.play(Paths.sound(ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
 	}
 
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(Paths.sound(ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
 	}
 }

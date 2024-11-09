@@ -129,7 +129,7 @@ class CharacterEditorState extends MusicBeatState
 		dumbTexts.cameras = [camHUD];
 
 		textAnim = new FlxText(300, 16);
-		textAnim.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		textAnim.setFormat(Paths.font("funkin.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		textAnim.borderSize = 1;
 		textAnim.size = 32;
 		textAnim.scrollFactor.set();
@@ -1119,7 +1119,7 @@ class CharacterEditorState extends MusicBeatState
 					MusicBeatState.switchState(new PlayState());
 				} else {
 					MusicBeatState.switchState(new editors.MasterEditorMenu());
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 				}
 				FlxG.mouse.visible = false;
 				return;

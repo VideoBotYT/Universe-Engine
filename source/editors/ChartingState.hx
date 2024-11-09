@@ -250,10 +250,22 @@ class ChartingState extends MusicBeatState
 
 		vortex = FlxG.save.data.chart_vortex;
 		ignoreWarnings = FlxG.save.data.ignoreWarnings;
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.scrollFactor.set();
-		bg.color = 0xFF222222;
-		add(bg);
+		if (ClientPrefs.darkmode)
+		{
+			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
+			bg.color = 0xFF222222;
+			bg.scrollFactor.set();
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			add(bg);
+		}
+		else
+		{
+			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+			bg.scrollFactor.set();
+			bg.color = 0xFF222222;
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			add(bg);
+		}
 
 		lilStage = new FlxSprite(32, 432).loadGraphic(Paths.image("chartEditor/lilStage"));
 		lilStage.scrollFactor.set();
@@ -2067,7 +2079,7 @@ class ChartingState extends MusicBeatState
 			{
 				PlayState.chartingMode = false;
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 				FlxG.mouse.visible = false;
 				return;
 			}
@@ -2419,8 +2431,10 @@ class ChartingState extends MusicBeatState
 			+ "th \n"
 			+ FlxStringUtil.formatMoney(CoolUtil.getNoteAmount(_song), false)
 			+ ' Notes\n'
-			+ "\nRendered Notes: " + FlxStringUtil.formatMoney(Math.abs(curRenderedNotes.length + nextRenderedNotes.length), false)
-			+ "\nSection Notes: " + FlxStringUtil.formatMoney(_song.notes[curSec].sectionNotes.length, false);
+			+ "\nRendered Notes: "
+			+ FlxStringUtil.formatMoney(Math.abs(curRenderedNotes.length + nextRenderedNotes.length), false)
+			+ "\nSection Notes: "
+			+ FlxStringUtil.formatMoney(_song.notes[curSec].sectionNotes.length, false);
 
 		var playedSound:Array<Bool> = [false, false, false, false]; // Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note)
@@ -2458,7 +2472,7 @@ class ChartingState extends MusicBeatState
 					{
 						if ((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress))
 						{
-							var soundToPlay = ClientPrefs.ht;
+							var soundToPlay = "hitsound-" + (ClientPrefs.ht);
 							if (_song.player1 == 'gf')
 							{ // Easter egg
 								soundToPlay = 'GF_' + Std.string(data + 1);
@@ -3125,7 +3139,7 @@ class ChartingState extends MusicBeatState
 					theType = '?';
 
 				var daText:AttachedFlxText = new AttachedFlxText(0, 0, 100, theType, 24);
-				daText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				daText.setFormat(Paths.font("funkin.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 				daText.xAdd = -32;
 				daText.yAdd = 6;
 				daText.borderSize = 1;
@@ -3153,7 +3167,7 @@ class ChartingState extends MusicBeatState
 					text = note.eventLength + ' Events:\n' + note.eventName;
 
 				var daText:AttachedFlxText = new AttachedFlxText(0, 0, 400, text, 12);
-				daText.setFormat(Paths.font("vcr.ttf"), 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
+				daText.setFormat(Paths.font("funkin.ttf"), 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
 				daText.xAdd = -410;
 				daText.borderSize = 1;
 				if (note.eventLength > 1)

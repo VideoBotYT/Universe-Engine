@@ -1191,7 +1191,6 @@ class PlayState extends MusicBeatState
 		healthBarBG.visible = !ClientPrefs.hideHud;
 		healthBarBG.xAdd = -4;
 		healthBarBG.yAdd = -4;
-		add(healthBarBG);
 		if (ClientPrefs.downScroll)
 			healthBarBG.y = 0.11 * FlxG.height;
 
@@ -1201,8 +1200,17 @@ class PlayState extends MusicBeatState
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
-		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
+		if (ClientPrefs.lhpbgb)
+		{
+			add(healthBarBG);
+			add(healthBar);
+		}
+		else
+		{
+			add(healthBar);
+			add(healthBarBG);
+		}
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
@@ -4346,8 +4354,19 @@ class PlayState extends MusicBeatState
 		else
 		{
 			var achieve:String = checkForAchievement([
-				'week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss', 'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad', 'ur_good', 'hype',
-				'two_keys', 'toastie', 'debugger'
+				'week1_nomiss',
+				'week2_nomiss',
+				'week3_nomiss',
+				'week4_nomiss',
+				'week5_nomiss',
+				'week6_nomiss',
+				'week7_nomiss',
+				'ur_bad',
+				'ur_good',
+				'hype',
+				'two_keys',
+				'toastie',
+				'debugger'
 			]);
 
 			if (achieve != null)
@@ -4388,13 +4407,13 @@ class PlayState extends MusicBeatState
 				if (storyPlaylist.length <= 0)
 				{
 					WeekData.loadTheFirstEnabledMod();
-					FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 
 					cancelMusicFadeTween();
 					if (FlxTransitionableState.skipNextTransIn)
 					{
 						CustomFadeTransition.nextCamera = null;
-					}
+					} 
 					MusicBeatState.switchState(new StoryMenuState());
 
 					// if ()
@@ -4465,7 +4484,7 @@ class PlayState extends MusicBeatState
 					CustomFadeTransition.nextCamera = null;
 				}
 				MusicBeatState.switchState(new FreeplayState());
-				FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 				changedDifficulty = false;
 			}
 			transitioning = true;
@@ -5063,10 +5082,10 @@ class PlayState extends MusicBeatState
 
 			/*boyfriend.stunned = true;
 	
-																// get stunned for 1/60 of a second, makes you able to
-																new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
-																{
-																	boyfriend.stunned = false;
+																									// get stunned for 1/60 of a second, makes you able to
+																									new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
+																									{
+																										boyfriend.stunned = false;
 			});*/
 
 			if (boyfriend.hasMissAnimations)
@@ -5150,7 +5169,7 @@ class PlayState extends MusicBeatState
 
 			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled)
 			{
-				FlxG.sound.play(Paths.sound(ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+				FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
 			}
 
 			if (note.hitCausesMiss)
@@ -5264,43 +5283,43 @@ class PlayState extends MusicBeatState
 	}
 
 	/*public function spawnNoteSplashOnNote(note:Note)
-			{
-				if (ClientPrefs.noteSplashes && note != null)
-				{
-					var strum:StrumNote = playerStrums.members[note.noteData];
-					if (strum != null)
-					{
-						spawnNoteSplash(strum.x, strum.y, note.noteData, note);
-					}
-				}
-			}
+						{
+							if (ClientPrefs.noteSplashes && note != null)
+							{
+								var strum:StrumNote = playerStrums.members[note.noteData];
+								if (strum != null)
+								{
+									spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+								}
+							}
+						}
 	
-			public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
-			{
-				var skin:String = 'noteSplashes';
-				if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
-					skin = PlayState.SONG.splashSkin;
+						public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
+						{
+							var skin:String = 'noteSplashes';
+							if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
+								skin = PlayState.SONG.splashSkin;
 	
-				var hue:Float = 0;
-				var sat:Float = 0;
-				var brt:Float = 0;
-				if (data > -1 && data < ClientPrefs.arrowHSV.length)
-				{
-					hue = ClientPrefs.arrowHSV[data][0] / 360;
-					sat = ClientPrefs.arrowHSV[data][1] / 100;
-					brt = ClientPrefs.arrowHSV[data][2] / 100;
-					if (note != null)
-					{
-						skin = note.noteSplashTexture;
-						hue = note.noteSplashHue;
-						sat = note.noteSplashSat;
-						brt = note.noteSplashBrt;
-					}
-				}
+							var hue:Float = 0;
+							var sat:Float = 0;
+							var brt:Float = 0;
+							if (data > -1 && data < ClientPrefs.arrowHSV.length)
+							{
+								hue = ClientPrefs.arrowHSV[data][0] / 360;
+								sat = ClientPrefs.arrowHSV[data][1] / 100;
+								brt = ClientPrefs.arrowHSV[data][2] / 100;
+								if (note != null)
+								{
+									skin = note.noteSplashTexture;
+									hue = note.noteSplashHue;
+									sat = note.noteSplashSat;
+									brt = note.noteSplashBrt;
+								}
+							}
 	
-				var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-				splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
-				grpNoteSplashes.add(splash);
+							var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+							splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+							grpNoteSplashes.add(splash);
 	}*/
 	var fastCarCanDrive:Bool = true;
 

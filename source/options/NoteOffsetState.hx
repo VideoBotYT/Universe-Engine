@@ -189,7 +189,7 @@ class NoteOffsetState extends MusicBeatState
 		add(blackBox);
 
 		changeModeText = new FlxText(0, 4, FlxG.width, "", 32);
-		changeModeText.setFormat(Paths.font("funin.ttf"), 32, FlxColor.WHITE, CENTER);
+		changeModeText.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, CENTER);
 		changeModeText.scrollFactor.set();
 		changeModeText.cameras = [camHUD];
 		add(changeModeText);
@@ -356,7 +356,7 @@ class NoteOffsetState extends MusicBeatState
 			persistentUpdate = false;
 			CustomFadeTransition.nextCamera = camOther;
 			MusicBeatState.switchState(new options.OptionsState());
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 1, true);
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 1, true);
 			FlxG.mouse.visible = false;
 		}
 

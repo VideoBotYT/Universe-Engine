@@ -349,7 +349,7 @@ class PauseSubState extends MusicBeatSubstate
 						{
 							FlxG.switchState(new FreeplayState());
 						}
-						FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 						PlayState.changedDifficulty = false;
 						PlayState.chartingMode = false;
 					case "Exit to Main Menu":
@@ -358,7 +358,7 @@ class PauseSubState extends MusicBeatSubstate
 
 						WeekData.loadTheFirstEnabledMod();
 						FlxG.switchState(new MainMenuState());
-						FlxG.sound.playMusic(Paths.music(ClientPrefs.mmm));
+						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 						PlayState.changedDifficulty = false;
 						PlayState.chartingMode = false;
 					case "Exit Game":
@@ -483,15 +483,16 @@ class PauseSubState extends MusicBeatSubstate
 		if (skipTimeText == null || skipTimeTracker == null)
 			return;
 
-		skipTimeText.x = skipTimeTracker.x + skipTimeTracker.width + 60;
-		skipTimeText.y = skipTimeTracker.y;
+		//skipTimeText.x = skipTimeTracker.x + skipTimeTracker.width + 60;
+		skipTimeText.screenCenter(X);
+		skipTimeText.y = skipTimeTracker.y + 60;
 		skipTimeText.visible = (skipTimeTracker.alpha >= 1);
 	}
 
 	function updateSkipTimeText()
 	{
 		skipTimeText.text = FlxStringUtil.formatTime(Math.max(0, Math.floor(curTime / 1000)), false)
-			+ ' / '
+			+ ' | '
 			+ FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / 1000)), false);
 	}
 }

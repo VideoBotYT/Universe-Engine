@@ -1,0 +1,5 @@
+Value 1:
+
+1 - opponent
+2 - Player
+3 - gf

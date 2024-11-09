@@ -22,37 +22,67 @@ class AchievementsMenuState extends MusicBeatState
 	#if ACHIEVEMENTS_ALLOWED
 	var options:Array<String> = [];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
+
 	private static var curSelected:Int = 0;
+
 	private var achievementArray:Array<AttachedAchievement> = [];
 	private var achievementIndex:Array<Int> = [];
 	private var descText:FlxText;
 
-	override function create() {
+	override function create()
+	{
 		#if desktop
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
-		menuBG.updateHitbox();
-		menuBG.screenCenter();
-		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
-		add(menuBG);
+		if (ClientPrefs.darkmode)
+		{
+			var menuBG:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
+			menuBG.color = 0xFF9271FD;
+			menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+			menuBG.updateHitbox();
+			menuBG.screenCenter();
+			menuBG.antialiasing = ClientPrefs.globalAntialiasing;
+			add(menuBG);
+		}
+		else if (ClientPrefs.cm)
+		{
+			var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+			menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+			menuBG.updateHitbox();
+			menuBG.screenCenter();
+			menuBG.antialiasing = ClientPrefs.globalAntialiasing;
+			menuBG.color = 0xFFfd719b;
+			add(menuBG);
+		}
+		else
+		{
+			var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBGBlue'));
+			menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+			menuBG.updateHitbox();
+			menuBG.screenCenter();
+			menuBG.antialiasing = ClientPrefs.globalAntialiasing;
+			add(menuBG);
+		}
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
 		Achievements.loadAchievements();
-		for (i in 0...Achievements.achievementsStuff.length) {
-			if(!Achievements.achievementsStuff[i][3] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
+		for (i in 0...Achievements.achievementsStuff.length)
+		{
+			if (!Achievements.achievementsStuff[i][3] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2]))
+			{
 				options.push(Achievements.achievementsStuff[i]);
 				achievementIndex.push(i);
 			}
 		}
 
-		for (i in 0...options.length) {
+		for (i in 0...options.length)
+		{
 			var achieveName:String = Achievements.achievementsStuff[achievementIndex[i]][2];
-			var optionText:Alphabet = new Alphabet(280, 300, Achievements.isAchievementUnlocked(achieveName) ? Achievements.achievementsStuff[achievementIndex[i]][0] : '?', false);
+			var optionText:Alphabet = new Alphabet(280, 300,
+				Achievements.isAchievementUnlocked(achieveName) ? Achievements.achievementsStuff[achievementIndex[i]][0] : '?', false);
 			optionText.isMenuItem = true;
 			optionText.targetY = i - curSelected;
 			optionText.snapToPosition();
@@ -65,7 +95,7 @@ class AchievementsMenuState extends MusicBeatState
 		}
 
 		descText = new FlxText(150, 600, 980, "", 32);
-		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		descText.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
 		add(descText);
@@ -74,23 +104,28 @@ class AchievementsMenuState extends MusicBeatState
 		super.create();
 	}
 
-	override function update(elapsed:Float) {
+	override function update(elapsed:Float)
+	{
 		super.update(elapsed);
 
-		if (controls.UI_UP_P) {
+		if (controls.UI_UP_P)
+		{
 			changeSelection(-1);
 		}
-		if (controls.UI_DOWN_P) {
+		if (controls.UI_DOWN_P)
+		{
 			changeSelection(1);
 		}
 
-		if (controls.BACK) {
+		if (controls.BACK)
+		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
 		}
 	}
 
-	function changeSelection(change:Int = 0) {
+	function changeSelection(change:Int = 0)
+	{
 		curSelected += change;
 		if (curSelected < 0)
 			curSelected = options.length - 1;
@@ -99,19 +134,23 @@ class AchievementsMenuState extends MusicBeatState
 
 		var bullShit:Int = 0;
 
-		for (item in grpOptions.members) {
+		for (item in grpOptions.members)
+		{
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
 			item.alpha = 0.6;
-			if (item.targetY == 0) {
+			if (item.targetY == 0)
+			{
 				item.alpha = 1;
 			}
 		}
 
-		for (i in 0...achievementArray.length) {
+		for (i in 0...achievementArray.length)
+		{
 			achievementArray[i].alpha = 0.6;
-			if(i == curSelected) {
+			if (i == curSelected)
+			{
 				achievementArray[i].alpha = 1;
 			}
 		}

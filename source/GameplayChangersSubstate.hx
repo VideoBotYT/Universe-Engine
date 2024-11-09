@@ -37,6 +37,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
+	// BIG FAIL
+	//private var descBox:FlxSprite;
+	//private var descText:FlxText;
+
 	public static var inThePauseMenu:Bool = false;
 
 	public var pauseState:PauseSubState;
@@ -49,6 +53,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var goption:GameplayOption = new GameplayOption('Scroll Type', 'scrolltype', 'string', 'multiplicative', ["multiplicative", "constant"]);
 		optionsArray.push(goption);
+		//descText = new FlxText(50, 600, 1180, "Change the Scroll type you want.", 32);
 
 		var option:GameplayOption = new GameplayOption('Scroll Speed', 'scrollspeed', 'float', 1);
 		option.scrollSpeed = 2.0;
@@ -66,17 +71,17 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			option.maxValue = 6;
 		}
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Change the scroll speed you want.", 32);
 
-		#if !html5
 		var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
 		option.scrollSpeed = 1;
 		option.minValue = 0.5;
-		option.maxValue = 3.0;
+		//option.maxValue = 10.0; //no limitations :)
 		option.changeValue = 0.05;
 		option.displayFormat = '%vX';
 		option.decimals = 2;
 		optionsArray.push(option);
-		#end
+		//descText = new FlxText(50, 600, 1180, "How fast the song should be.", 32);
 
 		var option:GameplayOption = new GameplayOption('Health Gain Multiplier', 'healthgain', 'float', 1);
 		option.scrollSpeed = 2.5;
@@ -85,6 +90,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "How much health do you wanna gain?", 32);
 
 		var option:GameplayOption = new GameplayOption('Health Loss Multiplier', 'healthloss', 'float', 1);
 		option.scrollSpeed = 2.5;
@@ -93,38 +99,52 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "How much health do you wanna lose?", 32);
 
 		var option:GameplayOption = new GameplayOption('Instakill on Miss', 'instakill', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Instant kill on miss, pretty simple.", 32);
 
 		var option:GameplayOption = new GameplayOption('Practice Mode', 'practice', 'bool', false);
 		option.onChange = onChangeCheat;
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Basically, doesn't kill you.", 32);
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		option.onChange = onChangeCheat;
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "A bot plays for you!", 32);
 
 		var option:GameplayOption = new GameplayOption('Modchart', 'modchart', 'bool', true);
 		option.onChange = onChangeCheat;
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Disable modchart and enable modchart.", 32);
 
 		var option:GameplayOption = new GameplayOption('Play Both Sides', 'pbs', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Feeling a bit bored playing one side? How bout' 2 sides?", 32);
 
 		var option:GameplayOption = new GameplayOption('Crash on miss', 'sd', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Crashes your game on miss! Used to be shut down on miss but replaced :(", 32);
 
 		var option:GameplayOption = new GameplayOption('Health Drain', 'hd', 'bool', true);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Opponent note hit, you lose health.", 32);
 
 		var option:GameplayOption = new GameplayOption('Sustain 1 note', 'sn', 'bool', true);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Really bad version of sustain as one note.", 32);
+
+		var option:GameplayOption = new GameplayOption('Health Drain Part 2', 'hdp2', 'bool', false);
+		option.onChange = onChangeChartOption;
+		optionsArray.push(option);
+		//descText = new FlxText(50, 600, 1180, "Whenever missed, you lose health and the more you miss, you lose more health.", 32);
 	}
 
 	public function getOptionByName(name:String)
@@ -194,7 +214,15 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		changeSelection();
 		reloadCheckboxes();
 
-		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];	
+
+		/*
+		descText = new FlxText(50, 600, 1180, "ballsack", 32);
+		descText.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		descText.scrollFactor.set();
+		descText.borderSize = 2.4;
+		add(descText);
+		*/
 	}
 
 	override function destroy()

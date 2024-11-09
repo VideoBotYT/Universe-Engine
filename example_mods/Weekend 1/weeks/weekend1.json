@@ -1,0 +1,57 @@
+{
+	"songs": [
+		[
+			"darnell",
+			"darnell",
+			[
+				61,
+				59,
+				41
+			]
+		],
+		[
+			"lit-up",
+			"darnell",
+			[
+				61,
+				59,
+				41
+			]
+		],
+		[
+			"2hot",
+			"darnell",
+			[
+				61,
+				59,
+				41
+			]
+		],
+		[
+			"blazin'",
+			"darnell",
+			[
+				61,
+				59,
+				41
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "phillyStreets",
+	"weekCharacters": [
+		"darnell",
+		"pico-player",
+		"nene"
+	],
+	"storyName": "DUE DEBTS",
+	"weekName": "week end 1",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "week7",
+	"startUnlocked": true
+}

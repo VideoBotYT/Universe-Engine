@@ -1,0 +1,7 @@
+Value 1
+
+No Value = 0.023 health taken
+hit = 0.2 health taken
+
+Value 2
+opp = 0.2 health boosted (only when value 1 is hit)

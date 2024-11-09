@@ -22,6 +22,7 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import MusicBeatState;
 import Controls;
+import lime.app.Application;
 
 using StringTools;
 
@@ -32,13 +33,16 @@ class UEGameOptions extends BaseOptionsMenu
 		title = 'Universe Game options';
 		rpcTitle = 'Game options of the engine'; // for Discord Rich Presence
 
-		var option:Option = new Option('Main Menu Music', 'Change the main menu song', 'mmm', 'string', 'freakymenu', [
-			'freakyMenu',
+		var option:Option = new Option('Main Menu Music', 'Change the main menu song', 'mmm', 'string', 'Universe', [
+			'Universe',
 			'FunkinParadise',
 			"AAC V4",
 			'VS Impostor V4',
 			'VS Shaggy',
-			'VS Nonsense V2'
+			'VS Nonsense V2',
+			'DNB Old',
+			'Stay Funky',
+			'Marked Engine'
 		]);
 		addOption(option);
 
@@ -59,6 +63,12 @@ class UEGameOptions extends BaseOptionsMenu
 			'checkForUpdates', 'bool', true);
 		addOption(option);
 
+		var option:Option = new Option('Dark Mode', 'Basically dark mode on every website, but cooler', 'darkmode', 'bool', false);
+		addOption(option);
+
+		var option:Option = new Option('El funny shake', 'funny shake :3', 'elfunyshak', 'bool', false);
+		addOption(option);
+
 		super();
 	}
 
@@ -77,7 +87,7 @@ class UEGameOptions extends BaseOptionsMenu
 	override function destroy()
 	{
 		if (changedMusic)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 		super.destroy();
 	}
 
@@ -101,7 +111,7 @@ class UEGameOptions extends BaseOptionsMenu
 
 	function onChangeHitSound()
 	{
-		FlxG.sound.play(Paths.sound(ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
 	}
 
 	function restart()

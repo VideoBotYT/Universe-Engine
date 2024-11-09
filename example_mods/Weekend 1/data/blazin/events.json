@@ -1,0 +1,26 @@
+{
+	"song": {
+		"events": [
+			[
+				8000,
+				[
+					[
+						"Alt Idle Animation",
+						"bf",
+						"-alt"
+					]
+				]
+			],
+			[
+				8083.33333333333,
+				[
+					[
+						"Alt Idle Animation",
+						"dad",
+						"-alt"
+					]
+				]
+			]
+		]
+	}
+}

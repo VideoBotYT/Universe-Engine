@@ -1,0 +1,35 @@
+{
+	"storyName": "Spooky Month Erect",
+	"difficulties": "Erect, Nightmare",
+	"hideFreeplay": false,
+	"weekBackground": "halloween",
+	"weekBefore": "week1",
+	"startUnlocked": true,
+	"songs": [
+		[
+			"Spookeez",
+			"spooky",
+			[
+				34,
+				51,
+				68
+			]
+		],
+		[
+			"South",
+			"spooky",
+			[
+				34,
+				51,
+				68
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"spooky",
+		"bf",
+		"gf"
+	],
+	"weekName": "Week 2 Erect"
+}

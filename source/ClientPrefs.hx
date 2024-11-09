@@ -48,7 +48,7 @@ class ClientPrefs
 	public static var hudZoomOut:Bool = true;
 	public static var hudPosUE:String = 'LEFT';
 	public static var sntf:Bool = true;
-	public static var mmm:String = 'freakyMenu';
+	public static var mmm:String = 'Universe';
 	public static var ft:Bool = false;
 	public static var ht:String = 'classic';
 	public static var dhb:Bool = true;
@@ -62,6 +62,12 @@ class ClientPrefs
 	public static var huet:Bool = false;
 	public static var css:String = 'GF Sounds';
 	public static var dcm:Bool = false;
+	public static var uess:Bool = true;
+	public static var lhpbgb:Bool = true;
+	public static var longnotet:Float = 0.6;
+	public static var darkmode:Bool = false;
+	public static var elfunyshak:Bool = false;
+	public static var ueresultscreen:Bool = true;
 
 	public static var noteSkin:String = 'Default';
 	public static var noteColorStyle:String = 'Normal';
@@ -92,7 +98,8 @@ class ClientPrefs
 		'pbs' => false,
 		'sd' => false,
 		'hd' => true,
-		'sn' => true
+		'sn' => true,
+		'hdp2' => false
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -163,6 +170,15 @@ class ClientPrefs
 		FlxG.save.data.huet = huet;
 		FlxG.save.data.css = css;
 		FlxG.save.data.dcm = dcm;
+		FlxG.save.data.uess = uess;
+		FlxG.save.data.lhpbgb = lhpbgb;
+		FlxG.save.data.longnotet = longnotet;
+		FlxG.save.data.darkmode = darkmode;
+		FlxG.save.data.elfunyshak = elfunyshak;
+		FlxG.save.data.ueresultscreen = ueresultscreen;
+
+		FlxG.save.data.arrowRGB = arrowRGB;
+		FlxG.save.data.arrowRGBPixel = arrowRGBPixel;
 
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.middleScroll = middleScroll;
@@ -305,7 +321,40 @@ class ClientPrefs
 		{
 			dcm = FlxG.save.data.dcm;
 		}
+		if (FlxG.save.data.arrowRGB != null)
+		{
+			arrowRGB = FlxG.save.data.arrowRGB;
+		}
+		if (FlxG.save.data.arrowRGBPixel != null)
+		{
+			arrowRGBPixel = FlxG.save.data.arrowRGBPixel;
+		}
+		if (FlxG.save.data.uess != null)
+		{
+			uess = FlxG.save.data.uess;
+		}
+		if (FlxG.save.data.lhpbgb != null)
+		{
+			lhpbgb = FlxG.save.data.lhpbgb;
+		}
+		if (FlxG.save.data.longnotet != null)
+		{
+			longnotet = FlxG.save.data.longnotet;
+		}
+		if (FlxG.save.data.darkmode != null)
+		{
+			darkmode = FlxG.save.data.darkmode;
+		}
+		if (FlxG.save.data.elfunyshak != null)
+		{
+			elfunyshak = FlxG.save.data.elfunyshak;
+		}
+		if (FlxG.save.data.ueresultscreen != null)
+		{
+			ueresultscreen = FlxG.save.data.ueresultscreen;
+		}
 
+		// Normal Psych Stuff
 		if (FlxG.save.data.downScroll != null)
 		{
 			downScroll = FlxG.save.data.downScroll;

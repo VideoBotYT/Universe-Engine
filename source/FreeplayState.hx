@@ -56,7 +56,7 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
-	public var cheatText:FlxText = new FlxText(FlxG.width / 2 - 100, FlxG.height - 92, 0, "Scores won't save bc of cheating", 32);
+	public var cheatText:FlxText = new FlxText(FlxG.width / 2 - 100, FlxG.height - 92, 0, "Scores won't save because of cheating", 32);
 
 	override function create()
 	{
@@ -113,10 +113,20 @@ class FreeplayState extends MusicBeatState
 				}
 		}*/
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bg);
-		bg.screenCenter();
+		if (ClientPrefs.darkmode)
+		{
+			bg = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			add(bg);
+			bg.screenCenter();
+		}
+		else
+		{
+			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			add(bg);
+			bg.screenCenter();
+		}
 
 		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
 		grid.velocity.set(40, 20);
@@ -213,7 +223,7 @@ class FreeplayState extends MusicBeatState
 		var size:Int = 18;
 		#end
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
-		text.setFormat(Paths.font("funkin.ttf"), size, FlxColor.WHITE, RIGHT);
+		text.setFormat(Paths.font("funkin.ttf"), size, FlxColor.WHITE, CENTER);
 		text.scrollFactor.set();
 		add(text);
 

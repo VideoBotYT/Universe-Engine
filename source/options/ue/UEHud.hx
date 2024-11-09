@@ -45,8 +45,30 @@ class UEHud extends BaseOptionsMenu
 				'sntf', 'bool', true);
 			addOption(option);
 
-			var option:Option = new Option("Hide UE's Timebar", ' If unchecked, the UE time bar is going to dissapear', 'huet', 'bool', false);
+			var option:Option = new Option("Hide UE's Timebar", ' If checked, the UE time bar is going to dissapear', 'huet', 'bool', false);
 			addOption(option);
+		}
+
+		var option:Option = new Option('Keystrokes', "If checked, you can see the keystrokes", 'keystrokes', 'bool', true);
+		addOption(option);
+
+		if (ClientPrefs.keystrokes == true)
+		{
+			var option:Option = new Option('Keystrokes Alpha', 'Keystrokes Alpha, max 50%', 'keyA', 'percent', 0.3);
+			addOption(option);
+			option.maxValue = 0.5;
+
+			var option:Option = new Option('Keystrokes Fade Time', 'Keystrokes Fade time, max 25%', 'keyFT', 'percent', 0.15);
+			addOption(option);
+			option.maxValue = 0.25;
+
+			var option:Option = new Option('Keystrokes X Position', 'Keystrokes X Pos, max 615', 'keyXPos', 'int', 90);
+			addOption(option);
+			option.maxValue = 615;
+
+			var option:Option = new Option('Keystrokes Y Position', 'Keystrokes Y Pos, max 580', 'keyYPos', 'int', 330);
+			addOption(option);
+			option.maxValue = 580;
 		}
 
 		var option:Option = new Option('Detached Health Bar', 'When Unchecked, the health bar get sets to camHUD', 'dhb', 'bool', true);
@@ -59,6 +81,9 @@ class UEHud extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Icon Bop', "If the mod has a custom icon bop, disable this!", 'ib', 'bool', true);
+		addOption(option);
+		
+		var option:Option = new Option('Layer HPBG Behind', 'If unchecked, The Healthbar BG Layers behind the health bar colors.', 'lhpbgb', 'bool', false);
 		addOption(option);
 
 		super();
@@ -79,7 +104,7 @@ class UEHud extends BaseOptionsMenu
 	override function destroy()
 	{
 		if (changedMusic)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 		super.destroy();
 	}
 
@@ -103,6 +128,6 @@ class UEHud extends BaseOptionsMenu
 
 	function onChangeHitSound()
 	{
-		FlxG.sound.play(Paths.sound(ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
 	}
 }
