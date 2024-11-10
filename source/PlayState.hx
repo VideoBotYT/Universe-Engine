@@ -1432,7 +1432,7 @@ class PlayState extends MusicBeatState
 
 		// PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
 		if (ClientPrefs.hitsoundVolume > 0)
-			precacheList.set(ClientPrefs.ht, 'sound');
+			precacheList.set('hitsound-${ClientPrefs.ht}', 'sound');
 		precacheList.set('missnote1', 'sound');
 		precacheList.set('missnote2', 'sound');
 		precacheList.set('missnote3', 'sound');
