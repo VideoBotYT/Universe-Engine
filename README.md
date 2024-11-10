@@ -6,14 +6,13 @@
   <br>
 </h1>
 <h3 align="center">
-  <b>Welcome to universe engine. A modified psych engine, making it a teeny tiny bit better.
-    
-  </b>
-  
+  <b>Welcome to universe engine. A modified psych engine, making it a teeny tiny bit better.</b>
+</h3>
+<h4 align="center">
   README.md Borrowed and modified from [JS ENGINE](https://github.com/JordanSantiagoYT/FNF-JS-Engine)
   
   CHANGELOG.md is now the universe engine changelog.
-</h3>
+</h4>
 
 # Hello!
 
@@ -40,14 +39,17 @@ please do post an issue! this helps us keeps bugs out in our engine!
 modcharting tool my beloved <3<3
 coolest thing there is in this engine.
 
-# Universe Engine Team
+# CREDICE
 * [uwenalil](https://linktr.ee/uwenalil) -> First dev, First DEV, In charge of the LUA, HX files and other\nDoes all/most of the bug fixes
 * [VideoBot](https://linktr.ee/videobot) -> Second DEV, In charge of the HX files
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
 
-# Universe Bonus Stuff
-[Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
-[Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
+<details>
+  <summary><h5>Bonus stuff
+### Universe Bonus Stuff
+* [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
+* [Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
+</h5></summary>
 
 <details>
   <summary><h2>Psych engine credits and other stuff</h2></summary>
