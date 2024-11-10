@@ -48,6 +48,8 @@ coolest thing there is in this engine.
 * [VideoBot](https://linktr.ee/videobot) -> Second DEV, In charge of the HX files
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
 
+* [CharGoldenYT](https://bsky.app/profile/chargoldenyt.bsky.social) -> Absoulute W to this man, PR that fixes some stuff to the engine.
+
 ### Universe Bonus Stuff
 * [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
 * [Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
