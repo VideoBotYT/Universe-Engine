@@ -405,19 +405,39 @@ class FreeplayState extends MusicBeatState
 				FlxG.sound.music.volume = 0;
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				if (PlayState.SONG.needsVoices)
-					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-				else
-					vocals = new FlxSound();
+				// The following fixes both missing vocals AND crashing due to missing chart. ShadowMario TO THIS DAY has not fixed the freeplay missing chart crash error.
+				try
+					{
+						PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+						if (PlayState.SONG.needsVoices)
+						{
+							try
+							{
+								vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+							}
+							catch(e:Dynamic)
+							{
+								vocals = new FlxSound();
+							}
+						}
+						else
+						{
+							vocals = new FlxSound();
+						}
 
-				FlxG.sound.list.add(vocals);
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-				vocals.play();
-				vocals.persist = true;
-				vocals.looped = true;
-				vocals.volume = 0.7;
-				instPlaying = curSelected;
+						FlxG.sound.list.add(vocals);
+						FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+						vocals.play();
+						vocals.persist = true;
+						vocals.looped = true;
+						vocals.volume = 0.7;
+						instPlaying = curSelected;
+					}
+					catch(e:Dynamic)
+					{
+						trace('Error loading/playing file! $e');
+						FlxG.sound.play(Paths.sound('cancelMenu'));
+					}
 				#end
 			}
 		}
