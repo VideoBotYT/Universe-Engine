@@ -8,8 +8,9 @@
 <h3 align="center">
   <b>Welcome to universe engine. A modified psych engine, making it a teeny tiny bit better.</b>
 
-  README.md Borrowed and modified from [JS ENGINE](https://github.com/JordanSantiagoYT/FNF-JS-Engine)
 
+  README.md Borrowed and modified from [JS ENGINE](https://github.com/JordanSantiagoYT/FNF-JS-Engine)
+  
   CHANGELOG.md is now the universe engine changelog.
 </h3>
 
@@ -19,45 +20,30 @@ Welcome to universe engine!
 
 probably one of the most advanced engine I've ever made lol.
 
-
-
 This engine includes some new features like a modcharting tool annd some other cool stuff!
 
-
-
 I won't go over what has been added since [Gamejolt page](https://gamejolt.com/games/universeengine/935086) already has all the features listed
-
-
 
 Heres some working libs that I use (uwenalil) that will make the engine work. (ONLY FOR COMPILING)
 * haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp (FIXES NO COLOR BUG)
 * haxelib install hxCodec 2.5.1 (FIXES VIDEO CRASH)
 * haxelib install lime 8.0.1 (FIXES TEXT SCREEN CENTER BUG) (optional!)
 
-
-
 If you have the voices.ogg problem when compiling, open a issue and ill send my haxelib libraries.
+
 If you have any bugs trying to compile this engine, please do submit a Issue!
-
-
 
 # THANK YOU FOR USING THIS ENGINE!
 seriously, thank you, I've never made an engine this popular <3
 
-
-
 # IF YOU HAVE ANY QUESTIONS/BUGS/CRASHES.
 please do post an issue! this helps us keeps bugs out in our engine!
-
-
 
 modcharting tool my beloved <3<3
 
 coolest thing there is in this engine.
 
-<h3 align="center">
-
-### Universe Engine Team
+# Universe Engine Team
 
 * [uwenalil](https://linktr.ee/uwenalil) -> First dev, First DEV, In charge of the LUA, HX files and other\nDoes all/most of the bug fixes
 
@@ -65,16 +51,11 @@ coolest thing there is in this engine.
 
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
 
-</h3>
+# Universe Bonus Stuff
 
-<details>
-  <summary><h4>Universe Bonus Stuff
+[Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
 
-  [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
-
-  [Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
-
-</h4></summary>
+[Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
 
 <details>
   <summary><h2>Psych engine credits and other stuff</h2></summary>
