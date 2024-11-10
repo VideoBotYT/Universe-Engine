@@ -68,13 +68,13 @@ coolest thing there is in this engine.
 </h3>
 
 <details>
-  <summary><h2>Universe Bonus Stuff
+  <summary><h4>Universe Bonus Stuff
 
   [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
 
   [Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
 
-</h2></summary>
+</h4></summary>
 
 <details>
   <summary><h2>Psych engine credits and other stuff</h2></summary>
