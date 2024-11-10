@@ -44,7 +44,7 @@ please do post an issue! this helps us keeps bugs out in our engine!
 
 
 modcharting tool my beloved <3<3
-also probably one of the most high effort I've ever made lol
+coolest thing there is in this engine.
 
 <details>
   <summary><h2>Psych engine credits and other stuff</h2></summary>
