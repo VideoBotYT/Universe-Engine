@@ -1,7 +1,9 @@
 # Universe Engine Changelog.
 
 [Universe Engine 0.3.3](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.3.3)
+
 <-- UWENALIL -->
+
 Intro of AAC was changed
 Note color crash is now fixed!
 Note color now saves your color
@@ -27,11 +29,13 @@ Added an option to turn off miss sounds
 There is no limitation to playback rate.
 
 <-- VIDEOBOT -->
+
 Lua backDrop
 Added a new menu music = Marked Engine
 Added a new menu music = DNB OLD
 
 <-- BARANMUZU -->
+
 Added Results Screen
 Fixed the double trail
 Added Health Drain Part 2
@@ -41,6 +45,7 @@ Jumpscare event
 Erect menu
 
 <-- PULL REQUESTS -->
+
 https://github.com/VideoBotYT/Universe-Engine/pull/8 -- CharGoldenYT
 
 * uwenalil
@@ -48,6 +53,7 @@ Taking a break from universe engine dev, thank you for using.
 **ME SAYING THAT DOESN'T MEAN THE ENGINE WONT BE UPDATED ANYMORE!!!**
 
 [Universe Engine 0.2.2](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.2.2)
+
 New events
 Cute mode more modified
 Shut down on miss now replaced with crash on miss
@@ -61,6 +67,7 @@ Chart editor{
 }
 
 [Universe Engine 0.2.1](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.2.1)
+
 Fixed the HUD tag so it doesn't conflict with any other script that uses the tag.
 Actually made Center Hud Pos and Combo counter Centered.
 Fixed combo counter on the misses and the popup.
@@ -93,4 +100,5 @@ New freakyMenu Music.
 Bonus Songs are now in a different download.
 
 [Universe Engine 0.1.0](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.1.0)
+
 First release with terrible features.
