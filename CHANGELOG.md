@@ -107,7 +107,7 @@ Fire in the hole
 
 Immediate reset (not implimented)
 
-Chart editor{
+Chart editor
 
     Section notes
     
@@ -116,8 +116,6 @@ Chart editor{
     Fixed chart hitsound crash
     
     Reset button for playback rate
-    
-}
 
 
 [Universe Engine 0.2.1](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.2.1)
