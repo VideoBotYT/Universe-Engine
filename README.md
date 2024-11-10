@@ -22,7 +22,7 @@ This engine includes some new features like a modcharting tool annd some other c
 
 I won't go over what has been added since [Gamejolt page](https://gamejolt.com/games/universeengine/935086) already has all the features listed
 
-Heres some working libs that I use (uwenalil) that will make the engine work.
+Heres some working libs that I use (uwenalil) that will make the engine work. (ONLY FOR COMPILING)
 * haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp (FIXES NO COLOR BUG)
 * haxelib install hxCodec 2.5.1 (FIXES VIDEO CRASH)
 * haxelib install lime 8.0.1 (FIXES TEXT SCREEN CENTER BUG) (optional!)
