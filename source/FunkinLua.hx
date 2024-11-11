@@ -2118,6 +2118,21 @@ class FunkinLua
 				object.makeGraphic(width, height, colorNum);
 			}
 		});
+		Lua_helper.add_callback(lua, 'changeWindowTitle', function(title:String) {
+			openfl.Lib.application.window.title = title;
+		});
+		Lua_helper.add_callback(lua, 'changeWindowIcon', function(icon:String) {
+			var path:String = '';
+			if (FileSystem.exists(Paths.modsImages('icon')))
+			{
+				path = Paths.modsImages('icon');
+			}
+			else
+			{
+				path = Paths.getPath('images/$icon.png', IMAGE);
+			}
+			openfl.Lib.application.window.setIcon(lime.graphics.Image.fromFile(path));
+		});
 		Lua_helper.add_callback(lua, "addAnimationByPrefix", function(obj:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true)
 		{
 			if (PlayState.instance.getLuaObject(obj, false) != null)
