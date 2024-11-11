@@ -658,20 +658,16 @@ class WeekEditorFreeplayState extends MusicBeatState
 	{
 		if (ClientPrefs.darkmode)
 		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = FlxColor.WHITE;
-			bg.scrollFactor.set();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
+			bg = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
 		}
 		else
 		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		}
 			bg.scrollFactor.set();
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
 			bg.color = FlxColor.WHITE;
 			add(bg);
-		}
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
