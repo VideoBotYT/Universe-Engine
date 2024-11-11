@@ -445,7 +445,16 @@ class FreeplayState extends MusicBeatState
 		{
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
-			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+			
+			try
+			{
+				var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+			}
+			catch(e:Dynamic)
+			{
+				lime.app.Application.current.window.alert('Error loading song!\n$e');
+				return;
+			}
 			/*#if MODS_ALLOWED
 				if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
 				#else
