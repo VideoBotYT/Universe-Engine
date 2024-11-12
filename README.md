@@ -54,6 +54,8 @@ coolest thing there is in this engine.
 * [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
 * [Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
 
+[pink thing](https://github.com/VideoBotYT/Universe-Engine/blob/main/assets/preload/images/pink-thing.png?raw=true)
+
 <details>
   <summary><h2>Psych engine credits and other stuff</h2></summary>
 
