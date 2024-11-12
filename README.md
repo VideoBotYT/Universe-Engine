@@ -58,7 +58,7 @@ coolest thing there is in this engine.
 
 ![pink thing](https://github.com/VideoBotYT/Universe-Engine/blob/main/assets/preload/images/pink-thing.png?raw=true)
 
-pink thing is now universe engine original character
+pink thing is now universe engine OC
 (character made by [B0YFR1END](https://www.youtube.com/@B0YFR1END))
 
 <details>
