@@ -3484,6 +3484,7 @@ class ChartingState extends MusicBeatState
 
 	var missingText:FlxText;
 	var missingTextTimer:FlxTimer;
+	// TODO: fix it failing to locate modded charts
 	function loadJson(song:String):Void
 	{
 		//shitty null fix, i fucking hate it when this happens

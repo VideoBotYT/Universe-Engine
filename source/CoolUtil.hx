@@ -6,6 +6,9 @@ import lime.utils.Assets as LimeAssets;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
 import flixel.sound.FlxSound;
+import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -220,4 +223,11 @@ class CoolUtil
 		}
 		return total;
 	}
+}
+
+enum PrintType {
+	LOG;
+	DEBUG;
+	WARNING;
+	ERROR;
 }

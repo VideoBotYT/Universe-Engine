@@ -895,12 +895,14 @@ class TitleState extends MusicBeatState
 			{
 				switch (sickBeats)
 				{
+					#if VIDEOS_ALLOWED
 					case 1:
 						var video:MP4Handler = new MP4Handler();
 						video.playVideo("assets/videos/AACIntroUE.mp4");
 
 						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
+					#end
 					case 33:
 						skipIntro();
 				}
