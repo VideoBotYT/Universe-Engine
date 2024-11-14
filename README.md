@@ -44,7 +44,7 @@ modcharting tool my beloved <3<3
 coolest thing there is in this engine.
 
 # CREDICE
-* [uwenalil](https://linktr.ee/uwenalil) -> First dev, First DEV, In charge of the LUA, HX files and other Does all/most of the bug fixes
+* [uwenalil](https://linktr.ee/uwenalil) -> First DEV, In charge of the LUA, HX files and other Does all/most of the bug fixes
 * [VideoBot](https://linktr.ee/videobot) -> Second DEV, In charge of the HX files
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
 
@@ -72,7 +72,7 @@ You must have [the most up-to-date version of Haxe](https://haxe.org/download/),
 
 Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
 
-To install LuaJIT do this: `haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit` on a Command prompt/PowerShell
+To install LuaJIT do this: `haxelib git linc_luajit https://github.com/superpowers04/linc_luajit` on a Command prompt/PowerShell
 
 ...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
 
@@ -97,7 +97,8 @@ otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
 * PolybiusProxy - .MP4 Video Loader Library (hxCodec)
 * Keoiki - Note Splash Animations
 * Smokey - Sprite Atlas Support
-* Nebula the Zorua - LUA JIT Fork and some Lua reworks
+* Nebula the Zorua - Some Lua reworks
+* Superpowers04 - LUA JIT Fork
 _____________________________________
 
 # Features
