@@ -34,7 +34,7 @@ jobs:
           sudo apt-get install libvlc-dev
           sudo apt-get install libvlccore-dev
           haxelib setup ~/haxelib
-          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp --always
           haxelib install lime 8.1.3
           haxelib install openfl 9.2.2
           haxelib --never install flixel
@@ -72,7 +72,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
-          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp --always
           haxelib install lime 8.1.3
           haxelib install openfl 9.2.2
           haxelib --never install flixel
@@ -111,7 +111,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp --always
           haxelib install lime 8.1.3
           haxelib install openfl 9.2.2
           haxelib --never install flixel
