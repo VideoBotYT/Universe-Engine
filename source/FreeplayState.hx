@@ -37,7 +37,7 @@ class FreeplayState extends MusicBeatState
 
 	var curDifficulty:Int = -1;
 
-	private static var lastDifficultyName:String = '';
+	private static var lastDifficultyName:String = Difficulty.getDefault();
 
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -101,17 +101,6 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 		WeekData.loadTheFirstEnabledMod();
-
-		/*//KIND OF BROKEN NOW AND ALSO PRETTY USELESS//
-
-			var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
-			for (i in 0...initSonglist.length)
-			{
-				if(initSonglist[i] != null && initSonglist[i].length > 0) {
-					var songArray:Array<String> = initSonglist[i].split(":");
-					addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
-				}
-		}*/
 
 		if (ClientPrefs.darkmode)
 		{
@@ -183,33 +172,11 @@ class FreeplayState extends MusicBeatState
 		bg.color = songs[curSelected].color;
 		intendedColor = bg.color;
 
-		if (lastDifficultyName == '')
-		{
-			lastDifficultyName = CoolUtil.defaultDifficulty;
-		}
-		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
+		curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(lastDifficultyName)));
 
 		changeSelection();
 		changeDiff();
-
-		var swag:Alphabet = new Alphabet(1, 0, "swag");
-
-		// JUST DOIN THIS SHIT FOR TESTING!!!
-		/* 
-			var md:String = Markdown.markdownToHtml(Assets.getText('CHANGELOG.md'));
-
-			var texFel:TextField = new TextField();
-			texFel.width = FlxG.width;
-			texFel.height = FlxG.height;
-			// texFel.
-			texFel.htmlText = md;
-
-			FlxG.stage.addChild(texFel);
-
-			// scoreText.textField.htmlText = md;
-
-			trace(md);
-		 */
+		// _updateSongLastDifficulty();
 
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
@@ -356,6 +323,7 @@ class FreeplayState extends MusicBeatState
 				{
 					changeSelection((checkNewHold - checkLastHold) * (controls.UI_UP ? -shiftMult : shiftMult));
 					changeDiff();
+					// _updateSongLastDifficulty();
 				}
 			}
 
@@ -364,6 +332,7 @@ class FreeplayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
 				changeSelection(-shiftMult * FlxG.mouse.wheel, false);
 				changeDiff();
+				// _updateSongLastDifficulty();
 			}
 		}
 
@@ -373,12 +342,18 @@ class FreeplayState extends MusicBeatState
 			ShortcutMenuSubState.inShortcutMenu = true;
 		}
 
-		if (controls.UI_LEFT_P)
+		if (controls.UI_LEFT_P){
 			changeDiff(-1);
-		else if (controls.UI_RIGHT_P)
+			// _updateSongLastDifficulty();
+		}
+		else if (controls.UI_RIGHT_P){
 			changeDiff(1);
-		else if (upP || downP)
+			// _updateSongLastDifficulty();
+		}
+		else if (upP || downP){
 			changeDiff();
+			// _updateSongLastDifficulty();
+		}
 
 		if (controls.BACK && !ShortcutMenuSubState.inShortcutMenu)
 		{
@@ -513,19 +488,21 @@ class FreeplayState extends MusicBeatState
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = CoolUtil.difficulties.length - 1;
-		if (curDifficulty >= CoolUtil.difficulties.length)
+			curDifficulty = Difficulty.list.length-1;
+		if (curDifficulty >= Difficulty.list.length)
 			curDifficulty = 0;
 
-		lastDifficultyName = CoolUtil.difficulties[curDifficulty];
+		lastDifficultyName = Difficulty.getString(curDifficulty);
 
-		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
-		#end
 
-		PlayState.storyDifficulty = curDifficulty;
-		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
+		if (Difficulty.list.length > 1)
+			diffText.text = '< ' + lastDifficultyName.toUpperCase() + ' >';
+		else
+			diffText.text = lastDifficultyName.toUpperCase();
+
+		_updateSongLastDifficulty();
 		positionHighscore();
 	}
 
@@ -534,6 +511,7 @@ class FreeplayState extends MusicBeatState
 		if (playSound)
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
+		var lastList:Array<String> = Difficulty.list;
 		curSelected += change;
 
 		if (curSelected < 0)
@@ -591,47 +569,23 @@ class FreeplayState extends MusicBeatState
 		Paths.currentModDirectory = songs[curSelected].folder;
 		PlayState.storyWeek = songs[curSelected].week;
 
-		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
-		var diffStr:String = WeekData.getCurrentWeek().difficulties;
-		if (diffStr != null)
-			diffStr = diffStr.trim(); // Fuck you HTML5
-
-		if (diffStr != null && diffStr.length > 0)
-		{
-			var diffs:Array<String> = diffStr.split(',');
-			var i:Int = diffs.length - 1;
-			while (i > 0)
-			{
-				if (diffs[i] != null)
-				{
-					diffs[i] = diffs[i].trim();
-					if (diffs[i].length < 1)
-						diffs.remove(diffs[i]);
-				}
-				--i;
-			}
-
-			if (diffs.length > 0 && diffs[0].length > 0)
-			{
-				CoolUtil.difficulties = diffs;
-			}
-		}
-
-		if (CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
-		{
-			curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
-		}
+		Difficulty.loadFromWeek();
+		
+		var savedDiff:String = songs[curSelected].lastDifficulty;
+		var lastDiff:Int = Difficulty.list.indexOf(lastDifficultyName);
+		if(savedDiff != null && !lastList.contains(savedDiff) && Difficulty.list.contains(savedDiff))
+			curDifficulty = Math.round(Math.max(0, Difficulty.list.indexOf(savedDiff)));
+		else if(lastDiff > -1)
+			curDifficulty = lastDiff;
+		else if(Difficulty.list.contains(Difficulty.getDefault()))
+			curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(Difficulty.getDefault())));
 		else
-		{
 			curDifficulty = 0;
-		}
+	}
 
-		var newPos:Int = CoolUtil.difficulties.indexOf(lastDifficultyName);
-		// trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
-		if (newPos > -1)
-		{
-			curDifficulty = newPos;
-		}
+	inline private function _updateSongLastDifficulty()
+	{
+		songs[curSelected].lastDifficulty = Difficulty.getString(curDifficulty);
 	}
 
 	private function positionHighscore()
@@ -652,6 +606,7 @@ class SongMetadata
 	public var songCharacter:String = "";
 	public var color:Int = -7179779;
 	public var folder:String = "";
+	public var lastDifficulty:String = null;
 
 	public function new(song:String, week:Int, songCharacter:String, color:Int)
 	{

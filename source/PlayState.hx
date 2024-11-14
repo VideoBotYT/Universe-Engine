@@ -424,7 +424,7 @@ class PlayState extends MusicBeatState
 		Conductor.changeBPM(SONG.bpm);
 
 		#if desktop
-		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
+		storyDifficultyText = Difficulty.getString();
 
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
 		if (isStoryMode)
@@ -4423,7 +4423,7 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					var difficulty:String = CoolUtil.getDifficultyFilePath();
+					var difficulty:String = Difficulty.getFilePath();
 
 					trace('LOADING NEXT SONG');
 					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]) + difficulty);
@@ -5067,16 +5067,6 @@ class PlayState extends MusicBeatState
 			RecalculateRating(true);
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
-			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
-			// FlxG.log.add('played imss note');
-
-			/*boyfriend.stunned = true;
-	
-																									// get stunned for 1/60 of a second, makes you able to
-																									new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
-																									{
-																										boyfriend.stunned = false;
-			});*/
 
 			if (boyfriend.hasMissAnimations)
 			{
@@ -5832,7 +5822,7 @@ class PlayState extends MusicBeatState
 				{
 					if (isStoryMode
 						&& campaignMisses + songMisses < 1
-						&& CoolUtil.difficultyString() == 'HARD'
+						&& Difficulty.getString().toUpperCase() == 'HARD'
 						&& storyPlaylist.length <= 1
 						&& !changedDifficulty
 						&& !usedPractice)

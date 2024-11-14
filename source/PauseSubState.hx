@@ -62,8 +62,7 @@ class PauseSubState extends MusicBeatSubstate
 	public function new(x:Float, y:Float)
 	{
 		super();
-		if (CoolUtil.difficulties.length < 2)
-			menuItemsOG.remove('Change Difficulty'); // No need to change difficulty if there is only one!
+		if(Difficulty.list.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
 		if (PlayState.chartingMode)
 		{
@@ -81,9 +80,8 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		menuItems = menuItemsOG;
 
-		for (i in 0...CoolUtil.difficulties.length)
-		{
-			var diff:String = '' + CoolUtil.difficulties[i];
+		for (i in 0...Difficulty.list.length) {
+			var diff:String = Difficulty.getString(i);
 			difficultyChoices.push(diff);
 		}
 		difficultyChoices.push('BACK');
@@ -117,7 +115,7 @@ class PauseSubState extends MusicBeatSubstate
 		levelInfo.updateHitbox();
 		add(levelInfo);
 
-		levelDifficulty.text += CoolUtil.difficultyString();
+		levelDifficulty.text += Difficulty.getString().toUpperCase();
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('funkin.ttf'), 32);
 		levelDifficulty.updateHitbox();

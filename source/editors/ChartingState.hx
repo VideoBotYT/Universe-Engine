@@ -47,11 +47,12 @@ import openfl.net.FileReference;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 import flixel.util.FlxStringUtil;
+import flixel.util.FlxTimer;
 
 using StringTools;
 
 #if sys
-import flash.media.Sound;
+import openfl.media.Sound;
 import sys.FileSystem;
 import sys.io.File;
 #end
@@ -220,8 +221,7 @@ class ChartingState extends MusicBeatState
 			_song = PlayState.SONG;
 		else
 		{
-			CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
-
+			Difficulty.resetList();
 			_song = {
 				song: 'Test',
 				notes: [],
@@ -416,7 +416,7 @@ class ChartingState extends MusicBeatState
 		var song:String;
 
 		var difficultyInt = PlayState.storyDifficulty;
-		var difficultyText = CoolUtil.difficulties[difficultyInt];
+		var difficultyText = Difficulty.getString();
 		var difText:FlxText = new FlxText(20, 80, 0, difficultyText, 16);
 		difText.setFormat(Paths.font('funkin.ttf'), 32, FlxColor.WHITE);
 		difText.scrollFactor.set();
@@ -2547,46 +2547,6 @@ class ChartingState extends MusicBeatState
 		reloadGridLayer();
 	}
 
-	/*
-		function loadAudioBuffer() {
-			if(audioBuffers[0] != null) {
-				audioBuffers[0].dispose();
-			}
-			audioBuffers[0] = null;
-			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders('songs/' + currentSongName + '/Inst.ogg'))) {
-				audioBuffers[0] = AudioBuffer.fromFile(Paths.modFolders('songs/' + currentSongName + '/Inst.ogg'));
-				//trace('Custom vocals found');
-			}
-			else { #end
-				var leVocals:String = Paths.getPath(currentSongName + '/Inst.' + Paths.SOUND_EXT, SOUND, 'songs');
-				if (OpenFlAssets.exists(leVocals)) { //Vanilla inst
-					audioBuffers[0] = AudioBuffer.fromFile('./' + leVocals.substr(6));
-					//trace('Inst found');
-				}
-			#if MODS_ALLOWED
-			}
-			#end
-
-			if(audioBuffers[1] != null) {
-				audioBuffers[1].dispose();
-			}
-			audioBuffers[1] = null;
-			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders('songs/' + currentSongName + '/Voices.ogg'))) {
-				audioBuffers[1] = AudioBuffer.fromFile(Paths.modFolders('songs/' + currentSongName + '/Voices.ogg'));
-				//trace('Custom vocals found');
-			} else { #end
-				var leVocals:String = Paths.getPath(currentSongName + '/Voices.' + Paths.SOUND_EXT, SOUND, 'songs');
-				if (OpenFlAssets.exists(leVocals)) { //Vanilla voices
-					audioBuffers[1] = AudioBuffer.fromFile('./' + leVocals.substr(6));
-					//trace('Voices found, LETS FUCKING GOOOO');
-				}
-			#if MODS_ALLOWED
-			}
-			#end
-		}
-	 */
 	var lastSecBeats:Float = 0;
 	var lastSecBeatsNext:Float = 0;
 
@@ -3522,26 +3482,48 @@ class ChartingState extends MusicBeatState
 		return noteData;
 	}
 
+	var missingText:FlxText;
+	var missingTextTimer:FlxTimer;
 	function loadJson(song:String):Void
 	{
-		// shitty null fix, i fucking hate it when this happens
-		// make it look sexier if possible
-		if (CoolUtil.difficulties[PlayState.storyDifficulty] != CoolUtil.defaultDifficulty)
-		{
-			if (CoolUtil.difficulties[PlayState.storyDifficulty] == null)
-			{
-				PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+		//shitty null fix, i fucking hate it when this happens
+		//make it look sexier if possible
+		try {
+			if (Difficulty.getString() != Difficulty.getDefault()) {
+				if(Difficulty.getString() == null){
+					PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+				}else{
+					PlayState.SONG = Song.loadFromJson(song.toLowerCase() + "-" + Difficulty.getString(), song.toLowerCase());
+				}
 			}
-			else
-			{
-				PlayState.SONG = Song.loadFromJson(song.toLowerCase() + "-" + CoolUtil.difficulties[PlayState.storyDifficulty], song.toLowerCase());
-			}
+			else PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+			MusicBeatState.resetState();
 		}
-		else
+		catch(e)
 		{
-			PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+			trace('ERROR! $e');
+
+			var errorStr:String = e.toString();
+			if(errorStr.startsWith('[file_contents,assets/data/')) errorStr = 'Missing file: ' + errorStr.substring(27, errorStr.length-1); //Missing chart
+			
+			if(missingText == null)
+			{
+				missingText = new FlxText(50, 0, FlxG.width - 100, '', 24);
+				missingText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				missingText.scrollFactor.set();
+				add(missingText);
+			}
+			else missingTextTimer.cancel();
+
+			missingText.text = 'ERROR WHILE LOADING CHART:\n$errorStr';
+			missingText.screenCenter(Y);
+
+			missingTextTimer = new FlxTimer().start(5, function(tmr:FlxTimer) {
+				remove(missingText);
+				missingText.destroy();
+			});
+			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
-		MusicBeatState.resetState();
 	}
 
 	function autosaveSong():Void
