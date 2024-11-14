@@ -44,7 +44,7 @@ modcharting tool my beloved <3<3
 coolest thing there is in this engine.
 
 # CREDICE
-* [uwenalil](https://linktr.ee/uwenalil) -> First dev, First DEV, In charge of the LUA, HX files and other Does all/most of the bug fixes
+* [uwenalil](https://linktr.ee/uwenalil) -> First DEV, In charge of the LUA, HX files and other Does all/most of the bug fixes
 * [VideoBot](https://linktr.ee/videobot) -> Second DEV, In charge of the HX files
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
 
