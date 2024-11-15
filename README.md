@@ -48,6 +48,7 @@ coolest thing there is in this engine.
 * [VideoBot](https://linktr.ee/videobot) -> Second DEV, In charge of the HX files
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
 
+** **
 * [CharGoldenYT](https://bsky.app/profile/chargoldenyt.bsky.social) -> Absoulute W to this man, PR that fixes some stuff to the engine.
 
 ### Universe Bonus Stuff
