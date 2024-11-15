@@ -49,7 +49,10 @@ coolest thing there is in this engine.
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
 
 ** **
+
 * [CharGoldenYT](https://bsky.app/profile/chargoldenyt.bsky.social) -> Absoulute W to this man, PR that fixes some stuff to the engine.
+
+** **
 
 ### Universe Bonus Stuff
 * [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
