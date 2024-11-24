@@ -1,5 +1,27 @@
 # Universe Engine Changelog.
 
+[Universe Engine 0.3.4](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.3.4)
+
+Minor bugfix stuff
+
+Immediate restart is now implemented
+
+Some text are centered
+
+Fixed erect difficulty changing on pause menu so it doesnt crash anymore (creds to CharGoldenYT for the PR)
+
+Fixed WeekEditorState menu crash (creds to CharGoldenYT for the pr, I don't use the built in editor lol)
+
+2 New Hitsounds
+
+Changed some ClientPrefs stuff
+
+Removed window icon for fire in the hole hitsound. (I didn't have enough time to fix it.)
+
+2 New gameplay modifier! (it includes playback rate)
+
+Loading screen! (can disable)
+
 
 [Universe Engine 0.3.3](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.3.3)
 

@@ -5,16 +5,18 @@ local selecteddifficulty = 0
 local selecting = "song"
 
 function onStartCountdown()
-    
-    playMusic("freakyMenu-"..getPropertyFromClass("ClientPrefs", "mmm"), 1, true)
+    playMusic("freakyMenu-" .. getPropertyFromClass("ClientPrefs", "mmm"), 1, true)
+
+    addGridBG("erectgridthingy", 80, 80, 160, 160, 20, 20)
+    setObjectCamera("erectgridthingy", "other")
 
     createBoyfriend()
     createEnemies()
-     
+
     makeLuaText('SongText', song, 1000, 130, 300)
     setTextFont('SongText', 'funkin.ttf')
     setTextSize('SongText', 70)
-	setObjectOrder('SongText', 4);
+    setObjectOrder('SongText', 4);
     setTextAlignment('SongText', 'center')
     addLuaText('SongText')
     setObjectCamera('SongText', 'other')
@@ -34,7 +36,7 @@ function onStartCountdown()
     makeLuaText('SelectText', "Select A Song And Difficulty", 1000, 130, 50)
     setTextFont('SelectText', 'funkin.ttf')
     setTextSize('SelectText', 50)
-	setObjectOrder('SelectText', 4);
+    setObjectOrder('SelectText', 4);
     setTextAlignment('SelectText', 'center')
     addLuaText('SelectText')
     setObjectCamera('SelectText', 'other')
@@ -42,7 +44,7 @@ function onStartCountdown()
     makeLuaText('<', "<", 1000, getProperty("SongText.text.length") - 140, 300)
     setTextFont('<', 'funkin.ttf')
     setTextSize('<', 70)
-	setObjectOrder('<', 10);
+    setObjectOrder('<', 10);
     setTextAlignment('<', 'center')
     addLuaText('<')
     setProperty('<.alpha', 1)
@@ -51,7 +53,7 @@ function onStartCountdown()
     makeLuaText('>', ">", 1000, getProperty("SongText.text.length") + 390, 300)
     setTextFont('>', 'funkin.ttf')
     setTextSize('>', 70)
-	setObjectOrder('>', 10);
+    setObjectOrder('>', 10);
     setTextAlignment('>', 'center')
     addLuaText('>')
     setProperty('>.alpha', 1)
@@ -60,7 +62,7 @@ function onStartCountdown()
     makeLuaText('<2', "<", 1000, -60, 390)
     setTextFont('<2', 'funkin.ttf')
     setTextSize('<2', 70)
-	setObjectOrder('<2', 10);
+    setObjectOrder('<2', 10);
     setTextAlignment('<2', 'center')
     addLuaText('<2')
     setProperty('<2.alpha', 0)
@@ -69,7 +71,7 @@ function onStartCountdown()
     makeLuaText('>2', ">", 1000, 320, 390)
     setTextFont('>2', 'funkin.ttf')
     setTextSize('>2', 70)
-	setObjectOrder('>2', 10);
+    setObjectOrder('>2', 10);
     setProperty('>2.alpha', 0)
     setTextAlignment('>2', 'center')
     addLuaText('2>')
@@ -84,10 +86,10 @@ function onStartCountdown()
     else
         makeLuaSprite('menugdark', 'aboutMenu', 0, 0)
         setObjectOrder('menugdark', 1)
-        --setProperty("menugdark.color", getColorFromHex("907237"))
+        -- setProperty("menugdark.color", getColorFromHex("907237"))
         addLuaSprite('menugdark', true)
         setProperty('menugdark.alpha', 1)
-        setObjectCamera('menugdark', 'other') 
+        setObjectCamera('menugdark', 'other')
     end
     return Function_Stop
 end
@@ -122,10 +124,10 @@ function onUpdate(elapsed)
     end
     if keyJustPressed("right") then
         if selecting == "song" and selectedsong < 16 then
-        selectedsong = selectedsong + 1
-        playSound("scrollMenu", 1)
-        doTweenX(">go", ">", 430, 0.1, "SineInOut")
-        runTimer(">back", 0.3)
+            selectedsong = selectedsong + 1
+            playSound("scrollMenu", 1)
+            doTweenX(">go", ">", 430, 0.1, "SineInOut")
+            runTimer(">back", 0.3)
         elseif selecting == "difficulty" and selecteddifficulty < 1 then
             selecteddifficulty = selecteddifficulty + 1
             playSound("scrollMenu", 1)
@@ -192,12 +194,12 @@ function onUpdate(elapsed)
     end
     if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.ENTER') then
         if selecting == "song" then
-        playSound("confirmMenu", 1)
-        selecting = "difficulty"
-        setProperty('>2.alpha', 1)
-        setProperty('<2.alpha', 1)
-        setProperty('>.alpha', 0)
-        setProperty('<.alpha', 0)
+            playSound("confirmMenu", 1)
+            selecting = "difficulty"
+            setProperty('>2.alpha', 1)
+            setProperty('<2.alpha', 1)
+            setProperty('>.alpha', 0)
+            setProperty('<.alpha', 0)
         elseif selecting == "difficulty" then
             playSound("confirmMenu", 1)
             objectPlayAnimation('BF', 'hey', true)
@@ -209,15 +211,15 @@ function onUpdate(elapsed)
     end
     if keyJustPressed("left") then
         if selecting == "song" and selectedsong > 1 then
-        selectedsong = selectedsong - 1
-        playSound("scrollMenu", 1)
-        doTweenX("<go", "<", -170, 0.1, "SineInOut")
-        runTimer("<back", 0.3)
-    elseif selecting == "difficulty" and selecteddifficulty > 0 then
-        selecteddifficulty = selecteddifficulty - 1
-        playSound("scrollMenu", 1)
-        doTweenX("<2go", "<2", -100, 0.1, "SineInOut")
-        runTimer("<2back", 0.3)
+            selectedsong = selectedsong - 1
+            playSound("scrollMenu", 1)
+            doTweenX("<go", "<", -170, 0.1, "SineInOut")
+            runTimer("<back", 0.3)
+        elseif selecting == "difficulty" and selecteddifficulty > 0 then
+            selecteddifficulty = selecteddifficulty - 1
+            playSound("scrollMenu", 1)
+            doTweenX("<2go", "<2", -100, 0.1, "SineInOut")
+            runTimer("<2back", 0.3)
         end
         if selectedsong >= 1 and selectedsong <= 3 then
             setProperty("DAD.alpha", 1)
@@ -281,97 +283,97 @@ function onUpdate(elapsed)
         setTextString("SongText", "Bopeebo")
         song = "Bopeebo"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 2 then
         setTextString("SongText", "Fresh")
         song = "Fresh"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 3 then
         setTextString("SongText", "Dad-Battle")
         song = "Dad-Battle"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 4 then
         setTextString("SongText", "Spookeez")
         song = "Spookeez"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 5 then
         setTextString("SongText", "South")
         song = "South"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 6 then
         setTextString("SongText", "Pico")
         song = "Pico"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 7 then
         setTextString("SongText", "Philly-Nice")
         song = "Philly-Nice"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 8 then
         setTextString("SongText", "Blammed")
         song = "Blammed"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 9 then
         setTextString("SongText", "Satin-Panties")
         song = "Satin-Panties"
-        --setProperty("<.x", getProperty("SongText.text.length") - 150)
-        --setProperty(">.x", getProperty("SongText.text.length") + 390)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 150)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 390)
     elseif selectedsong == 10 then
         setTextString("SongText", "High")
         song = "High"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 11 then
         setTextString("SongText", "Cocoa")
         song = "Cocoa"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 12 then
         setTextString("SongText", "Eggnog")
         song = "Eggnog"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 13 then
         setTextString("SongText", "Senpai")
         song = "Senpai"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 14 then
         setTextString("SongText", "Roses")
         song = "Roses"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 15 then
         setTextString("SongText", "Thorns")
         song = "Thorns"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     elseif selectedsong == 16 then
         setTextString("SongText", "Ugh")
         song = "Ugh"
 
-        --setProperty("<.x", getProperty("SongText.text.length") - 90)
-        --setProperty(">.x", getProperty("SongText.text.length") + 335)
+        -- setProperty("<.x", getProperty("SongText.text.length") - 90)
+        -- setProperty(">.x", getProperty("SongText.text.length") + 335)
     end
     if selecteddifficulty == 0 then
         setProperty("Erect.alpha", 1)
@@ -446,7 +448,7 @@ function createEnemies()
     setProperty('PARENT.scale.y', 1.2)
     setProperty('PARENT.alpha', 0)
     setObjectCamera('PARENT', 'other')
-    
+
     makeAnimatedLuaSprite('SENPAI', 'erectselect/characters/Menu_Senpai', 50, 350)
     addAnimationByPrefix('SENPAI', 'idle', 'M Senpai Idle0', 24, true)
     objectPlayAnimation('SENPAI', 'idle', true)
@@ -467,7 +469,6 @@ function createEnemies()
     setProperty('TANKMAN.alpha', 0)
     setObjectCamera('TANKMAN', 'other')
 end
-
 
 function onTimerCompleted(tag, loops, loopsLeft)
     if tag == "start" then

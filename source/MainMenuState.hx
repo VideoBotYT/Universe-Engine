@@ -29,7 +29,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var ueVersion:String = '0.3.3';
+	public static var ueVersion:String = '0.3.4';
 	public static var psychEngineVersion:String = '0.6.3'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -201,8 +201,9 @@ class MainMenuState extends MusicBeatState
 		add(textBG);
 		var leText:String = "Press TAB to open the shortcut menu / Press RESET to restart the game";
 		var size:Int = 18;
-		var text:FlxText = new FlxText(textBG.x - 4, textBG.y + 4, FlxG.width, leText, size);
-		text.setFormat(Paths.font("funkin.ttf"), size, FlxColor.WHITE, RIGHT);
+		var text:FlxText = new FlxText(0, textBG.y + 4, FlxG.width, leText, size);
+		text.screenCenter(X);
+		text.setFormat(Paths.font("funkin.ttf"), size, FlxColor.WHITE, CENTER);
 		text.scrollFactor.set();
 		add(text);
 

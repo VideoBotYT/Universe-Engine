@@ -33,6 +33,7 @@ function onCreatePost()
     if UEsd then addLuaScript(UEenginescriptlocateGP..'Crash on miss') end
     --note, the lua of UE shut down didn't change.
     if UEhealthdrainp2 then addLuaScript(UEenginescriptlocateGP..'Health Drain Part 2') end
+    if UEIncreasePBR then addLuaScript(UEenginescriptlocateGP..'Increase Playback') end
 
     -- Chaning the FPS Font << << << << <<
     addHaxeLibrary('Main'); runHaxeCode([[ Main.fpsVar.defaultTextFormat = new openfl.text.TextFormat("funkin.ttf", 15, 10); ]]);

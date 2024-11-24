@@ -110,7 +110,8 @@ class FunkinLua
 		scriptName = script;
 		initHaxeModule();
 
-		trace('lua file loaded succesfully:' + script);
+		//unlowercased starting words make me mad!!
+		trace('Lua file loaded succesfully:' + script);
 
 		// Lua shit
 		set('Function_StopLua', Function_StopLua);
@@ -218,6 +219,7 @@ class FunkinLua
 		set('currentModDirectory', Paths.currentModDirectory);
 
 		// UE optiosn
+		set('universeEngine', ClientPrefs.universeEngineCPREF); //this is to check if you running universe engine!
 		set('UEkeystrokes', ClientPrefs.keystrokes);
 		set('UEkeyA', ClientPrefs.keyA);
 		set('UEkeyFT', ClientPrefs.keyFT);
@@ -252,6 +254,8 @@ class FunkinLua
 		set('UEsustainOneNote', ClientPrefs.gameplaySettings.get('sn'));
 		set('modchart', ClientPrefs.gameplaySettings.get('modchart'));
 		set('UEhealthdrainp2', ClientPrefs.gameplaySettings.get('hdp2'));
+		set('UEIncreasePBR', ClientPrefs.gameplaySettings.get('ipbr'));
+		set('UEipbrv',  ClientPrefs.gameplaySettings.get('ipbrv'));
 
 		#if windows
 		set('buildTarget', 'windows');

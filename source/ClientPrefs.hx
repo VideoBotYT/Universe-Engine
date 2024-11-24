@@ -39,6 +39,7 @@ class ClientPrefs
 	public static var splashAlpha:Float = 0.6;
 
 	// UE
+	public static var universeEngineCPREF:Bool = true; //this is to check if you running universe engine!
 	public static var keystrokes:Bool = true;
 	public static var keyA:Float = 0.3;
 	public static var keyFT:Float = 0.15;
@@ -50,7 +51,7 @@ class ClientPrefs
 	public static var sntf:Bool = true;
 	public static var mmm:String = 'Universe';
 	public static var ft:Bool = false;
-	public static var ht:String = 'classic';
+	public static var ht:String = 'Classic';
 	public static var dhb:Bool = true;
 	public static var cc:Bool = true;
 	public static var sh:Bool = true;
@@ -63,12 +64,12 @@ class ClientPrefs
 	public static var css:String = 'GF Sounds';
 	public static var dcm:Bool = false;
 	public static var uess:Bool = true;
-	public static var lhpbgb:Bool = true;
+	public static var lhpbgb:Bool = false;
 	public static var longnotet:Float = 0.6;
 	public static var darkmode:Bool = false;
-	public static var elfunyshak:Bool = false;
 	public static var ueresultscreen:Bool = true;
 	public static var uems:Bool = true;
+	public static var loadscreen:Bool = false;
 
 	public static var noteSkin:String = 'Default';
 	public static var noteColorStyle:String = 'Normal';
@@ -100,7 +101,10 @@ class ClientPrefs
 		'sd' => false,
 		'hd' => false, // ermm,,,
 		'sn' => false, // this is shitty
-		'hdp2' => false
+		'hdp2' => false,
+		'ipbr' => false,//
+		'ipbrv' => "Normal"
+
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -175,9 +179,9 @@ class ClientPrefs
 		FlxG.save.data.lhpbgb = lhpbgb;
 		FlxG.save.data.longnotet = longnotet;
 		FlxG.save.data.darkmode = darkmode;
-		FlxG.save.data.elfunyshak = elfunyshak;
 		FlxG.save.data.ueresultscreen = ueresultscreen;
 		FlxG.save.data.uems = uems;
+		FlxG.save.data.loadscreen = loadscreen;
 
 		FlxG.save.data.arrowRGB = arrowRGB;
 		FlxG.save.data.arrowRGBPixel = arrowRGBPixel;
@@ -347,10 +351,6 @@ class ClientPrefs
 		{
 			darkmode = FlxG.save.data.darkmode;
 		}
-		if (FlxG.save.data.elfunyshak != null)
-		{
-			elfunyshak = FlxG.save.data.elfunyshak;
-		}
 		if (FlxG.save.data.ueresultscreen != null)
 		{
 			ueresultscreen = FlxG.save.data.ueresultscreen;
@@ -358,6 +358,10 @@ class ClientPrefs
 		if (FlxG.save.data.uems != null)
 		{
 			uems = FlxG.save.data.uems;
+		}
+		if (FlxG.save.data.loadscreen != null)
+		{
+			loadscreen = FlxG.save.data.loadscreen;
 		}
 
 		// Normal Psych Stuff

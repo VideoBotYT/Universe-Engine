@@ -53,7 +53,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var goption:GameplayOption = new GameplayOption('Scroll Type', 'scrolltype', 'string', 'multiplicative', ["multiplicative", "constant"]);
 		optionsArray.push(goption);
-		//descText = new FlxText(50, 600, 1180, "Change the Scroll type you want.", 32);
 
 		var option:GameplayOption = new GameplayOption('Scroll Speed', 'scrollspeed', 'float', 1);
 		option.scrollSpeed = 2.0;
@@ -71,7 +70,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			option.maxValue = 6;
 		}
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Change the scroll speed you want.", 32);
 
 		var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
 		option.scrollSpeed = 1;
@@ -81,7 +79,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.displayFormat = '%vX';
 		option.decimals = 2;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "How fast the song should be.", 32);
 
 		var option:GameplayOption = new GameplayOption('Health Gain Multiplier', 'healthgain', 'float', 1);
 		option.scrollSpeed = 2.5;
@@ -90,7 +87,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "How much health do you wanna gain?", 32);
 
 		var option:GameplayOption = new GameplayOption('Health Loss Multiplier', 'healthloss', 'float', 1);
 		option.scrollSpeed = 2.5;
@@ -99,52 +95,51 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "How much health do you wanna lose?", 32);
 
 		var option:GameplayOption = new GameplayOption('Instakill on Miss', 'instakill', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Instant kill on miss, pretty simple.", 32);
 
 		var option:GameplayOption = new GameplayOption('Practice Mode', 'practice', 'bool', false);
 		option.onChange = onChangeCheat;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Basically, doesn't kill you.", 32);
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		option.onChange = onChangeCheat;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "A bot plays for you!", 32);
 
 		var option:GameplayOption = new GameplayOption('Modchart', 'modchart', 'bool', true);
 		option.onChange = onChangeCheat;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Disable modchart and enable modchart.", 32);
 
 		var option:GameplayOption = new GameplayOption('Play Both Sides', 'pbs', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Feeling a bit bored playing one side? How bout' 2 sides?", 32);
 
 		var option:GameplayOption = new GameplayOption('Crash on miss', 'sd', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Crashes your game on miss! Used to be shut down on miss but replaced :(", 32);
 
 		var option:GameplayOption = new GameplayOption('Health Drain', 'hd', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Opponent note hit, you lose health.", 32);
 
 		var option:GameplayOption = new GameplayOption('Sustain 1 note', 'sn', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Really bad version of sustain as one note.", 32);
 
-		var option:GameplayOption = new GameplayOption('Health Drain Part 2', 'hdp2', 'bool', false);
+		var option:GameplayOption = new GameplayOption('Increase HlthDrn on miss', 'hdp2', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
-		//descText = new FlxText(50, 600, 1180, "Whenever missed, you lose health and the more you miss, you lose more health.", 32);
+
+		var option:GameplayOption = new GameplayOption('Increase Playback on hit', 'ipbr', 'bool', false);
+		option.onChange = onChangeChartOption;
+		optionsArray.push(option);
+		
+		var goption:GameplayOption = new GameplayOption('Increase PBR Value', 'ipbrv', 'string', 'Normal',
+		["Normal", "High", "Very High", "WTF", "Good Luck"]);
+		//BARAN TOLD ME TO ADD WTF :sob:
+		optionsArray.push(goption);
 	}
 
 	public function getOptionByName(name:String)

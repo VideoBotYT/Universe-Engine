@@ -17,6 +17,7 @@ import flixel.util.FlxStringUtil;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 
+using StringTools;
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
@@ -56,6 +57,7 @@ class PauseSubState extends MusicBeatSubstate
 	var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, "", 32);
 	var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "", 32);
 	var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
+	var isErect:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{
@@ -162,6 +164,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		regenMenu();
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+		isErect = Paths.formatToSongPath(PlayState.SONG.song.toLowerCase()).trim().endsWith('-erect');
 	}
 
 	var holdTime:Float = 0;
@@ -238,7 +241,34 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					var name:String = PlayState.SONG.song;
 					var poop = Highscore.formatSong(name, curSelected);
-					PlayState.SONG = Song.loadFromJson(poop, name);
+					if (isErect) // Special thanks to CharGoldenYT on github for this PR
+					{
+						try
+						{
+							// Try to load it normally.
+							PlayState.SONG = Song.loadFromJson(poop, name);
+						}
+						catch (e:Dynamic)
+						{
+							/**
+							 * If it failed, it's likely an erect chart in the same folder as the normal charts.
+							 * A quick explanation for what these 2 variables do:
+							 * 
+							 * We lowercase the name to be able to replace `erect` while ignoring case, 
+							 * which is fine thanks to the fact that the `folder` argument when 
+							 * loading a song does not support uppercase characters anyway,
+							 * then we replace erect so it can load the proper file e.g. `bopeebo-erect` becomes `bopeebo/bopeebo-erect.json`
+							 * which is how it's stored in the data folder.
+							 */
+							var poop2 = Highscore.formatSong(name.toLowerCase().replace('erect', '').trim(), curSelected);
+							var name2 = name.toLowerCase().replace('erect', '').trim();
+							PlayState.SONG = Song.loadFromJson(poop2, name2);
+						}
+					}
+					else
+					{
+						PlayState.SONG = Song.loadFromJson(poop, name);
+					}
 					PlayState.storyDifficulty = curSelected;
 					MusicBeatState.resetState();
 					FlxG.sound.music.volume = 0;
@@ -483,7 +513,7 @@ class PauseSubState extends MusicBeatSubstate
 		if (skipTimeText == null || skipTimeTracker == null)
 			return;
 
-		//skipTimeText.x = skipTimeTracker.x + skipTimeTracker.width + 60;
+		// skipTimeText.x = skipTimeTracker.x + skipTimeTracker.width + 60;
 		skipTimeText.screenCenter(X);
 		skipTimeText.y = skipTimeTracker.y + 60;
 		skipTimeText.visible = (skipTimeTracker.alpha >= 1);

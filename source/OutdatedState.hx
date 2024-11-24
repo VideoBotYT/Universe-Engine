@@ -40,11 +40,11 @@ class OutdatedState extends MusicBeatState
 		checker.updateHitbox();
 
 		warnText = new FlxText(0, 0, FlxG.width,
-			"Ay Mate! looks you are using an\n
-			outdated version of Universe Engine (" + MainMenuState.ueVersion + "),\n
-			please update to " + TitleState.updateVersion + "!\n
-			Press ESCAPE to proceed anyway.\n
-			\n
+			"Ay Mate! looks you are using an
+			outdated version of Universe Engine (" + MainMenuState.ueVersion + "),
+			please update to " + TitleState.updateVersion + "!
+			Press ESCAPE to proceed anyway.
+			
 			Thank you for using the Engine!
 			You are truly THE epic :D",
 			32);

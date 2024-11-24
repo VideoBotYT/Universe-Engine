@@ -4128,16 +4128,151 @@
                         "FocusCamera",
                         "1",
                         "4"
+                    ],
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "buhhh"
                     ]
                 ]
             ],
             [
-                90058,
+                90468.75,
                 [
                     [
-                        "ZoomCamera",
-                        "32, expoOut",
-                        "stage, 1"
+                        "Lyrics Event",
+                        "dad",
+                        "wop"
+                    ]
+                ]
+            ],
+            [
+                90703.125,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "wop wop"
+                    ]
+                ]
+            ],
+            [
+                90937.5,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bop"
+                    ]
+                ]
+            ],
+            [
+                91093.75,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bop bop"
+                    ]
+                ]
+            ],
+            [
+                91250,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bop bop bop"
+                    ]
+                ]
+            ],
+            [
+                91406.25,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bop bop bop bop"
+                    ]
+                ]
+            ],
+            [
+                91640.625,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bop bop bop bop bop"
+                    ]
+                ]
+            ],
+            [
+                91875,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "booowm"
+                    ]
+                ]
+            ],
+            [
+                92343.75,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "wob"
+                    ]
+                ]
+            ],
+            [
+                92578.125,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bob"
+                    ]
+                ]
+            ],
+            [
+                92812.5,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bob bo"
+                    ]
+                ]
+            ],
+            [
+                92929.6875,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bob bo bo"
+                    ]
+                ]
+            ],
+            [
+                93046.875,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "bob bo bo bo"
+                    ]
+                ]
+            ],
+            [
+                93281.25,
+                [
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        "eeeeeeeeeeeeeeee"
                     ]
                 ]
             ],
@@ -4148,6 +4283,206 @@
                         "FocusCamera",
                         "0",
                         "0, 0"
+                    ],
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "bwooo"
+                    ],
+                    [
+                        "Lyrics Event",
+                        "dad",
+                        ""
+                    ]
+                ]
+            ],
+            [
+                94218.75,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "wob"
+                    ]
+                ]
+            ],
+            [
+                94453.125,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "wob wob"
+                    ]
+                ]
+            ],
+            [
+                94687.5,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "bob"
+                    ]
+                ]
+            ],
+            [
+                94804.6875,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "bob bob"
+                    ]
+                ]
+            ],
+            [
+                94921.875,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "bob bob bob"
+                    ]
+                ]
+            ],
+            [
+                95156.25,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "bob bob bob bob"
+                    ]
+                ]
+            ],
+            [
+                95390.625,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "bob bob bob bob bob"
+                    ]
+                ]
+            ],
+            [
+                95625,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "bwooo"
+                    ]
+                ]
+            ],
+            [
+                96093.75,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "wob"
+                    ]
+                ]
+            ],
+            [
+                96328.125,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "wob wob"
+                    ]
+                ]
+            ],
+            [
+                96738.28125,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "mi"
+                    ]
+                ]
+            ],
+            [
+                96796.875,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "mi mi"
+                    ]
+                ]
+            ],
+            [
+                96914.0625,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "mi mi mi"
+                    ]
+                ]
+            ],
+            [
+                97031.25,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "mi mi mi mi"
+                    ]
+                ]
+            ],
+            [
+                97148.4375,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "mi mi mi mi mi"
+                    ]
+                ]
+            ],
+            [
+                97265.625,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "mi mi mi mi mi mi"
+                    ]
+                ]
+            ],
+            [
+                97382.8125,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "mi mi mi mi mi mi mi"
+                    ]
+                ]
+            ],
+            [
+                97500,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        "was that good?"
+                    ]
+                ]
+            ],
+            [
+                98789.0625,
+                [
+                    [
+                        "Lyrics Event",
+                        "bf",
+                        ""
                     ]
                 ]
             ]

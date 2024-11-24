@@ -48,7 +48,9 @@ class UEHitSound extends BaseOptionsMenu
 			'Heartbeat',
 			'Fire in the hole',
 			'Universe',
-			'Baldi'
+			'Baldi',
+			'Spongefail',
+			'Spongebob'
 		]);
 		addOption(option);
 		option.onChange = onChangeHitSound;

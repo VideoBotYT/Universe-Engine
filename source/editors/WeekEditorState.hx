@@ -60,7 +60,7 @@ class WeekEditorState extends MusicBeatState
 	override function create()
 	{
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
-		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
+		txtWeekTitle.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
@@ -345,9 +345,8 @@ class WeekEditorState extends MusicBeatState
 		var isMissing:Bool = true;
 		if (assetName != null && assetName.length > 0)
 		{
-			if (#if MODS_ALLOWED FileSystem.exists(Paths.modsImages('menubackgrounds/menu_' +
-				assetName)) || #end Assets.exists(Paths.getPath('images/menubackgrounds/menu_'
-				+ assetName + '.png', IMAGE), IMAGE))
+			if (#if MODS_ALLOWED FileSystem.exists(Paths.modsImages('menubackgrounds/menu_' + assetName))
+				|| #end Assets.exists(Paths.getPath('images/menubackgrounds/menu_' + assetName + '.png', IMAGE), IMAGE))
 			{
 				bgSprite.loadGraphic(Paths.image('menubackgrounds/menu_' + assetName));
 				isMissing = false;
@@ -369,8 +368,8 @@ class WeekEditorState extends MusicBeatState
 		var isMissing:Bool = true;
 		if (assetName != null && assetName.length > 0)
 		{
-			if (#if MODS_ALLOWED FileSystem.exists(Paths.modsImages('storymenu/' + assetName)) || #end Assets.exists(Paths.getPath('images/storymenu/'
-				+ assetName + '.png', IMAGE), IMAGE))
+			if (#if MODS_ALLOWED FileSystem.exists(Paths.modsImages('storymenu/' + assetName))
+				|| #end Assets.exists(Paths.getPath('images/storymenu/' + assetName + '.png', IMAGE), IMAGE))
 			{
 				weekThing.loadGraphic(Paths.image('storymenu/' + assetName));
 				isMissing = false;
@@ -658,20 +657,16 @@ class WeekEditorFreeplayState extends MusicBeatState
 	{
 		if (ClientPrefs.darkmode)
 		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
-			bg.color = FlxColor.WHITE;
-			bg.scrollFactor.set();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
+			bg = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
 		}
 		else
 		{
-			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-			bg.scrollFactor.set();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			bg.color = FlxColor.WHITE;
-			add(bg);
+			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		}
+		bg.scrollFactor.set();
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.color = FlxColor.WHITE;
+		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);

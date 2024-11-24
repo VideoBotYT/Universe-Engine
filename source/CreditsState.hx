@@ -104,7 +104,7 @@ class CreditsState extends MusicBeatState
 			[
 				'uwenalil',
 				'uwenalil',
-				'First DEV, In charge of the LUA, HX files and other\nwhy do i suffer now',
+				'First DEV, In charge of the LUA, HX files and other\nDoes all/most of the bug fixes\nwhy do i suffer now',
 				'https://linktr.ee/uwenalil',
 				'008BFF'
 			],
@@ -119,17 +119,16 @@ class CreditsState extends MusicBeatState
 				'BaranMuzu',
 				'baranmuzu',
 				'Third DEV, In charge of the LUA files and other',
-				'https://www.youtube.com/@BaranMuzu',
+				'https://linktr.ee/baranmuzu',
 				'BE9877'
 			],
 			[''],
 			['Stuff used by Universe'],
-			['Edwhak', 'Edwhak', 'Modchart Tool', 'https://www.youtube.com/@EDWHAK', '00FF00'],
 			[
-				'An Ammar',
-				'Ammar',
-				'Hype Mode and Detached Health Bar',
-				'https://gamebanana.com/mods/381804',
+				'Edwhak',
+				'Edwhak',
+				'Modchart Tool',
+				'https://www.youtube.com/@EDWHAK',
 				'00FF00'
 			],
 			[
@@ -160,28 +159,35 @@ class CreditsState extends MusicBeatState
 				'https://www.youtube.com/watch?v=xmUQUi8rd9M',
 				'FFFFFF'
 			],
-			[
-				"Friday Night Troubleshootin'",
-				'fnt',
-				'Fancy title background',
-				'https://gamejolt.com/games/troubleshootin/644581',
-				'7000da'
-			],
 			[''],
 			['Special Thanks'],
 			[
 				'Blitz',
-				'noicon',
-				'Discord RPC Logo',
+				'Blitz',
+				'Universe Logo And Playtester',
 				'https://www.youtube.com/@fireballfurby',
 				'00FFFF'
 			],
 			[
+				'An Ammar',
+				'Ammar',
+				'Hype Mode, Detached Health Bar, Playtester',
+				'https://gamebanana.com/mods/381804',
+				'00FF00'
+			],
+			[
 				'Dinus Game',
 				'Dinus Game',
-				'FreakyMenu Universe Engine music',
+				'freakyMenu Universe Engine music',
 				'https://gamebanana.com/members/2053946',
 				'27FF27'
+			],
+			[
+				'idiotxd',
+				'idiotxd',
+				'His own freakyMenu music and Universe Banner',
+				'https://x.com/IdiottLool',
+				'5656FF'
 			],
 			[
 				'JordanSantiago',
@@ -189,6 +195,15 @@ class CreditsState extends MusicBeatState
 				'Most of the code of UE comes from JS',
 				'https://gamebanana.com/tools/13575',
 				'32CD32'
+			],
+			[''],
+			["Universe PR's"],
+			[
+				'CharGoldenYT',
+				'char',
+				"Very epic PR's",
+				'https://bsky.app/profile/chargoldenyt.bsky.social',
+				'D18054'
 			],
 			[''],
 			['Psych Engine Team'],

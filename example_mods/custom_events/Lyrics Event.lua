@@ -1,5 +1,5 @@
 function onCreatePost()
-    makeLuaText("BFLyrics", "", 1500, -120, 480)
+    makeLuaText("BFLyrics", "", 1500, (screenWidth/2)-(1500/2), 420)
     addLuaText("BFLyrics")
     setTextSize("BFLyrics", 32)
     setTextAlignment("BFLyrics", "center")

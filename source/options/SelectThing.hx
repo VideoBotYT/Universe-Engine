@@ -52,8 +52,8 @@ class SelectThing extends MusicBeatState
 
 	override function create()
 	{
-		// FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic), "shared"), 0);
-		// FlxG.sound.music.fadeIn(4, 0, 0.7);
+		//FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic), "shared"), 0);
+		//FlxG.sound.music.fadeIn(4, 0, 0.7);
 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();

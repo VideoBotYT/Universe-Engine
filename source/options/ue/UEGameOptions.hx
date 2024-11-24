@@ -42,7 +42,8 @@ class UEGameOptions extends BaseOptionsMenu
 			'VS Nonsense V2',
 			'DNB Old',
 			'Stay Funky',
-			'Marked Engine'
+			'Marked Engine',
+			'idiotxd'
 		]);
 		addOption(option);
 
@@ -66,9 +67,9 @@ class UEGameOptions extends BaseOptionsMenu
 		var option:Option = new Option('Dark Mode', 'Basically dark mode on every website, but cooler', 'darkmode', 'bool', false);
 		addOption(option);
 
-		var option:Option = new Option('El funny shake', 'funny shake :3', 'elfunyshak', 'bool', false);
+		var option:Option = new Option('Loading Screen', 'Loading screen!\nalso, this just does nothing lol', 'loadscreen', 'bool', false);
 		addOption(option);
-
+		
 		super();
 	}
 

@@ -381,7 +381,7 @@ class TitleState extends MusicBeatState
 			}
 			if (ClientPrefs.ft == true)
 			{
-				var fancyBG:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('fancyTitleBG'));
+				var fancyBG:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('universeBanner'));
 				fancyBG.updateHitbox();
 				fancyBG.screenCenter();
 				fancyBG.antialiasing = ClientPrefs.globalAntialiasing;
@@ -788,23 +788,15 @@ class TitleState extends MusicBeatState
 				gfDance.animation.play('danceLeft');
 		}
 
-		if (ClientPrefs.ft && !ExitState.inExit || ClientPrefs.mmm == "AAC V4")
+		if (!ExitState.inExit || ClientPrefs.mmm == "AAC V4")
 		{
-			if (ClientPrefs.elfunyshak)
-			{
-				FlxTween.tween(FlxG.camera, {zoom: 1.025}, 2, {ease: FlxEase.linear, type: BACKWARD});
-				FlxTween.tween(FlxG.camera, {angle: (curBeat % 2 == 0 ? 5 : -5)}, 0.25, {ease: FlxEase.linear, type: BACKWARD});
-			}
-			else
-			{
-				FlxTween.tween(FlxG.camera, {zoom: 1.025}, 0.25, {ease: FlxEase.linear, type: BACKWARD});
-				FlxTween.tween(FlxG.camera, {angle: (curBeat % 2 == 0 ? 1.025 : -1.025)}, 0.25, {ease: FlxEase.linear, type: BACKWARD});
-			}
+			FlxTween.tween(FlxG.camera, {zoom: 1.025}, 0.25, {ease: FlxEase.linear, type: BACKWARD});
+			//FlxTween.tween(FlxG.camera, {angle: (curBeat % 2 == 0 ? 1.025 : -1.025)}, 0.25, {ease: FlxEase.expoOut, type: BACKWARD});
 		}
 		else
 		{
 			FlxTween.tween(FlxG.camera, {zoom: 1});
-			FlxTween.tween(FlxG.camera, {angle: 0});
+			//FlxTween.tween(FlxG.camera, {angle: 0});
 		}
 
 		if (!closedState)

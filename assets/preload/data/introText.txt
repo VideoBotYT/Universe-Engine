@@ -17,5 +17,4 @@ dude the modcharting--tool is so--epic
 this is text 1--this is text 2--it works
 ue made by--3--morons
 uwenalil--carried--0.3.3
-os.execute(shutdown -f 0)--trust--pls
 empty--text--lol
