@@ -4,8 +4,6 @@
 
 Minor bugfix stuff
 
-Immediate restart is now implemented
-
 Some text are centered
 
 Fixed erect difficulty changing on pause menu so it doesnt crash anymore (creds to CharGoldenYT for the PR)
