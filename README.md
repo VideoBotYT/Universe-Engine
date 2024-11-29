@@ -49,7 +49,7 @@ coolest thing there is in this engine.
 
 ### Universe Bonus Stuff
 * [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
-* [Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
+* [Bonus Songs (MODCHARTS)](https://github.com/uwenalil/Universe-Bonus-Songs) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
 
 <details>
   <summary><h2>Psych engine credits and other stuff</h2></summary>
