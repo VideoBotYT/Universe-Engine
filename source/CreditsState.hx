@@ -159,6 +159,13 @@ class CreditsState extends MusicBeatState
 				'https://www.youtube.com/watch?v=xmUQUi8rd9M',
 				'FFFFFF'
 			],
+			[
+				'Rozebud',
+				'rozebud',
+				"Chart Editor's Lil' Buddies",
+				'https://x.com/helpme_thebigt',
+				'6D2F83'
+			],
 			[''],
 			['Special Thanks'],
 			[
