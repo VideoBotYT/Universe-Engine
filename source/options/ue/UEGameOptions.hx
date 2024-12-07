@@ -69,7 +69,13 @@ class UEGameOptions extends BaseOptionsMenu
 
 		var option:Option = new Option('Loading Screen', 'Loading screen!\nalso, this just does nothing lol', 'loadscreen', 'bool', false);
 		addOption(option);
-		
+
+		var option:Option = new Option('Fancy Menus', "Makes the menus just more clean", 'fm', 'bool', true);
+		addOption(option);
+
+		var option:Option = new Option('Silly Bounce', "Makes the dots behind the main menu bounce", 'sillyBob', 'bool', true);
+		addOption(option);
+
 		super();
 	}
 

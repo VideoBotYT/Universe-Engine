@@ -45,7 +45,7 @@ class MasterEditorMenu extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Editors Main Menu", null);
 		#end
-		
+
 		if (ClientPrefs.darkmode)
 		{
 			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
@@ -123,7 +123,14 @@ class MasterEditorMenu extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new MainMenuState());
+			if (ClientPrefs.fm)
+			{
+				MusicBeatState.switchState(new CoolMenuState());
+			}
+			else
+			{
+				MusicBeatState.switchState(new MainMenuState());
+			}
 		}
 
 		if (controls.ACCEPT)
@@ -153,6 +160,7 @@ class MasterEditorMenu extends MusicBeatState
 		for (item in grpTexts.members)
 		{
 			item.targetY = bullShit - curSelected;
+			item.targetX = bullShit - curSelected;
 			bullShit++;
 
 			item.alpha = 0.6;
@@ -162,6 +170,10 @@ class MasterEditorMenu extends MusicBeatState
 			{
 				item.alpha = 1;
 				// item.setGraphicSize(Std.int(item.width));
+			}
+			if (ClientPrefs.fm && item.targetY != 0)
+			{
+				item.targetX -= Std.int(Math.abs(item.targetY) * 20);
 			}
 		}
 		super.update(elapsed);

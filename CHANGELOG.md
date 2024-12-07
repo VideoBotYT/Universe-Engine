@@ -1,5 +1,14 @@
 # Universe Engine Changelog.
 
+[Universe Engine 0.4.4](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.4.4)
+
+New features
+
+Fancy Menus (game option)
+Silly Bounce (game option *only effects when you have Fancy Menus on)
+New modifiers
+New lua functions (check [wiki](https://github.com/VideoBotYT/Universe-Engine/wiki) for it)
+
 [Universe Engine 0.3.4](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.3.4)
 
 Minor bugfix stuff

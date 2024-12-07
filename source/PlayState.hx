@@ -4425,7 +4425,14 @@ class PlayState extends MusicBeatState
 					{
 						CustomFadeTransition.nextCamera = null;
 					}
-					MusicBeatState.switchState(new StoryMenuState());
+					if (ClientPrefs.fm)
+					{
+						LoadingState.loadAndSwitchState(new CoolStoryState());
+					}
+					else
+					{
+						MusicBeatState.switchState(new StoryMenuState());
+					}
 
 					// if ()
 					if (!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false))
@@ -5093,10 +5100,10 @@ class PlayState extends MusicBeatState
 
 			/*boyfriend.stunned = true;
 	
-																												// get stunned for 1/60 of a second, makes you able to
-																												new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
-																												{
-																													boyfriend.stunned = false;
+																															// get stunned for 1/60 of a second, makes you able to
+																															new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
+																															{
+																																boyfriend.stunned = false;
 			});*/
 
 			if (boyfriend.hasMissAnimations)
@@ -5294,43 +5301,43 @@ class PlayState extends MusicBeatState
 	}
 
 	/*public function spawnNoteSplashOnNote(note:Note)
-							{
-								if (ClientPrefs.noteSplashes && note != null)
 								{
-									var strum:StrumNote = playerStrums.members[note.noteData];
-									if (strum != null)
+									if (ClientPrefs.noteSplashes && note != null)
 									{
-										spawnNoteSplash(strum.x, strum.y, note.noteData, note);
-									}
-								}
-							}
-	
-							public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
-							{
-								var skin:String = 'noteSplashes';
-								if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
-									skin = PlayState.SONG.splashSkin;
-	
-								var hue:Float = 0;
-								var sat:Float = 0;
-								var brt:Float = 0;
-								if (data > -1 && data < ClientPrefs.arrowHSV.length)
-								{
-									hue = ClientPrefs.arrowHSV[data][0] / 360;
-									sat = ClientPrefs.arrowHSV[data][1] / 100;
-									brt = ClientPrefs.arrowHSV[data][2] / 100;
-									if (note != null)
-									{
-										skin = note.noteSplashTexture;
-										hue = note.noteSplashHue;
-										sat = note.noteSplashSat;
-										brt = note.noteSplashBrt;
+										var strum:StrumNote = playerStrums.members[note.noteData];
+										if (strum != null)
+										{
+											spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+										}
 									}
 								}
 	
-								var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-								splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
-								grpNoteSplashes.add(splash);
+								public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
+								{
+									var skin:String = 'noteSplashes';
+									if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
+										skin = PlayState.SONG.splashSkin;
+	
+									var hue:Float = 0;
+									var sat:Float = 0;
+									var brt:Float = 0;
+									if (data > -1 && data < ClientPrefs.arrowHSV.length)
+									{
+										hue = ClientPrefs.arrowHSV[data][0] / 360;
+										sat = ClientPrefs.arrowHSV[data][1] / 100;
+										brt = ClientPrefs.arrowHSV[data][2] / 100;
+										if (note != null)
+										{
+											skin = note.noteSplashTexture;
+											hue = note.noteSplashHue;
+											sat = note.noteSplashSat;
+											brt = note.noteSplashBrt;
+										}
+									}
+	
+									var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+									splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+									grpNoteSplashes.add(splash);
 	}*/
 	var fastCarCanDrive:Bool = true;
 

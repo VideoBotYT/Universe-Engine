@@ -24,7 +24,7 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 	var menuItemsOG:Array<String> = ['Title Screen', 'Menus', 'Modes', 'Options', 'Exit'];
 
 	var menuItemsExit:Array<String> = ['Exit Shortcut Menu', 'Exit Game', 'Back'];
-	//var menuItemsExit:Array<String> = ['Exit Game', 'Back'];
+	// var menuItemsExit:Array<String> = ['Exit Game', 'Back'];
 	var menuItemsSongs:Array<String> = ['Story Mode', 'Freeplay', 'Back'];
 	var menuItemsMenu:Array<String> = ['Main Menu', 'Mods Menu', 'Back'];
 	var menuItemsOptions:Array<String> = ['Universe', 'Psych', 'Back'];
@@ -141,7 +141,7 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 								FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 								close();
 							}
-					});
+						});
 					case 'Exit Game':
 						persistentUpdate = false;
 						openSubState(new ExitState());
@@ -155,7 +155,14 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 				switch (daSelected)
 				{
 					case 'Story Mode':
-						FlxG.switchState(new StoryMenuState());
+						if (ClientPrefs.fm)
+						{
+							FlxG.switchState(new CoolStoryState());
+						}
+						else
+						{
+							FlxG.switchState(new StoryMenuState());
+						}
 						inShortcutMenu = false;
 					case 'Freeplay':
 						FlxG.switchState(new FreeplayState());
@@ -171,7 +178,14 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 				switch (daSelected)
 				{
 					case 'Main Menu':
-						FlxG.switchState(new MainMenuState());
+						if (ClientPrefs.fm)
+						{
+							MusicBeatState.switchState(new CoolMenuState());
+						}
+						else
+						{
+							MusicBeatState.switchState(new MainMenuState());
+						}
 						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 						inShortcutMenu = false;
 					case 'Mods Menu':

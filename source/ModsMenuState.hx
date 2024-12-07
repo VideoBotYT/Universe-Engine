@@ -515,7 +515,14 @@ class ModsMenuState extends MusicBeatState
 			}
 			else
 			{
-				MusicBeatState.switchState(new MainMenuState());
+				if (ClientPrefs.fm)
+				{
+					MusicBeatState.switchState(new CoolMenuState());
+				}
+				else
+				{
+					MusicBeatState.switchState(new MainMenuState());
+				}
 			}
 		}
 

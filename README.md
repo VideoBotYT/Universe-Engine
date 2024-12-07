@@ -28,7 +28,6 @@ I won't go over what has been added since [Gamejolt page](https://gamejolt.com/g
 Heres some working libs that I use (uwenalil) that will make the engine work. (ONLY FOR COMPILING)
 * haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp (FIXES NO COLOR BUG)
 * haxelib install hxCodec 2.5.1 (FIXES VIDEO CRASH)
-* haxelib install lime 8.0.1 (FIXES TEXT SCREEN CENTER BUG) (optional!)
 
 If you have the voices.ogg problem when compiling, open a issue and ill send my haxelib libraries.
 If you have any bugs trying to compile this engine, please do submit a Issue!
@@ -44,13 +43,13 @@ modcharting tool my beloved <3<3
 coolest thing there is in this engine.
 
 # CREDICE
-* [uwenalil](https://linktr.ee/uwenalil) -> First dev, First DEV, In charge of the LUA, HX files and other Does all/most of the bug fixes
+* [uwenalil](https://linktr.ee/uwenalil) -> First dev, In charge of the LUA, HX files and other Does all/most of the bug fixes
 * [VideoBot](https://linktr.ee/videobot) -> Second DEV, In charge of the HX files
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
 
 ### Universe Bonus Stuff
 * [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
-* [Bonus Songs (MODCHARTS)](https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing) -> https://drive.google.com/file/d/17zvBlJC9n476sYwUHsvxcHgoer6d9I3Y/view?usp=sharing
+* [Bonus Songs (MODCHARTS)](https://github.com/uwenalil/Universe-Bonus-Songs) -> https://github.com/uwenalil/Universe-Bonus-Songs
 
 <details>
   <summary><h2>Psych engine credits and other stuff</h2></summary>

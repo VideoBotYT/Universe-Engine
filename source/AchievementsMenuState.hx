@@ -120,7 +120,14 @@ class AchievementsMenuState extends MusicBeatState
 		if (controls.BACK)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			if (ClientPrefs.fm)
+			{
+				MusicBeatState.switchState(new MainMenuState());
+			}
+			else
+			{
+				MusicBeatState.switchState(new CoolMenuState());
+			}
 		}
 	}
 

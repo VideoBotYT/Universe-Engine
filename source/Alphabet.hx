@@ -9,6 +9,7 @@ import flixel.math.FlxPoint;
 import flixel.util.FlxTimer;
 import flixel.sound.FlxSound;
 import flash.media.Sound;
+import CoolUtil;
 
 using StringTools;
 
@@ -28,6 +29,7 @@ class Alphabet extends FlxSpriteGroup
 
 	public var isMenuItem:Bool = false;
 	public var targetY:Int = 0;
+	public var targetX:Int = 0;
 	public var changeX:Bool = true;
 	public var changeY:Bool = true;
 
@@ -203,7 +205,7 @@ class Alphabet extends FlxSpriteGroup
 		{
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 9.6, 0, 1);
 			if (changeX)
-				x = FlxMath.lerp(x, (targetY * distancePerItem.x) + startPosition.x, lerpVal);
+				x = FlxMath.lerp(x, (targetX * distancePerItem.x) + startPosition.x, lerpVal);
 			if (changeY)
 				y = FlxMath.lerp(y, (targetY * 1.3 * distancePerItem.y) + startPosition.y, lerpVal);
 		}
@@ -215,7 +217,7 @@ class Alphabet extends FlxSpriteGroup
 		if (isMenuItem)
 		{
 			if (changeX)
-				x = (targetY * distancePerItem.x) + startPosition.x;
+				x = (targetX * distancePerItem.x) + startPosition.x;
 			if (changeY)
 				y = (targetY * 1.3 * distancePerItem.y) + startPosition.y;
 		}

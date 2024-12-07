@@ -18,6 +18,7 @@ import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 
 using StringTools;
+
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
@@ -373,7 +374,14 @@ class PauseSubState extends MusicBeatSubstate
 						WeekData.loadTheFirstEnabledMod();
 						if (PlayState.isStoryMode)
 						{
-							FlxG.switchState(new StoryMenuState());
+							if (ClientPrefs.fm)
+							{
+								FlxG.switchState(new CoolStoryState());
+							}
+							else
+							{
+								FlxG.switchState(new StoryMenuState());
+							}
 						}
 						else if (!PlayState.isStoryMode)
 						{
@@ -387,7 +395,14 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.seenCutscene = false;
 
 						WeekData.loadTheFirstEnabledMod();
-						FlxG.switchState(new MainMenuState());
+						if (ClientPrefs.fm)
+						{
+							MusicBeatState.switchState(new CoolMenuState());
+						}
+						else
+						{
+							MusicBeatState.switchState(new MainMenuState());
+						}
 						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 						PlayState.changedDifficulty = false;
 						PlayState.chartingMode = false;

@@ -20,6 +20,7 @@ class OutdatedState extends MusicBeatState
 
 	var checker:FlxBackdrop;
 	var warnText:FlxText;
+
 	override function create()
 	{
 		super.create();
@@ -39,15 +40,17 @@ class OutdatedState extends MusicBeatState
 		checker.alpha = 0.2;
 		checker.updateHitbox();
 
-		warnText = new FlxText(0, 0, FlxG.width,
-			"Ay Mate! looks you are using an
-			outdated version of Universe Engine (" + MainMenuState.ueVersion + "),
-			please update to " + TitleState.updateVersion + "!
+		warnText = new FlxText(0, 0, FlxG.width, "Ay Mate! looks you are using an
+			outdated version of Universe Engine ("
+			+ MainMenuState.ueVersion
+			+ "),
+			please update to "
+			+ TitleState.updateVersion
+			+ "!
 			Press ESCAPE to proceed anyway.
 			
 			Thank you for using the Engine!
-			You are truly THE epic :D",
-			32);
+			You are truly THE epic :D", 32);
 		warnText.setFormat(Paths.font('funkin.ttf'), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		warnText.screenCenter(Y);
 		add(warnText);
@@ -55,24 +58,36 @@ class OutdatedState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if(!leftState) {
-			if (controls.ACCEPT) {
+		if (!leftState)
+		{
+			if (controls.ACCEPT)
+			{
 				leftState = true;
-				#if windows FlxG.switchState(new UpdateState());
+				#if windows
+				FlxG.switchState(new UpdateState());
 				#else
 				CoolUtil.browserLoad("https://github.com/VideoBotYT/Universe-Engine/releases/");
 				#end
 			}
-			else if(controls.BACK) {
+			else if (controls.BACK)
+			{
 				leftState = true;
 			}
 
-			if(leftState)
+			if (leftState)
 			{
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				FlxTween.tween(warnText, {alpha: 0}, 1, {
-					onComplete: function (twn:FlxTween) {
-						MusicBeatState.switchState(new MainMenuState());
+					onComplete: function(twn:FlxTween)
+					{
+						if (ClientPrefs.fm)
+						{
+							MusicBeatState.switchState(new CoolMenuState());
+						}
+						else
+						{
+							MusicBeatState.switchState(new MainMenuState());
+						}
 					}
 				});
 			}

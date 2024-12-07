@@ -362,12 +362,17 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		for (item in grpOptions.members)
 		{
 			item.targetY = bullShit - curSelected;
+			item.targetX = bullShit - curSelected;
 			bullShit++;
 
 			item.alpha = 0.6;
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
+			}
+			if (ClientPrefs.fm && item.targetY != 0)
+			{
+				item.targetX -= Std.int(Math.abs(item.targetY) * 10);
 			}
 		}
 		for (text in grpTexts)

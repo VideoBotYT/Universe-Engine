@@ -142,6 +142,11 @@ class FreeplayState extends MusicBeatState
 			var songText:Alphabet = new Alphabet(90, 320, songs[i].songName, true);
 			songText.isMenuItem = true;
 			songText.targetY = i - curSelected;
+			songText.targetX = i + curSelected;
+			if (ClientPrefs.fm)
+			{
+				songText.x = 320;
+			}
 			grpSongs.add(songText);
 
 			var maxWidth = 980;
@@ -149,7 +154,6 @@ class FreeplayState extends MusicBeatState
 			{
 				songText.scaleX = maxWidth / songText.width;
 			}
-			songText.snapToPosition();
 
 			Paths.currentModDirectory = songs[i].folder;
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
@@ -388,7 +392,14 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			if (ClientPrefs.fm)
+			{
+				MusicBeatState.switchState(new CoolMenuState());
+			}
+			else
+			{
+				MusicBeatState.switchState(new MainMenuState());
+			}
 		}
 
 		if (ctrl && !ShortcutMenuSubState.inShortcutMenu)
@@ -407,37 +418,37 @@ class FreeplayState extends MusicBeatState
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				// The following fixes both missing vocals AND crashing due to missing chart. ShadowMario TO THIS DAY has not fixed the freeplay missing chart crash error.
 				try
+				{
+					PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+					if (PlayState.SONG.needsVoices)
 					{
-						PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-						if (PlayState.SONG.needsVoices)
+						try
 						{
-							try
-							{
-								vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-							}
-							catch(e:Dynamic)
-							{
-								vocals = new FlxSound();
-							}
+							vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 						}
-						else
+						catch (e:Dynamic)
 						{
 							vocals = new FlxSound();
 						}
-
-						FlxG.sound.list.add(vocals);
-						FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-						vocals.play();
-						vocals.persist = true;
-						vocals.looped = true;
-						vocals.volume = 0.7;
-						instPlaying = curSelected;
 					}
-					catch(e:Dynamic)
+					else
 					{
-						trace('Error loading/playing file! $e');
-						FlxG.sound.play(Paths.sound('cancelMenu'));
+						vocals = new FlxSound();
 					}
+
+					FlxG.sound.list.add(vocals);
+					FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+					vocals.play();
+					vocals.persist = true;
+					vocals.looped = true;
+					vocals.volume = 0.7;
+					instPlaying = curSelected;
+				}
+				catch (e:Dynamic)
+				{
+					trace('Error loading/playing file! $e');
+					FlxG.sound.play(Paths.sound('cancelMenu'));
+				}
 				#end
 			}
 		}
@@ -446,12 +457,12 @@ class FreeplayState extends MusicBeatState
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
-			
+
 			try
 			{
 				PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 			}
-			catch(e:Dynamic)
+			catch (e:Dynamic)
 			{
 				lime.app.Application.current.window.alert('Error loading song!\n$e');
 				return;
@@ -576,6 +587,7 @@ class FreeplayState extends MusicBeatState
 		for (item in grpSongs.members)
 		{
 			item.targetY = bullShit - curSelected;
+			item.targetX = bullShit - curSelected;
 			bullShit++;
 
 			item.alpha = 0.6;
@@ -585,6 +597,10 @@ class FreeplayState extends MusicBeatState
 			{
 				item.alpha = 1;
 				// item.setGraphicSize(Std.int(item.width));
+			}
+			if (ClientPrefs.fm && item.targetY != 0)
+			{
+				item.targetX -= Std.int(Math.abs(item.targetY) * 10);
 			}
 		}
 

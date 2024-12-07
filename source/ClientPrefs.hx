@@ -39,7 +39,7 @@ class ClientPrefs
 	public static var splashAlpha:Float = 0.6;
 
 	// UE
-	public static var universeEngineCPREF:Bool = true; //this is to check if you running universe engine!
+	public static var universeEngineCPREF:Bool = true; // this is to check if you running universe engine!
 	public static var keystrokes:Bool = true;
 	public static var keyA:Float = 0.3;
 	public static var keyFT:Float = 0.15;
@@ -70,6 +70,9 @@ class ClientPrefs
 	public static var ueresultscreen:Bool = true;
 	public static var uems:Bool = true;
 	public static var loadscreen:Bool = false;
+	public static var fm:Bool = true;
+
+	public static var sillyBob:Bool = true;
 
 	public static var noteSkin:String = 'Default';
 	public static var noteColorStyle:String = 'Normal';
@@ -102,9 +105,8 @@ class ClientPrefs
 		'hd' => false, // ermm,,,
 		'sn' => false, // this is shitty
 		'hdp2' => false,
-		'ipbr' => false,//
+		'ipbr' => false, //
 		'ipbrv' => "Normal"
-
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -182,6 +184,7 @@ class ClientPrefs
 		FlxG.save.data.ueresultscreen = ueresultscreen;
 		FlxG.save.data.uems = uems;
 		FlxG.save.data.loadscreen = loadscreen;
+		FlxG.save.data.fm = fm;
 
 		FlxG.save.data.arrowRGB = arrowRGB;
 		FlxG.save.data.arrowRGBPixel = arrowRGBPixel;
@@ -362,6 +365,10 @@ class ClientPrefs
 		if (FlxG.save.data.loadscreen != null)
 		{
 			loadscreen = FlxG.save.data.loadscreen;
+		}
+		if (FlxG.save.data.fm != null)
+		{
+			fm = FlxG.save.data.fm;
 		}
 
 		// Normal Psych Stuff

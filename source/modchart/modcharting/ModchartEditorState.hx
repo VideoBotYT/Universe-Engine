@@ -75,6 +75,7 @@ import modcharting.*;
 import modchart.modcharting.PlayfieldRenderer.StrumNoteType;
 import modchart.modcharting.Modifier;
 import modchart.modcharting.ModchartFile;
+import modchart.modcharting.info.InfoText;
 
 using StringTools;
 
@@ -231,6 +232,12 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		SquareXModifier,
 		SquareYModifier,
 		SquareZModifier,
+		DrunkScaleModifier,
+		DrunkScaleXModifier,
+		DrunkScaleYModifier,
+		DrunkSkewModifier,
+		DrunkSkewXModifier,
+		DrunkSkewYModifier,
 		WaveLaneModifier,
 		XModifier,
 		YModifier,

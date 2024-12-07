@@ -125,10 +125,10 @@ class CreditsState extends MusicBeatState
 			[''],
 			['Stuff used by Universe'],
 			[
-				'Edwhak',
-				'Edwhak',
-				'Modchart Tool',
-				'https://www.youtube.com/@EDWHAK',
+				'Edwhak', 
+				'Edwhak', 
+				'Modchart Tool', 
+				'https://www.youtube.com/@EDWHAK', 
 				'00FF00'
 			],
 			[
@@ -159,6 +159,13 @@ class CreditsState extends MusicBeatState
 				'https://www.youtube.com/watch?v=xmUQUi8rd9M',
 				'FFFFFF'
 			],
+			[
+				'Rozebud',
+				'rozebud',
+				"Chart Editor's Lil' Buddies",
+				'https://x.com/helpme_thebigt',
+				'6D2F83'
+			],
 			[''],
 			['Special Thanks'],
 			[
@@ -171,7 +178,7 @@ class CreditsState extends MusicBeatState
 			[
 				'An Ammar',
 				'Ammar',
-				'Hype Mode, Detached Health Bar, Playtester',
+				'Hype Mode, Detached Health Bar, Playtester, Creator of the fancy main menu',
 				'https://gamebanana.com/mods/381804',
 				'00FF00'
 			],
@@ -442,7 +449,14 @@ class CreditsState extends MusicBeatState
 					colorTween.cancel();
 				}
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new MainMenuState());
+				if (ClientPrefs.fm)
+				{
+					MusicBeatState.switchState(new CoolMenuState());
+				}
+				else
+				{
+					MusicBeatState.switchState(new MainMenuState());
+				}
 				quitting = true;
 			}
 		}

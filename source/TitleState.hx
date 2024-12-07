@@ -41,6 +41,7 @@ import flixel.util.FlxAxes;
 #if VIDEOS_ALLOWED
 import vlc.MP4Handler;
 #end
+import flixel.addons.display.FlxBackdrop;
 
 using StringTools;
 
@@ -89,6 +90,13 @@ class TitleState extends MusicBeatState
 	var titleJSON:TitleData;
 
 	public static var updateVersion:String = '';
+
+	var blackDots:FlxBackdrop;
+	var logoCanBeat:Bool = false;
+	var fnf:FlxSprite;
+	var anammar:FlxSprite;
+	var creativity:FlxSprite;
+	var bg:FlxSprite;
 
 	override public function create():Void
 	{
@@ -298,7 +306,7 @@ class TitleState extends MusicBeatState
 		{
 			if (ClientPrefs.darkmode)
 			{
-				var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
+				bg = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
 				bg.color = 0xFFFDE871;
 				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.setGraphicSize(Std.int(bg.width * 2));
@@ -309,7 +317,7 @@ class TitleState extends MusicBeatState
 			}
 			else
 			{
-				var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menuBG'));
+				bg = new FlxSprite(0, 0).loadGraphic(Paths.image('menuBG'));
 				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.setGraphicSize(Std.int(bg.width * 2));
 				bg.updateHitbox();
@@ -416,33 +424,47 @@ class TitleState extends MusicBeatState
 
 		if (ClientPrefs.mmm == "AAC V4")
 		{
-			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/introBG'));
+			bg = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/introBG'));
 			bg.updateHitbox();
 			bg.screenCenter();
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
 			bg.setGraphicSize(Std.int(bg.width * 1.175));
 			add(bg);
 
-			var FNF:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/FNF'));
-			FNF.updateHitbox();
-			FNF.screenCenter(X);
-			FNF.y = FlxG.height / 2 - 370;
-			FNF.antialiasing = ClientPrefs.globalAntialiasing;
-			add(FNF);
+			blackDots = new FlxBackdrop(Paths.image("blackDots"), X);
+			blackDots.antialiasing = ClientPrefs.globalAntialiasing;
+			blackDots.setGraphicSize(Std.int(1280 * 1.04));
+			blackDots.updateHitbox();
+			blackDots.screenCenter();
+			blackDots.velocity.set(30, 0);
+			blackDots.alpha = 0; // 0.3
+			blackDots.y += 125;
+			add(blackDots);
 
-			var AA:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/An Ammar'));
-			AA.updateHitbox();
-			AA.screenCenter(X);
-			AA.y = FlxG.height / 2 - 360;
-			AA.antialiasing = ClientPrefs.globalAntialiasing;
-			add(AA);
+			fnf = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/FNF'));
+			fnf.updateHitbox();
+			fnf.screenCenter(X);
+			fnf.y = FlxG.height / 2 - 370;
+			fnf.antialiasing = ClientPrefs.globalAntialiasing;
 
-			var creativity:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/Creativity'));
+			anammar = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/An Ammar'));
+			anammar.updateHitbox();
+			anammar.screenCenter(X);
+			anammar.y = FlxG.height / 2 - 360;
+			anammar.antialiasing = ClientPrefs.globalAntialiasing;
+
+			creativity = new FlxSprite(0, 0).loadGraphic(Paths.image('AmmarTitle/Creativity'));
 			creativity.updateHitbox();
 			creativity.screenCenter(X);
 			creativity.y = FlxG.height / 2 - 350;
 			creativity.antialiasing = ClientPrefs.globalAntialiasing;
+
+			add(fnf);
+			add(anammar);
 			add(creativity);
+			fnf.scale.set(3, 3);
+			anammar.scale.set(3, 3);
+			creativity.scale.set(3, 3);
 		}
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
@@ -586,6 +608,18 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
+		if (ClientPrefs.mmm == "AAC V4")
+		{
+			if (logoCanBeat)
+			{
+				var fnfsizeLerp:Float = FlxMath.lerp(fnf.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
+				var ansizeLerp:Float = FlxMath.lerp(anammar.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
+				var crsizeLerp:Float = FlxMath.lerp(creativity.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
+				fnf.scale.set(fnfsizeLerp, fnfsizeLerp);
+				anammar.scale.set(ansizeLerp, ansizeLerp);
+				creativity.scale.set(crsizeLerp, crsizeLerp);
+			}
+		}
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
 		if (gamepad != null)
@@ -650,7 +684,14 @@ class TitleState extends MusicBeatState
 					}
 					else
 					{
-						MusicBeatState.switchState(new MainMenuState());
+						if (ClientPrefs.fm)
+						{
+							MusicBeatState.switchState(new CoolMenuState());
+						}
+						else
+						{
+							MusicBeatState.switchState(new MainMenuState());
+						}
 					}
 					closedState = true;
 				});
@@ -788,15 +829,25 @@ class TitleState extends MusicBeatState
 				gfDance.animation.play('danceLeft');
 		}
 
+		if (ClientPrefs.mmm == "AAC V4")
+		{
+			if (logoCanBeat)
+			{
+				fnf.scale.set(1.06, 1.06);
+				anammar.scale.set(1.1, 1.1);
+				creativity.scale.set(1.13, 1.13);
+			}
+		}
+
 		if (!ExitState.inExit || ClientPrefs.mmm == "AAC V4")
 		{
 			FlxTween.tween(FlxG.camera, {zoom: 1.025}, 0.25, {ease: FlxEase.linear, type: BACKWARD});
-			//FlxTween.tween(FlxG.camera, {angle: (curBeat % 2 == 0 ? 1.025 : -1.025)}, 0.25, {ease: FlxEase.expoOut, type: BACKWARD});
+			// FlxTween.tween(FlxG.camera, {angle: (curBeat % 2 == 0 ? 1.025 : -1.025)}, 0.25, {ease: FlxEase.expoOut, type: BACKWARD});
 		}
 		else
 		{
 			FlxTween.tween(FlxG.camera, {zoom: 1});
-			//FlxTween.tween(FlxG.camera, {angle: 0});
+			// FlxTween.tween(FlxG.camera, {angle: 0});
 		}
 
 		if (!closedState)
@@ -941,6 +992,14 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
+			if (ClientPrefs.mmm == "AAC V4")
+			{
+				FlxTween.tween(bg, {y: ((720 / 2) - (bg.height / 2))}, 1, {ease: FlxEase.expoOut, startDelay: 0.4});
+				FlxTween.tween(fnf, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.3});
+				FlxTween.tween(anammar, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.4});
+				FlxTween.tween(creativity, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.5});
+				FlxTween.tween(blackDots, {alpha:0.3}, 1, {ease: FlxEase.quadOut, startDelay: 0.6});
+			}
 			if (playJingle) // Ignore deez
 			{
 				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
@@ -1017,6 +1076,16 @@ class TitleState extends MusicBeatState
 					}
 				}
 				#end
+			}
+			if (ClientPrefs.mmm == "AAC V4")
+			{
+				var timer:FlxTimer = new FlxTimer().start(1.5, function(tmr:FlxTimer)
+				{
+					logoCanBeat = true;
+					fnf.origin.y = 283;
+					anammar.origin.y = 283;
+					creativity.origin.y = 283;
+				});
 			}
 			skippedIntro = true;
 		}

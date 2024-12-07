@@ -52,8 +52,8 @@ class SelectThing extends MusicBeatState
 
 	override function create()
 	{
-		//FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic), "shared"), 0);
-		//FlxG.sound.music.fadeIn(4, 0, 0.7);
+		// FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic), "shared"), 0);
+		// FlxG.sound.music.fadeIn(4, 0, 0.7);
 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
@@ -145,8 +145,14 @@ class SelectThing extends MusicBeatState
 					LoadingState.loadAndSwitchState(new PlayState());
 					FlxG.sound.music.volume = 0;
 				}
+				else if (ClientPrefs.fm)
+				{
+					MusicBeatState.switchState(new CoolMenuState());
+				}
 				else
+				{
 					MusicBeatState.switchState(new MainMenuState());
+				}
 			}
 			if (controls.ACCEPT)
 			{

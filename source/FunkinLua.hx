@@ -51,6 +51,7 @@ import hscript.Expr;
 #end
 #if desktop
 import Discord;
+import Discord.DiscordClient;
 #end
 
 using StringTools;
@@ -110,7 +111,7 @@ class FunkinLua
 		scriptName = script;
 		initHaxeModule();
 
-		//unlowercased starting words make me mad!!
+		// unlowercased starting words make me mad!!
 		trace('Lua file loaded succesfully:' + script);
 
 		// Lua shit
@@ -219,7 +220,7 @@ class FunkinLua
 		set('currentModDirectory', Paths.currentModDirectory);
 
 		// UE optiosn
-		set('universeEngine', ClientPrefs.universeEngineCPREF); //this is to check if you running universe engine!
+		set('universeEngine', ClientPrefs.universeEngineCPREF); // this is to check if you running universe engine!
 		set('UEkeystrokes', ClientPrefs.keystrokes);
 		set('UEkeyA', ClientPrefs.keyA);
 		set('UEkeyFT', ClientPrefs.keyFT);
@@ -255,7 +256,7 @@ class FunkinLua
 		set('modchart', ClientPrefs.gameplaySettings.get('modchart'));
 		set('UEhealthdrainp2', ClientPrefs.gameplaySettings.get('hdp2'));
 		set('UEIncreasePBR', ClientPrefs.gameplaySettings.get('ipbr'));
-		set('UEipbrv',  ClientPrefs.gameplaySettings.get('ipbrv'));
+		set('UEipbrv', ClientPrefs.gameplaySettings.get('ipbrv'));
 
 		#if windows
 		set('buildTarget', 'windows');
@@ -291,6 +292,30 @@ class FunkinLua
 			PlayState.instance.variables[tag].destroy();
 			PlayState.instance.variables.remove(tag);
 			PlayState.instance.remove(PlayState.instance.variables.get(tag));
+		});
+		Lua_helper.add_callback(lua, "windowSize", function(sizeX:Float, sizeY:Float, duration:Float, ease:String)
+		{
+			var screen = Lib.application.window;
+			FlxTween.tween(screen, {"width": sizeX}, duration, {ease: getFlxEaseByString(ease)});
+			FlxTween.tween(screen, {"width": sizeY}, duration, {ease: getFlxEaseByString(ease)});
+		});
+		Lua_helper.add_callback(lua, "windowPos", function(x:Float, y:Float, duration:Float, ease)
+		{
+			var screen = Lib.application.window;
+			FlxTween.tween(screen, {"x": x}, duration, {ease: getFlxEaseByString(ease)});
+			FlxTween.tween(screen, {"y": y}, duration, {ease: getFlxEaseByString(ease)});
+		});
+		Lua_helper.add_callback(lua, "resetWindow", function(size:Bool, pos:Bool, duration:Float, ease:String)
+		{
+			var screen = Lib.application.window;
+			if (size)
+			{
+				FlxTween.tween(screen, {"width": 1280, "height": 720}, duration, {ease: getFlxEaseByString(ease)});
+			}
+			if (pos)
+			{
+				FlxTween.tween(screen, {"x": 0, "y": 0}, duration, {ease: getFlxEaseByString(ease)});
+			}
 		});
 
 		// custom substate
