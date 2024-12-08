@@ -30,7 +30,7 @@ class CoolMenuState extends MusicBeatState
 	var bg:FlxSprite;
 	var dots:FlxBackdrop;
 
-	public static var ueVersion:String = '0.4.4';
+	public static var ueVersion:String = '0.4.5';
 	public static var psychEngineVersion:String = '0.6.3';
 
 	var curSelected:Int = 0;
