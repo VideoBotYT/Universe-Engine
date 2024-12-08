@@ -4,8 +4,8 @@
 Bugfixes
 
 windowSize now doesn't have 2 arguments that did the same _previously the sizeX and sizeY did the same_
-windowSize now also has 2 extra functions _for the X and the Y sepreratly_ read (wiki)[https://github.com/VideoBotYT/Universe-Engine/wik] for more information
-windowPos now also has 2 extra function _like widnowSize_  read (wiki)[https://github.com/VideoBotYT/Universe-Engine/wik] for more information
+windowSize now also has 2 extra functions _for the X and the Y sepreratly_ read [wiki](https://github.com/VideoBotYT/Universe-Engine/wik) for more information
+windowPos now also has 2 extra function _like widnowSize_  read [wiki](https://github.com/VideoBotYT/Universe-Engine/wik) for more information
 
 [Universe Engine 0.4.4](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.4.4)
 
