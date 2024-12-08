@@ -297,12 +297,32 @@ class FunkinLua
 		{
 			var screen = Lib.application.window;
 			FlxTween.tween(screen, {"width": sizeX}, duration, {ease: getFlxEaseByString(ease)});
-			FlxTween.tween(screen, {"width": sizeY}, duration, {ease: getFlxEaseByString(ease)});
+			FlxTween.tween(screen, {"height": sizeY}, duration, {ease: getFlxEaseByString(ease)});
+		});
+		Lua_helper.add_callback(lua, "windowSizeX", function(sizeX:Float, duration:Float, ease:String)
+		{
+			var screen = Lib.application.window;
+			FlxTween.tween(screen, {"width": sizeX}, duration, {ease: getFlxEaseByString(ease)});
+		});
+		Lua_helper.add_callback(lua, "windowSizeY", function(sizeY:Float, duration:Float, ease:String)
+		{
+			var screen = Lib.application.window;
+			FlxTween.tween(screen, {"height": sizeY}, duration, {ease: getFlxEaseByString(ease)});
 		});
 		Lua_helper.add_callback(lua, "windowPos", function(x:Float, y:Float, duration:Float, ease)
 		{
 			var screen = Lib.application.window;
 			FlxTween.tween(screen, {"x": x}, duration, {ease: getFlxEaseByString(ease)});
+			FlxTween.tween(screen, {"y": y}, duration, {ease: getFlxEaseByString(ease)});
+		});
+		Lua_helper.add_callback(lua, "windowPosX", function(x:Float, duration:Float, ease)
+		{
+			var screen = Lib.application.window;
+			FlxTween.tween(screen, {"x": x}, duration, {ease: getFlxEaseByString(ease)});
+		});
+		Lua_helper.add_callback(lua, "windowPosY", function(y:Float, duration:Float, ease)
+		{
+			var screen = Lib.application.window;
 			FlxTween.tween(screen, {"y": y}, duration, {ease: getFlxEaseByString(ease)});
 		});
 		Lua_helper.add_callback(lua, "resetWindow", function(size:Bool, pos:Bool, duration:Float, ease:String)
