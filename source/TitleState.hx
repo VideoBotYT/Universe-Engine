@@ -85,8 +85,6 @@ class TitleState extends MusicBeatState
 	var easterEggKeysBuffer:String = '';
 	#end
 
-	var mustUpdate:Bool = false;
-
 	var titleJSON:TitleData;
 
 	public static var updateVersion:String = '';
@@ -147,47 +145,18 @@ class TitleState extends MusicBeatState
 
 		ClientPrefs.loadPrefs();
 
-		if (ClientPrefs.checkForUpdates && !closedState)
-		{
-			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/VideoBotYT/Universe-Engine/refs/heads/main/gitVersion.txt");
-
-			http.onData = function(data:String)
-			{
-				updateVersion = data.split('\n')[0].trim();
-				var curVersion:String = MainMenuState.ueVersion.trim();
-				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
-				if (updateVersion != curVersion)
-				{
-					trace('versions arent matching!');
-					mustUpdate = true;
-				}
-			}
-
-			http.onError = function(error)
-			{
-				trace('error: $error');
-			}
-
-			http.request();
-		}
-
 		Highscore.load();
 
 		// IGNORE THIS!!!
 		titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
 		if (ClientPrefs.mmm == "DNB Old")
-		{
-			titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle-DNB.json'));
-		}
+			titleJSON = Json.parse(Paths.getTextFromFile('images/bpmchange/DNB.json'));
 		else if (ClientPrefs.mmm == "Stay Funky")
-		{
-			titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle-SFunky.json'));
-		}
+			titleJSON = Json.parse(Paths.getTextFromFile('images/bpmchange/Stay-Funky.json'));
 		else if (ClientPrefs.mmm == "Marked Engine")
-		{
-			titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle-Marked.json'));
-		}
+			titleJSON = Json.parse(Paths.getTextFromFile('images/bpmchange/Marked.json'));
+		else if (ClientPrefs.mmm == "Daveberry")
+			titleJSON = Json.parse(Paths.getTextFromFile('images/bpmchange/Daveberry.json'));
 		#if TITLE_SCREEN_EASTER_EGG
 		if (FlxG.save.data.psychDevsEasterEgg == null)
 			FlxG.save.data.psychDevsEasterEgg = ''; // Crash prevention
@@ -235,6 +204,12 @@ class TitleState extends MusicBeatState
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new FlashingState());
+		}
+		else if (FlxG.save.data.officialLauncher == null && !OfficialLauncherState.leftState) //Thing Remove popup officlal launcher
+		{
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxTransitionableState.skipNextTransOut = true;
+			MusicBeatState.switchState(new OfficialLauncherState()); // comment this line if you wanna remove the officiallauncherstate!
 		}
 		else
 		{
@@ -397,7 +372,6 @@ class TitleState extends MusicBeatState
 				add(fancyBG);
 			}
 
-			add(logoBl);
 			logoBl.shader = swagShader.shader;
 			if (ClientPrefs.ft == true)
 			{
@@ -416,8 +390,10 @@ class TitleState extends MusicBeatState
 				fancyLogoBl.screenCenter(X);
 				logoBl.y = FlxG.height / 2 - 450;
 				add(fancyLogoBl);
+				fancyLogoBl.alpha = 0;
 				fancyLogoBl.shader = swagShader.shader;
 			}
+			add(logoBl);
 			add(gfDance);
 			gfDance.shader = swagShader.shader;
 		}
@@ -678,20 +654,13 @@ class TitleState extends MusicBeatState
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
-					if (mustUpdate)
+					if (ClientPrefs.fm)
 					{
-						MusicBeatState.switchState(new OutdatedState());
+						MusicBeatState.switchState(new CoolMenuState());
 					}
 					else
 					{
-						if (ClientPrefs.fm)
-						{
-							MusicBeatState.switchState(new CoolMenuState());
-						}
-						else
-						{
-							MusicBeatState.switchState(new MainMenuState());
-						}
+						MusicBeatState.switchState(new MainMenuState());
 					}
 					closedState = true;
 				});
@@ -870,60 +839,32 @@ class TitleState extends MusicBeatState
 						addMoreText('uwenalil', 15);
 						addMoreText('VideoBot', 15);
 						addMoreText('BaranMuzu', 15);
-					// credTextShit.text += '\npresent...';
-					// credTextShit.addText();
-
 					case 5:
 						deleteCoolText();
 					case 6:
-						createCoolText(['You are listening'], -40);
+						createCoolText(['Psych Engine'], 15);
 					case 7:
-						addMoreText('To', -40);
+						addMoreText('By', 15);
 					case 8:
-						addMoreText(ClientPrefs.mmm, -40);
-						addMoreText("Main menu song", -40);
-						addMoreText("Not associated with", 70);
-						addMoreText("Newgrounds", 70);
-					/*
-						// credTextShit.visible = false;
-						// credTextShit.text = 'In association \nwith';
-						// credTextShit.screenCenter();
-						case 6:
-							createCoolText(['Not associated'], -40);
-						case 7:
-							addMoreText('With', -40);
-						case 8:
-							addMoreText('newgrounds', -40);
-							ngSpr.visible = true;
-						// credTextShit.text += '\nNewgrounds'; */
-
+						addMoreText('Shadow Mario', 15);
+						addMoreText('RiverOaken', 15);
+						addMoreText('shubs', 15);
 					case 9:
 						deleteCoolText();
 						ngSpr.visible = false;
-					// credTextShit.visible = false;
-
-					// credTextShit.text = 'Shoutouts Tom Fulp';
-					// credTextShit.screenCenter();
 					case 10:
 						addMoreText(curWacky[0]);
-					// credTextShit.visible = true;
 					case 11:
 						addMoreText(curWacky[1]);
 					case 12:
 						addMoreText(curWacky[2]);
-					// credTextShit.text += '\nlmao';
 					case 13:
 						deleteCoolText();
-						addMoreText('FNF', -40);
-					// credTextShit.visible = false;
-					// credTextShit.text = "Friday";
-					// credTextShit.screenCenter();
+						addMoreText('Friday', -40);
 					case 14:
-						addMoreText('Universe', -40);
-					// credTextShit.visible = true;
+						addMoreText('Night', -40);
 					case 15:
-						addMoreText('Engine', -40);
-					// credTextShit.text += '\nNight';
+						addMoreText("Funkin'", -40);
 					case 16:
 						addMoreText(unWackyourwacky[0], -20); // credTextShit.text += '\nFunkin';
 						addMoreText(unWackyourwacky[1], -20);
@@ -939,8 +880,10 @@ class TitleState extends MusicBeatState
 				switch (sickBeats)
 				{
 					case 1:
+						#if !html5
 						var video:MP4Handler = new MP4Handler();
 						video.playVideo("assets/videos/AACIntroUE.mp4");
+						#end
 
 						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
@@ -961,24 +904,24 @@ class TitleState extends MusicBeatState
 						addMoreText('uwenalil', 15);
 						addMoreText('VideoBot', 15);
 						addMoreText('BaranMuzu', 15);
-					case 6:
+					case 3:
 						deleteCoolText();
-						createCoolText(['Not associated'], -40);
-						addMoreText('With', -40);
-						addMoreText('newgrounds', -40);
+						createCoolText(['Psych Engine'], -40);
+						addMoreText('By', -40);
+						addMoreText('ShadowMario', -40);
 						ngSpr.visible = true;
-					case 9:
+					case 6:
 						deleteCoolText();
 						ngSpr.visible = false;
 						addMoreText(curWacky[0], -20);
-					case 10:
+					case 7:
 						addMoreText(curWacky[1], -20);
-					case 11:
+					case 8:
 						addMoreText(curWacky[2], -20);
-					case 12:
-						addMoreText('FNF Universe');
-						addMoreText('Stay funky forever');
-					case 13:
+					case 9:
+						addMoreText('Friday Night');
+						addMoreText("Funkin'");
+					case 10:
 						skipIntro();
 				}
 			}
@@ -998,7 +941,7 @@ class TitleState extends MusicBeatState
 				FlxTween.tween(fnf, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.3});
 				FlxTween.tween(anammar, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.4});
 				FlxTween.tween(creativity, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.5});
-				FlxTween.tween(blackDots, {alpha:0.3}, 1, {ease: FlxEase.quadOut, startDelay: 0.6});
+				FlxTween.tween(blackDots, {alpha: 0.3}, 1, {ease: FlxEase.quadOut, startDelay: 0.6});
 			}
 			if (playJingle) // Ignore deez
 			{

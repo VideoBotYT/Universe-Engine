@@ -9,6 +9,7 @@ function onCreatePost()
     addLuaScript(UEenginescriptlocateFORCE.."Trail Double Note")
     addLuaScript(UEenginescriptlocateFORCE.."fire")
     addLuaScript(UEenginescriptlocateFORCE.."baldi")
+    addLuaScript(UEenginescriptlocateFORCE.."DiscordRPC")
     
     -- Options << << << << <<
     if UEHud then addLuaScript(UEenginescriptlocateOPTIONS.."Hud") end
@@ -41,20 +42,3 @@ function onCreatePost()
     -- Other non important << << << << <<
     --luaDebugMode = true
 end
-
---[[
-
-Little tutorial on how to use the custom function!
-
-function onCreatePost()
-    addLuaScript("scripts/UE engine/customFunction")
-end
-
-add that line to your lua script!
-here are some avalible functions for now!
-
-UEAlphaHud(DURATION,VALUE)
-UEAlphaCombo(DURATION,VALUE)
-UEHideKeystrokes(DURATION,TRUE/FALSE)
-
-]]

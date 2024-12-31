@@ -32,12 +32,6 @@ class PauseSubState extends MusicBeatSubstate
 		'Options',
 		'Exit'
 	];
-	var menuItemsExit:Array<String> = [
-		(PlayState.isStoryMode ? 'Exit to Story Menu' : 'Exit to Freeplay'),
-		'Exit to Main Menu',
-		'Exit Game',
-		'Back'
-	];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -183,7 +177,7 @@ class PauseSubState extends MusicBeatSubstate
 		if (pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
 
-		if (menuItems != menuItemsExit && menuItems.contains('Skip Time'))
+		if (menuItems.contains('Skip Time'))
 			updateSkipTextStuff();
 
 		super.update(elapsed);
@@ -292,6 +286,16 @@ class PauseSubState extends MusicBeatSubstate
 						grpMenuShit.remove(obj, true);
 						obj.destroy();
 					}
+
+					bg.alpha = 0;
+					levelInfo.alpha = 0;
+					levelDifficulty.alpha = 0;
+					blueballedTxt.alpha = 0;
+					grid.alpha = 0;
+					close();
+
+					/* old code, it just basically gives a little second until its hidden
+					   keeping it here if someone wants to idk, use it?
 					FlxTween.tween(bg, {alpha: 0}, 1.5, {ease: FlxEase.quartInOut});
 					FlxTween.tween(levelInfo, {alpha: 0}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 					FlxTween.tween(levelDifficulty, {alpha: 0}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
@@ -303,6 +307,7 @@ class PauseSubState extends MusicBeatSubstate
 							close();
 						}
 					});
+					*/
 				case 'Change Difficulty':
 					menuItems = difficultyChoices;
 					deleteSkipTimeText();
@@ -360,58 +365,16 @@ class PauseSubState extends MusicBeatSubstate
 					GameplayChangersSubstate.inThePauseMenu = true; */
 
 				case "Exit":
-					menuItems = menuItemsExit;
-					regenMenu();
-			}
-			if (menuItems == menuItemsExit)
-			{
-				switch (daSelected)
-				{
-					case "Exit to Story Menu", "Exit to Freeplay":
-						PlayState.deathCounter = 0;
-						PlayState.seenCutscene = false;
+					PlayState.deathCounter = 0;
+					PlayState.seenCutscene = false;
 
-						WeekData.loadTheFirstEnabledMod();
-						if (PlayState.isStoryMode)
-						{
-							if (ClientPrefs.fm)
-							{
-								FlxG.switchState(new CoolStoryState());
-							}
-							else
-							{
-								FlxG.switchState(new StoryMenuState());
-							}
-						}
-						else if (!PlayState.isStoryMode)
-						{
-							FlxG.switchState(new FreeplayState());
-						}
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
-						PlayState.changedDifficulty = false;
-						PlayState.chartingMode = false;
-					case "Exit to Main Menu":
-						PlayState.deathCounter = 0;
-						PlayState.seenCutscene = false;
+					WeekData.loadTheFirstEnabledMod();
 
-						WeekData.loadTheFirstEnabledMod();
-						if (ClientPrefs.fm)
-						{
-							MusicBeatState.switchState(new CoolMenuState());
-						}
-						else
-						{
-							MusicBeatState.switchState(new MainMenuState());
-						}
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
-						PlayState.changedDifficulty = false;
-						PlayState.chartingMode = false;
-					case "Exit Game":
-						openfl.system.System.exit(0);
-					case "Back":
-						menuItems = menuItemsOG;
-						regenMenu();
-				}
+					FlxG.switchState(new FreeplayState());
+
+					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+					PlayState.changedDifficulty = false;
+					PlayState.chartingMode = false;
 			}
 		}
 	}

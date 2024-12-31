@@ -284,7 +284,15 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
+
 	public var scoreTxt:FlxText;
+
+	//scrapped
+	//public var UEscoreTxt:FlxText;
+	//public var UEmissesTxt:FlxText;
+	//public var UEratingTxt:FlxText;
+	
+	public var lerpScore:Int = 0;
 
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -3644,6 +3652,12 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+		lerpScore = Math.floor(FlxMath.lerp(lerpScore, songScore, CoolUtil.boundTo(elapsed * 17, 0, 1)));
+		if (Math.abs(lerpScore - songScore) <= 10)
+			lerpScore = songScore;
+
+		setOnLuas('lerpScore', lerpScore);
+
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
@@ -4391,15 +4405,10 @@ class PlayState extends MusicBeatState
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if (ret != FunkinLua.Function_Stop && !transitioning)
 		{
-			if (SONG.validScore)
-			{
-				#if !switch
-				var percent:Float = ratingPercent;
-				if (Math.isNaN(percent))
-					percent = 0;
-				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
-				#end
-			}
+			var percent:Float = ratingPercent;
+			if (Math.isNaN(percent))
+				percent = 0;
+			Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent, songMisses);
 			playbackRate = 1;
 
 			if (chartingMode)
@@ -4439,10 +4448,7 @@ class PlayState extends MusicBeatState
 					{
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
 
-						if (SONG.validScore)
-						{
-							Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
-						}
+						Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
 
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
 						FlxG.save.flush();
@@ -5100,10 +5106,10 @@ class PlayState extends MusicBeatState
 
 			/*boyfriend.stunned = true;
 	
-																															// get stunned for 1/60 of a second, makes you able to
-																															new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
-																															{
-																																boyfriend.stunned = false;
+																																		// get stunned for 1/60 of a second, makes you able to
+																																		new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
+																																		{
+																																			boyfriend.stunned = false;
 			});*/
 
 			if (boyfriend.hasMissAnimations)
@@ -5301,43 +5307,43 @@ class PlayState extends MusicBeatState
 	}
 
 	/*public function spawnNoteSplashOnNote(note:Note)
-								{
-									if (ClientPrefs.noteSplashes && note != null)
 									{
-										var strum:StrumNote = playerStrums.members[note.noteData];
-										if (strum != null)
+										if (ClientPrefs.noteSplashes && note != null)
 										{
-											spawnNoteSplash(strum.x, strum.y, note.noteData, note);
-										}
-									}
-								}
-	
-								public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
-								{
-									var skin:String = 'noteSplashes';
-									if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
-										skin = PlayState.SONG.splashSkin;
-	
-									var hue:Float = 0;
-									var sat:Float = 0;
-									var brt:Float = 0;
-									if (data > -1 && data < ClientPrefs.arrowHSV.length)
-									{
-										hue = ClientPrefs.arrowHSV[data][0] / 360;
-										sat = ClientPrefs.arrowHSV[data][1] / 100;
-										brt = ClientPrefs.arrowHSV[data][2] / 100;
-										if (note != null)
-										{
-											skin = note.noteSplashTexture;
-											hue = note.noteSplashHue;
-											sat = note.noteSplashSat;
-											brt = note.noteSplashBrt;
+											var strum:StrumNote = playerStrums.members[note.noteData];
+											if (strum != null)
+											{
+												spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+											}
 										}
 									}
 	
-									var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-									splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
-									grpNoteSplashes.add(splash);
+									public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null)
+									{
+										var skin:String = 'noteSplashes';
+										if (PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0)
+											skin = PlayState.SONG.splashSkin;
+	
+										var hue:Float = 0;
+										var sat:Float = 0;
+										var brt:Float = 0;
+										if (data > -1 && data < ClientPrefs.arrowHSV.length)
+										{
+											hue = ClientPrefs.arrowHSV[data][0] / 360;
+											sat = ClientPrefs.arrowHSV[data][1] / 100;
+											brt = ClientPrefs.arrowHSV[data][2] / 100;
+											if (note != null)
+											{
+												skin = note.noteSplashTexture;
+												hue = note.noteSplashHue;
+												sat = note.noteSplashSat;
+												brt = note.noteSplashBrt;
+											}
+										}
+	
+										var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+										splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+										grpNoteSplashes.add(splash);
 	}*/
 	var fastCarCanDrive:Bool = true;
 

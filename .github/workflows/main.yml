@@ -34,7 +34,7 @@ jobs:
           sudo apt-get install libvlc-dev
           sudo apt-get install libvlccore-dev
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
           haxelib install lime
           haxelib install openfl
           haxelib --never install flixel
@@ -46,7 +46,7 @@ jobs:
           haxelib install tjson
           haxelib install hxjsonast
           haxelib install hxCodec
-          haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
@@ -75,7 +75,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
-          haxelib install hxcpp > nul
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
           haxelib install lime
           haxelib install openfl
           haxelib --never install flixel
@@ -87,7 +87,7 @@ jobs:
           haxelib install tjson
           haxelib install hxjsonast
           haxelib install hxCodec
-          haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
@@ -117,7 +117,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
           haxelib install lime
           haxelib install openfl
           haxelib --never install flixel
@@ -129,7 +129,7 @@ jobs:
           haxelib install tjson
           haxelib install hxjsonast
           haxelib install hxCodec
-          haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc

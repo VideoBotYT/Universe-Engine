@@ -43,9 +43,12 @@ class UEGameOptions extends BaseOptionsMenu
 			'DNB Old',
 			'Stay Funky',
 			'Marked Engine',
-			'idiotxd'
+			'IdiotXD',
+			'Normal Collections',
+			'Daveberry'
 		]);
 		addOption(option);
+		option.onChange = changeSong;
 
 		var option:Option = new Option('Fancy Title', 'Title bounce', 'ft', 'bool', false);
 		addOption(option);
@@ -60,9 +63,11 @@ class UEGameOptions extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = restart;
 
+		/*
 		var option:Option = new Option('Check for Updates', 'On Release builds, turn this on to check for updates when you start the game.',
 			'checkForUpdates', 'bool', true);
 		addOption(option);
+		*/
 
 		var option:Option = new Option('Dark Mode', 'Basically dark mode on every website, but cooler', 'darkmode', 'bool', false);
 		addOption(option);
@@ -74,6 +79,15 @@ class UEGameOptions extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Silly Bounce', "Makes the dots behind the main menu bounce", 'sillyBob', 'bool', true);
+		addOption(option);
+
+		var option:Option = new Option('Disable Second Page', "Disables the second page on the main menu.", 'disable2ndpage', 'bool', false);
+		addOption(option);
+
+		var option:Option = new Option('Hide Original Credits', "Hides the original credits built-in in source.", 'hideOriCredits', 'bool', false);
+		addOption(option);
+
+		var option:Option = new Option('Move Credits and Mods', "Moves the Credits and Mods to Options.", 'moveCreditMods', 'bool', false);
 		addOption(option);
 
 		super();
@@ -119,6 +133,11 @@ class UEGameOptions extends BaseOptionsMenu
 	function onChangeHitSound()
 	{
 		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+	}
+
+	function changeSong()
+	{
+		FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0.7);
 	}
 
 	function restart()

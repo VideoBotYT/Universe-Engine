@@ -67,6 +67,12 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
 			bg.updateHitbox();
 			add(bg);
+
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x337F7F7F, 0x0));
+			grid.velocity.set(20, 20);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
 		}
 		else
 		{
@@ -76,13 +82,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
 			bg.updateHitbox();
 			add(bg);
-		}
 
-		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
-		grid.velocity.set(20, 20);
-		grid.alpha = 0;
-		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-		add(grid);
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+			grid.velocity.set(20, 20);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
+		}
 
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();

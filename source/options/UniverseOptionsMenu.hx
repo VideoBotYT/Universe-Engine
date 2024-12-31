@@ -29,7 +29,7 @@ using StringTools;
 
 class UniverseOptionsMenu extends MusicBeatState
 {
-	var options:Array<String> = ['HUD Options', 'GamePlay Options', 'HitSound Options', 'Game Options'];
+	var options:Array<String> = ['HUD', 'Gameplay', 'Game Options'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 
 	private static var curSelected:Int = 0;
@@ -39,12 +39,10 @@ class UniverseOptionsMenu extends MusicBeatState
 	{
 		switch (label)
 		{
-			case 'HUD Options':
+			case 'HUD':
 				openSubState(new options.ue.UEHud());
-			case 'GamePlay Options':
+			case 'Gameplay':
 				openSubState(new options.ue.UEGamePlay());
-			case 'HitSound Options':
-				openSubState(new options.ue.UEHitSound());
 			case 'Game Options':
 				openSubState(new options.ue.UEGameOptions());
 		}
@@ -68,6 +66,12 @@ class UniverseOptionsMenu extends MusicBeatState
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
 			bg.updateHitbox();
 			add(bg);
+
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x337F7F7F, 0x0));
+			grid.velocity.set(20, 20);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
 		}
 		else
 		{
@@ -77,13 +81,13 @@ class UniverseOptionsMenu extends MusicBeatState
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
 			bg.updateHitbox();
 			add(bg);
-		}
 
-		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
-		grid.velocity.set(20, 20);
-		grid.alpha = 0;
-		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-		add(grid);
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+			grid.velocity.set(20, 20);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
+		}
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);

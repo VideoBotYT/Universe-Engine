@@ -92,7 +92,7 @@ class CoolStoryState extends MusicBeatState
 		bg = new FlxSprite(0, 0).loadGraphic(Paths.image('aboutMenu', 'preload'));
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		bg.color = 0x0000FF;
+		bg.color = 0x00FFFF;
 		add(bg);
 
 		add(bgSprite);

@@ -161,6 +161,8 @@ class FunkinLua
 		set('score', 0);
 		set('misses', 0);
 		set('hits', 0);
+		
+		set('lerpScore', 0);
 
 		set('rating', 0);
 		set('ratingName', '');
@@ -228,7 +230,6 @@ class FunkinLua
 		set('UEkeyYPos', ClientPrefs.keyYPos);
 		set('UEHud', ClientPrefs.ueHud);
 		set('UEhudZoomOut', ClientPrefs.hudZoomOut);
-		set('UEplayBothSides', ClientPrefs.gameplaySettings.get('pbs'));
 		set('UEhudPos', ClientPrefs.hudPosUE);
 		set('UEsnTimeFollow', ClientPrefs.sntf);
 		set('UEhitsound', ClientPrefs.ht);
@@ -254,10 +255,16 @@ class FunkinLua
 		set('UEsd', ClientPrefs.gameplaySettings.get('sd'));
 		set('UEsustainOneNote', ClientPrefs.gameplaySettings.get('sn'));
 		set('modchart', ClientPrefs.gameplaySettings.get('modchart'));
+		set('UEplayBothSides', ClientPrefs.gameplaySettings.get('pbs'));
 		set('UEhealthdrainp2', ClientPrefs.gameplaySettings.get('hdp2'));
 		set('UEIncreasePBR', ClientPrefs.gameplaySettings.get('ipbr'));
 		set('UEipbrv', ClientPrefs.gameplaySettings.get('ipbrv'));
 
+		// ewwww cringe simplified names!!!
+		// VIDEOBOT WHY WOULD YOU EVEN SIMPLIFY THESE DAMN NAMES
+		// THEYRE HARD TO FUCKING READ
+
+		//build target, even tho windows will be the main one, until someone ports ue to linux, mac, html5 (possibly not please) or android
 		#if windows
 		set('buildTarget', 'windows');
 		#elseif linux

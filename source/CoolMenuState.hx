@@ -30,7 +30,7 @@ class CoolMenuState extends MusicBeatState
 	var bg:FlxSprite;
 	var dots:FlxBackdrop;
 
-	public static var ueVersion:String = '0.4.5';
+	public static var ueVersion:String = '0.5.5';
 	public static var psychEngineVersion:String = '0.6.3';
 
 	var curSelected:Int = 0;
@@ -49,7 +49,7 @@ class CoolMenuState extends MusicBeatState
 	private var bgFollow:FlxObject;
 	private var hudFollow:FlxObject;
 
-	var menuList:Array<Array<String>> = [['Story Mode'], ['freeplay'], ['mods'], ['credits'], ['options']];
+	var menuList:Array<Array<String>>;
 	var uselessList:Array<Array<String>> = [['Awards'], ['Donate']];
 
 	var debugKeys:Array<FlxKey>;
@@ -72,6 +72,11 @@ class CoolMenuState extends MusicBeatState
 
 	override function create()
 	{
+		if (ClientPrefs.moveCreditMods)
+			menuList = [['Story Mode'], ['freeplay'], ['options']];
+		else
+			menuList = [['Story Mode'], ['freeplay'], ['mods'], ['credits'], ['options']];
+
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
@@ -220,6 +225,8 @@ class CoolMenuState extends MusicBeatState
 		arrow.antialiasing = ClientPrefs.globalAntialiasing;
 		arrow.scrollFactor.set();
 		add(arrow);
+		if (ClientPrefs.disable2ndpage)
+			arrow.alpha = 0;
 
 		FlxTween.tween(arrow, {x: targetArrowX}, 1, {
 			ease: FlxEase.backOut,
@@ -272,17 +279,19 @@ class CoolMenuState extends MusicBeatState
 			{
 				doShish();
 			}
-			if (controls.UI_RIGHT_P && curPage != "useless" && !switching)
+			if (!ClientPrefs.disable2ndpage)
 			{
-				switchPage("main"); // switches to useless page
-			}
-			if (controls.UI_LEFT_P && curPage != "main" && !switching)
-			{
-				switchPage("useless"); // switches to main page
+				if (controls.UI_RIGHT_P && curPage != "useless" && !switching)
+				{
+					switchPage("main"); // switches to useless page
+				}
+				if (controls.UI_LEFT_P && curPage != "main" && !switching)
+				{
+					switchPage("useless"); // switches to main page
+				}
 			}
 			if (controls.RESET)
 			{
-				ClientPrefs.saveSettings();
 				TitleState.initialized = false;
 				TitleState.closedState = false;
 				if (FreeplayState.vocals != null)

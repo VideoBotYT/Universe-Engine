@@ -138,7 +138,7 @@ function onUpdatePost(elapsed)
 
     if hits > 0 then
         setTextString('UErating', 'Rating: (' .. ratingFC .. ') ' .. round(rating * 100, 2) .. '%')
-        setTextString('UEscore', 'Score: ' .. score)
+        setTextString('UEscore', 'Score: ' .. lerpScore)
     end
 end
 

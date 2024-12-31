@@ -30,7 +30,7 @@ using StringTools;
 
 class SelectThing extends MusicBeatState
 {
-	var options:Array<String> = ['Universe Options', 'Psych Options',];
+	var options:Array<String>;
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 
 	private static var curSelected:Int = 0;
@@ -44,6 +44,10 @@ class SelectThing extends MusicBeatState
 				MusicBeatState.switchState(new options.UniverseOptionsMenu());
 			case 'Psych Options':
 				MusicBeatState.switchState(new options.OptionsState());
+			case 'Mods':
+				MusicBeatState.switchState(new ModsMenuState());
+			case 'Credits':
+				MusicBeatState.switchState(new CreditsState());
 		}
 	}
 
@@ -55,15 +59,15 @@ class SelectThing extends MusicBeatState
 		// FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic), "shared"), 0);
 		// FlxG.sound.music.fadeIn(4, 0, 0.7);
 
+		if (ClientPrefs.moveCreditMods)
+			options = ['Universe Options', 'Psych Options', 'Mods', 'Credits'];
+		else
+			options = ['Universe Options', 'Psych Options'];
+
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
 		ShortcutMenuSubState.inShortcutMenu = false;
-
-		if (!PauseSubState.inPause)
-		{
-			FlxG.sound.destroy(true);
-		}
 
 		DiscordClient.changePresence("Selecting options category", null);
 
@@ -75,6 +79,12 @@ class SelectThing extends MusicBeatState
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
 			bg.updateHitbox();
 			add(bg);
+
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x337F7F7F, 0x0));
+			grid.velocity.set(20, 20);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
 		}
 		else
 		{
@@ -84,13 +94,13 @@ class SelectThing extends MusicBeatState
 			bg.antialiasing = ClientPrefs.globalAntialiasing;
 			bg.updateHitbox();
 			add(bg);
-		}
 
-		var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
-		grid.velocity.set(20, 20);
-		grid.alpha = 0;
-		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-		add(grid);
+			var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+			grid.velocity.set(20, 20);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+			add(grid);
+		}
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);

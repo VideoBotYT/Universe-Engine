@@ -1,27 +1,76 @@
 # Universe Engine Changelog.
 
+[Universe Engine 0.5.5](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.5.5)
+
+Universe engine offical launcher?!!?!?!?!??!!?!?!??!?!?! [(click here)](https://github.com/VideoBotYT/Universe-Engine-Launhcer/releases)
+
+Removed the ingame updater (we have a damn launcher now)
+
+Added 2 new options
+
+Credited 2 people for the PR's
+
+Hitsounds options now moved to gameplay
+
+Better Discord RPC
+
+Removed the delay resume on pause menu
+
+Options menu finally has music
+
+Changing Menu Music updates on options
+
+2 New Menu Music
+
+Added an option to move "mods" and "credits" to options
+
+Removed Exit on Shortcut menu
+
+Made the checker a little darker when on dark mode
+
+Added an option to remove second page in main menu
+
+Fixed Pause Menu music crash on psych options
+
+# NOTE FROM THE (FORMER)FIRST DEVELOPER
+
+Hey uh, Yeah hi, I'm uwenalil, I'm the one who made this update and so now, I don't work for universe engine anymore.
+
+It's not due to school or depression, I'va just completlely lost interest in FNF.
+
+So, Im putting my hat down and passing it to VideoBot and BaranMuzu to work on the engine.
+
+Thank you for your support.
+
+See you.
+
+#
+
 [Universe Engone 0.4.5](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.4.5)
 
 Bugfixes
 
 windowSize now doesn't have 2 arguments that did the same _previously the sizeX and sizeY did the same_
-windowSize now also has 2 extra functions _for the X and the Y sepreratly_ read [wiki](https://github.com/VideoBotYT/Universe-Engine/wik) for more information
-windowPos now also has 2 extra function _like widnowSize_  read [wiki](https://github.com/VideoBotYT/Universe-Engine/wik) for more information
+
+windowSize now also has 2 extra functions _for the X and the Y sepreratly_ read [wiki](https://github.com/VideoBotYT/Universe-Engine/wiki) for more information
+
+windowPos now also has 2 extra function _like windowSize_  read [wiki](https://github.com/VideoBotYT/Universe-Engine/wiki) for more information
 
 [Universe Engine 0.4.4](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.4.4)
 
 New features
 
 Fancy Menus (game option)
+
 Silly Bounce (game option *only effects when you have Fancy Menus on)
+
 New modifiers
+
 New lua functions (check [wiki](https://github.com/VideoBotYT/Universe-Engine/wiki) for it)
 
 [Universe Engine 0.3.4](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.3.4)
 
 Minor bugfix stuff
-
-Immediate restart is now implemented
 
 Some text are centered
 
@@ -59,9 +108,9 @@ Moved the "UE Engine" Folder to assets and renamed
 
 Pressing RESET key on main menu state restarts the game
 
-Intro text is now 3 texts instead of 2, its also customizable!
+Intro text is now 3 texts instead of 2.
 
-Randomized Text on the end of the introState, also customizable!
+Randomized Text on the end of the introState.
 
 Long note transparency option
 
@@ -125,14 +174,6 @@ Erect menu
 
 https://github.com/VideoBotYT/Universe-Engine/pull/8 -- CharGoldenYT
 
-
-* uwenalil
-
-Taking a break from universe engine dev, thank you for using.
-
-**ME SAYING THAT DOESN'T MEAN THE ENGINE WONT BE UPDATED ANYMORE!!!**
-
-
 [Universe Engine 0.2.2](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.2.2)
 
 
@@ -143,8 +184,6 @@ Cute mode more modified
 Shut down on miss now replaced with crash on miss
 
 Fire in the hole
-
-Immediate reset (not implimented)
 
 Chart editor
 
@@ -221,3 +260,9 @@ Bonus Songs are now in a different download.
 [Universe Engine 0.1.0](https://github.com/VideoBotYT/Universe-Engine/releases/tag/0.1.0)
 
 First release with terrible features.
+
+#
+
+videobot mispelled engine :3
+
+and im keeping it!!!! >:3

@@ -29,8 +29,31 @@ class UEGamePlay extends BaseOptionsMenu
 {
 	public function new()
 	{
-		title = 'Universe Gameplay options';
+		title = 'Universe Gameplay';
 		rpcTitle = 'Gameplay options of the engine'; // for Discord Rich Presence
+
+		var option:Option = new Option('Hitsound Volume', 'Funny notes does \"Tick!\" when you hit them."', 'hitsoundVolume', 'percent', 0);
+		addOption(option);
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		option.onChange = onChangeHitsoundVolume;
+
+		var option:Option = new Option('Hitsound Type:', 'Change the hitsound type', 'ht', 'string', 'Classic', [
+			'Classic',
+			'Water',
+			'Waterboom',
+			'Heartbeat',
+			'Fire in the hole',
+			'Universe',
+			'Baldi',
+			'Spongefail',
+			'Spongebob'
+		]);
+		addOption(option);
+		option.onChange = onChangeHitSound;
 
 		var option:Option = new Option('Smooth HP', 'If there was any bug moving the position X health icons, turn this off!', 'sh', 'bool', true);
 		addOption(option);
@@ -111,6 +134,11 @@ class UEGamePlay extends BaseOptionsMenu
 	}
 
 	function onChangeHitSound()
+	{
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+	}
+
+	function onChangeHitsoundVolume()
 	{
 		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
 	}

@@ -29,7 +29,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var ueVersion:String = '0.4.5';
+	public static var ueVersion:String = '0.5.5';
 	public static var psychEngineVersion:String = '0.6.3'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -39,7 +39,7 @@ class MainMenuState extends MusicBeatState
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
 
-	var optionShit:Array<String> = ['story_mode', 'freeplay', 'mods', 'credits', 'options'];
+	var optionShit:Array<String>;
 
 	var arrow:FlxSprite;
 	var magenta:FlxSprite;
@@ -49,6 +49,11 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		if (ClientPrefs.moveCreditMods)
+			optionShit = ['story_mode', 'freeplay', 'options'];
+		else
+			optionShit = ['story_mode', 'freeplay', 'mods', 'credits', 'options'];
+
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
@@ -210,12 +215,12 @@ class MainMenuState extends MusicBeatState
 		arrow = new FlxSprite(FlxG.width / 2 + 157 + 300, 0).loadGraphic(Paths.image('noteupthingg'));
 		arrow.screenCenter(Y);
 		arrow.angle = 90;
-		arrow.scale.set(0.75,0.75);
+		arrow.scale.set(0.75, 0.75);
 		arrow.antialiasing = ClientPrefs.globalAntialiasing;
 		arrow.scrollFactor.set();
 		add(arrow);
-
-		
+		if (ClientPrefs.disable2ndpage)
+			arrow.alpha = 0;
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -278,9 +283,12 @@ class MainMenuState extends MusicBeatState
 				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
 			}
 
-			if (controls.UI_RIGHT_P)
+			if (!ClientPrefs.disable2ndpage)
 			{
-				MusicBeatState.switchState(new MainMenuUselessState());
+				if (controls.UI_RIGHT_P)
+				{
+					MusicBeatState.switchState(new MainMenuUselessState());
+				}
 			}
 
 			var shiftMult:Int = 1;

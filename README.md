@@ -43,14 +43,15 @@ modcharting tool my beloved <3<3
 coolest thing there is in this engine.
 
 # CREDICE
-* [uwenalil](https://linktr.ee/uwenalil) -> First dev, In charge of the LUA, HX files and other Does all/most of the bug fixes
-* [VideoBot](https://linktr.ee/videobot) -> Second DEV, In charge of the HX files
-* [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Third DEV, In charge of the LUA files and other
+* [uwenalil](https://linktr.ee/uwenalil) -> Former dev, (No Longer) In charge of the LUA, HX files and other.
+* [VideoBot](https://linktr.ee/videobot) -> First DEV, In charge of the HX files
+* [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Second DEV, In charge of the LUA files and other
 
 ### Universe Bonus Stuff
+* [Support server (also uwens discord server)](discord.gg/S7Ycgznj2Z) -> https://discord.gg/S7Ycgznj2Z
 * [OFFICIAL Universe Engine Website](https://uwenalil.netlify.app/universe%20engine/universewiki) -> https://uwenalil.netlify.app/universe%20engine/universewiki
-* [Universe Engine Team YT Page](https://www.youtube.com/@universeengineoffical) -> https://www.youtube.com/@universeengineoffical
 * [Bonus Songs (MODCHARTS)](https://github.com/uwenalil/Universe-Bonus-Songs) -> https://github.com/uwenalil/Universe-Bonus-Songs
+* [Official Launcher](https://github.com/VideoBotYT/Universe-Engine-Launhcer) -> https://github.com/VideoBotYT/Universe-Engine-Launhcer
 
 <details>
   <summary><h2>Psych engine credits and other stuff</h2></summary>

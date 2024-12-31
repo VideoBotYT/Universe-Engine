@@ -21,10 +21,7 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 	public static var inShortcutMenu = false;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Title Screen', 'Menus', 'Modes', 'Options', 'Exit'];
-
-	var menuItemsExit:Array<String> = ['Exit Shortcut Menu', 'Exit Game', 'Back'];
-	// var menuItemsExit:Array<String> = ['Exit Game', 'Back'];
+	var menuItemsOG:Array<String> = ['Title Screen', 'Menus', 'Modes', 'Options'];
 	var menuItemsSongs:Array<String> = ['Story Mode', 'Freeplay', 'Back'];
 	var menuItemsMenu:Array<String> = ['Main Menu', 'Mods Menu', 'Back'];
 	var menuItemsOptions:Array<String> = ['Universe', 'Psych', 'Back'];
@@ -115,41 +112,8 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 				case 'Options':
 					menuItems = menuItemsOptions;
 					regenMenu();
-				case 'Exit':
-					menuItems = menuItemsExit;
-					regenMenu();
 			}
-
-			if (menuItems == menuItemsExit)
-			{
-				switch (daSelected)
-				{
-					case 'Exit Shortcut Menu':
-						inShortcutMenu = false;
-						for (i in 0...grpMenuShit.members.length)
-						{
-							var obj = grpMenuShit.members[0];
-							obj.kill();
-							grpMenuShit.remove(obj, true);
-							obj.destroy();
-						}
-						FlxTween.tween(bg, {alpha: 0}, 1.5, {ease: FlxEase.quartInOut});
-						FlxTween.tween(grid, {alpha: 0}, 1, {
-							ease: FlxEase.quadOut,
-							onComplete: function(twn:FlxTween)
-							{
-								FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
-								close();
-							}
-						});
-					case 'Exit Game':
-						persistentUpdate = false;
-						openSubState(new ExitState());
-					case 'Back':
-						menuItems = menuItemsOG;
-						regenMenu();
-				}
-			}
+			
 			if (menuItems == menuItemsSongs)
 			{
 				switch (daSelected)

@@ -1,3 +1,5 @@
+// hitsound moved to gameplay :p
+
 package options.ue;
 
 import flash.text.TextField;

@@ -33,7 +33,7 @@ class ClientPrefs
 	public static var controllerMode:Bool = false;
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
-	public static var checkForUpdates:Bool = true;
+	//public static var checkForUpdates:Bool = true;
 	public static var comboStacking = true;
 
 	public static var splashAlpha:Float = 0.6;
@@ -71,6 +71,12 @@ class ClientPrefs
 	public static var uems:Bool = true;
 	public static var loadscreen:Bool = false;
 	public static var fm:Bool = true;
+	public static var disable2ndpage:Bool = false;
+	public static var hideOriCredits:Bool = false;
+	public static var moveCreditMods:Bool = false;
+
+	//offical launcherl mao
+	public static var officialLauncher:Bool = true;
 
 	public static var sillyBob:Bool = true;
 
@@ -185,6 +191,11 @@ class ClientPrefs
 		FlxG.save.data.uems = uems;
 		FlxG.save.data.loadscreen = loadscreen;
 		FlxG.save.data.fm = fm;
+		FlxG.save.data.disable2ndpage = disable2ndpage;
+		FlxG.save.data.hideOriCredits = hideOriCredits;
+		FlxG.save.data.moveCreditMods = moveCreditMods;
+
+		FlxG.save.data.officialLauncher = officialLauncher;
 
 		FlxG.save.data.arrowRGB = arrowRGB;
 		FlxG.save.data.arrowRGBPixel = arrowRGBPixel;
@@ -223,7 +234,7 @@ class ClientPrefs
 		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.hitsoundVolume = hitsoundVolume;
 		FlxG.save.data.pauseMusic = pauseMusic;
-		FlxG.save.data.checkForUpdates = checkForUpdates;
+		//FlxG.save.data.checkForUpdates = checkForUpdates;
 		FlxG.save.data.comboStacking = comboStacking;
 
 		FlxG.save.flush();
@@ -239,97 +250,77 @@ class ClientPrefs
 	{
 		// UE
 		if (FlxG.save.data.keystrokes != null)
-		{
 			keystrokes = FlxG.save.data.keystrokes;
-		}
 		if (FlxG.save.data.keyA != null)
-		{
 			keyA = FlxG.save.data.keyA;
-		}
 		if (FlxG.save.data.keyFT != null)
-		{
 			keyFT = FlxG.save.data.keyFT;
-		}
 		if (FlxG.save.data.keyXpos != null)
-		{
 			keyXPos = FlxG.save.data.keyXPos;
-		}
 		if (FlxG.save.data.keyYPos != null)
-		{
 			keyYPos = FlxG.save.data.keyYPos;
-		}
 		if (FlxG.save.data.ueHud != null)
-		{
 			ueHud = FlxG.save.data.ueHud;
-		}
 		if (FlxG.save.data.hudZoomOut != null)
-		{
 			hudZoomOut = FlxG.save.data.hudZoomOut;
-		}
 		if (FlxG.save.data.hudPosUE != null)
-		{
 			hudPosUE = FlxG.save.data.hudPosUE;
-		}
 		if (FlxG.save.data.sntf != null)
-		{
 			sntf = FlxG.save.data.sntf;
-		}
 		if (FlxG.save.data.mmm != null)
-		{
 			mmm = FlxG.save.data.mmm;
-		}
 		if (FlxG.save.data.ft != null)
-		{
 			ft = FlxG.save.data.ft;
-		}
 		if (FlxG.save.data.ht != null)
-		{
 			ht = FlxG.save.data.ht;
-		}
 		if (FlxG.save.data.dhb != null)
-		{
 			dhb = FlxG.save.data.dhb;
-		}
 		if (FlxG.save.data.cc != null)
-		{
 			cc = FlxG.save.data.cc;
-		}
 		if (FlxG.save.data.sh != null)
-		{
 			sh = FlxG.save.data.sh;
-		}
 		if (FlxG.save.data.ec != null)
-		{
 			ec = FlxG.save.data.ec;
-		}
 		if (FlxG.save.data.snm != null)
-		{
 			snm = FlxG.save.data.snm;
-		}
 		if (FlxG.save.data.tng != null)
-		{
 			tng = FlxG.save.data.tng;
-		}
 		if (FlxG.save.data.ib != null)
-		{
 			ib = FlxG.save.data.ib;
-		}
 		if (FlxG.save.data.cm != null)
-		{
 			cm = FlxG.save.data.cm;
-		}
 		if (FlxG.save.data.huet != null)
-		{
 			huet = FlxG.save.data.huet;
-		}
 		if (FlxG.save.data.css != null)
-		{
 			css = FlxG.save.data.css;
-		}
 		if (FlxG.save.data.dcm != null)
-		{
 			dcm = FlxG.save.data.dcm;
-		}
+		if (FlxG.save.data.uess != null)
+			uess = FlxG.save.data.uess;
+		if (FlxG.save.data.lhpbgb != null)
+			lhpbgb = FlxG.save.data.lhpbgb;
+		if (FlxG.save.data.longnotet != null)
+			longnotet = FlxG.save.data.longnotet;
+		if (FlxG.save.data.darkmode != null)
+			darkmode = FlxG.save.data.darkmode;
+		if (FlxG.save.data.ueresultscreen != null)
+			ueresultscreen = FlxG.save.data.ueresultscreen;
+		if (FlxG.save.data.uems != null)
+			uems = FlxG.save.data.uems;
+		if (FlxG.save.data.loadscreen != null)
+			loadscreen = FlxG.save.data.loadscreen;
+		if (FlxG.save.data.fm != null)
+			fm = FlxG.save.data.fm;
+		if (FlxG.save.data.disable2ndpage != null)
+			disable2ndpage = FlxG.save.data.disable2ndpage;
+		if (FlxG.save.data.hideOriCredits != null)
+			hideOriCredits = FlxG.save.data.hideOriCredits;
+		if (FlxG.save.data.moveCreditMods != null)
+			moveCreditMods = FlxG.save.data.moveCreditMods;
+		if (FlxG.save.data.officialLauncher != null)
+			officialLauncher = FlxG.save.data.officialLauncher;
+
+		// Normal Psych Stuff
 		if (FlxG.save.data.arrowRGB != null)
 		{
 			arrowRGB = FlxG.save.data.arrowRGB;
@@ -338,40 +329,7 @@ class ClientPrefs
 		{
 			arrowRGBPixel = FlxG.save.data.arrowRGBPixel;
 		}
-		if (FlxG.save.data.uess != null)
-		{
-			uess = FlxG.save.data.uess;
-		}
-		if (FlxG.save.data.lhpbgb != null)
-		{
-			lhpbgb = FlxG.save.data.lhpbgb;
-		}
-		if (FlxG.save.data.longnotet != null)
-		{
-			longnotet = FlxG.save.data.longnotet;
-		}
-		if (FlxG.save.data.darkmode != null)
-		{
-			darkmode = FlxG.save.data.darkmode;
-		}
-		if (FlxG.save.data.ueresultscreen != null)
-		{
-			ueresultscreen = FlxG.save.data.ueresultscreen;
-		}
-		if (FlxG.save.data.uems != null)
-		{
-			uems = FlxG.save.data.uems;
-		}
-		if (FlxG.save.data.loadscreen != null)
-		{
-			loadscreen = FlxG.save.data.loadscreen;
-		}
-		if (FlxG.save.data.fm != null)
-		{
-			fm = FlxG.save.data.fm;
-		}
 
-		// Normal Psych Stuff
 		if (FlxG.save.data.downScroll != null)
 		{
 			downScroll = FlxG.save.data.downScroll;
@@ -523,10 +481,12 @@ class ClientPrefs
 		{
 			FlxG.sound.muted = FlxG.save.data.mute;
 		}
+		/*
 		if (FlxG.save.data.checkForUpdates != null)
 		{
 			checkForUpdates = FlxG.save.data.checkForUpdates;
 		}
+		*/
 		if (FlxG.save.data.comboStacking != null)
 			comboStacking = FlxG.save.data.comboStacking;
 

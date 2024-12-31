@@ -39,6 +39,8 @@ class CreditsState extends MusicBeatState
 
 	var offsetThing:Float = -75;
 
+	var pisspoop:Array<Array<String>>;
+
 	override function create()
 	{
 		#if desktop
@@ -98,241 +100,68 @@ class CreditsState extends MusicBeatState
 		}
 		#end
 
-		var pisspoop:Array<Array<String>> = [
-			// Name - Icon name - Description - Link - BG Color
-			['Universe Engine Team'],
-			[
-				'uwenalil',
-				'uwenalil',
-				'First DEV, In charge of the LUA, HX files and other\nDoes all/most of the bug fixes\nwhy do i suffer now',
-				'https://linktr.ee/uwenalil',
-				'008BFF'
-			],
-			[
-				'Video Bot',
-				'videobot',
-				'Second DEV, In charge of the HX files',
-				'https://linktr.ee/videobot',
-				'14FFFF'
-			],
-			[
-				'BaranMuzu',
-				'baranmuzu',
-				'Third DEV, In charge of the LUA files and other',
-				'https://linktr.ee/baranmuzu',
-				'BE9877'
-			],
-			[''],
-			['Stuff used by Universe'],
-			[
-				'Edwhak', 
-				'Edwhak', 
-				'Modchart Tool', 
-				'https://www.youtube.com/@EDWHAK', 
-				'00FF00'
-			],
-			[
-				'SilverSpringing',
-				'Gamebanana',
-				'Combo Counter',
-				'https://gamebanana.com/members/1823951',
-				'00FFFF'
-			],
-			[
-				'Unholywanderer',
-				'Gamebanana',
-				'Smooth HP',
-				'https://gamebanana.com/members/1908754',
-				'00FFFF'
-			],
-			[
-				'Kiruwu',
-				'Gamebanana',
-				'Weekend 1 Port',
-				'https://gamebanana.com/mods/512609',
-				'B3715F'
-			],
-			[
-				'Spelo',
-				'YouTube',
-				'Play Both Sides',
-				'https://www.youtube.com/watch?v=xmUQUi8rd9M',
-				'FFFFFF'
-			],
-			[
-				'Rozebud',
-				'rozebud',
-				"Chart Editor's Lil' Buddies",
-				'https://x.com/helpme_thebigt',
-				'6D2F83'
-			],
-			[''],
-			['Special Thanks'],
-			[
-				'Blitz',
-				'Blitz',
-				'Universe Logo And Playtester',
-				'https://www.youtube.com/@fireballfurby',
-				'00FFFF'
-			],
-			[
-				'An Ammar',
-				'Ammar',
-				'Hype Mode, Detached Health Bar, Playtester, Creator of the fancy main menu',
-				'https://gamebanana.com/mods/381804',
-				'00FF00'
-			],
-			[
-				'Dinus Game',
-				'Dinus Game',
-				'freakyMenu Universe Engine music',
-				'https://gamebanana.com/members/2053946',
-				'27FF27'
-			],
-			[
-				'idiotxd',
-				'idiotxd',
-				'His own freakyMenu music and Universe Banner',
-				'https://x.com/IdiottLool',
-				'5656FF'
-			],
-			[
-				'JordanSantiago',
-				'jor',
-				'Most of the code of UE comes from JS',
-				'https://gamebanana.com/tools/13575',
-				'32CD32'
-			],
-			[''],
-			["Universe PR's"],
-			[
-				'CharGoldenYT',
-				'char',
-				"Very epic PR's",
-				'https://bsky.app/profile/chargoldenyt.bsky.social',
-				'D18054'
-			],
-			[''],
-			['Psych Engine Team'],
-			[
-				'Shadow Mario',
-				'shadowmario',
-				'Main Programmer of Psych Engine',
-				'https://twitter.com/Shadow_Mario_',
-				'444444'
-			],
-			[
-				'RiverOaken',
-				'river',
-				'Main Artist/Animator of Psych Engine',
-				'https://twitter.com/RiverOaken',
-				'B42F71'
-			],
-			[
-				'shubs',
-				'shubs',
-				'Additional Programmer of Psych Engine',
-				'https://twitter.com/yoshubs',
-				'5E99DF'
-			],
-			[''],
-			['Former Engine Members'],
-			[
-				'bb-panzu',
-				'bb',
-				'Ex-Programmer of Psych Engine',
-				'https://twitter.com/bbsub3',
-				'3E813A'
-			],
-			[''],
-			['Engine Contributors'],
-			[
-				'iFlicky',
-				'flicky',
-				'Composer of Psync and Tea Time\nMade the Dialogue Sounds',
-				'https://twitter.com/flicky_i',
-				'9E29CF'
-			],
-			[
-				'SqirraRNG',
-				'sqirra',
-				'Crash Handler and Base code for\nChart Editor\'s Waveform',
-				'https://twitter.com/gedehari',
-				'E1843A'
-			],
-			[
-				'EliteMasterEric',
-				'mastereric',
-				'Runtime Shaders support',
-				'https://twitter.com/EliteMasterEric',
-				'FFBD40'
-			],
-			[
-				'PolybiusProxy',
-				'proxy',
-				'.MP4 Video Loader Library (hxCodec)',
-				'https://twitter.com/polybiusproxy',
-				'DCD294'
-			],
-			[
-				'KadeDev',
-				'kade',
-				'Fixed some cool stuff on Chart Editor\nand other PRs',
-				'https://twitter.com/kade0912',
-				'64A250'
-			],
-			[
-				'Keoiki',
-				'keoiki',
-				'Note Splash Animations',
-				'https://twitter.com/Keoiki_',
-				'D2D2D2'
-			],
-			[
-				'Nebula the Zorua',
-				'nebula',
-				'LUA JIT Fork and some Lua reworks',
-				'https://twitter.com/Nebula_Zorua',
-				'7D40B2'
-			],
-			[
-				'Smokey',
-				'smokey',
-				'Sprite Atlas Support',
-				'https://twitter.com/Smokey_5_',
-				'483D92'
-			],
-			[''],
-			["Funkin' Crew"],
-			[
-				'ninjamuffin99',
-				'ninjamuffin99',
-				"Programmer of Friday Night Funkin'",
-				'https://twitter.com/ninja_muffin99',
-				'CF2D2D'
-			],
-			[
-				'PhantomArcade',
-				'phantomarcade',
-				"Animator of Friday Night Funkin'",
-				'https://twitter.com/PhantomArcade3K',
-				'FADC45'
-			],
-			[
-				'evilsk8r',
-				'evilsk8r',
-				"Artist of Friday Night Funkin'",
-				'https://twitter.com/evilsk8r',
-				'5ABD4B'
-			],
-			[
-				'kawaisprite',
-				'kawaisprite',
-				"Composer of Friday Night Funkin'",
-				'https://twitter.com/kawaisprite',
-				'378FC7'
-			]
-		];
+		if (!ClientPrefs.hideOriCredits)
+		{
+			pisspoop = [
+				// Name - Icon name - Description - Link - BG Color
+				['Universe Engine DEVs'],
+				['Video Bot',					'videobot',			'First DEV, In charge of the HX files',											'https://linktr.ee/videobot',									'14FFFF'],
+				['BaranMuzu',					'baranmuzu',		'Second DEV, In charge of the LUA files and other',								'https://linktr.ee/baranmuzu',									'BE9877'],
+				[''],
+				['Former UE DEV'],
+				['uwenalil',					'uwenalil',			'Former DEV, (No Longer) In charge of the LUA, HX files and other',				'https://uwenalil.netlify.app/uwenalil/links',					'008BFF'],
+				[''],
+				['UE Borrowed Code'],
+				['Edwhak', 						'Edwhak', 			'Modchart Tool', 																'https://www.youtube.com/@EDWHAK', 								'00FF00'],
+				['Rozebud',						'rozebud',			"Chart Editor's Lil' Buddies",													'https://x.com/helpme_thebigt',									'6D2F83'],
+				['  SilverSpringing',			'invis',			'Combo Counter',																'https://gamebanana.com/members/1823951',						'00FFFF'],
+				['  Unholywanderer',			'invis',			'Smooth HP',																	'https://gamebanana.com/members/1908754',						'00FFFF'],
+				['  Kiruwu',					'invis',			'Weekend 1 Port',																'https://gamebanana.com/mods/512609',							'B3715F'],
+				['  Spelo',						'invis',			'Play Both Sides',																'https://www.youtube.com/watch?v=xmUQUi8rd9M',					'FFFFFF'],
+				[''],
+				['UE Special Thanks'],
+				['Blitz',						'Blitz',			'Universe Logo And Playtester',													'https://www.youtube.com/@fireballfurby',						'00FFFF'],
+				['An Ammar',					'Ammar',			'Hype Mode, Detached Health Bar, Playtester, Creator of the fancy main menu',	'https://gamebanana.com/mods/381804',							'00FF00'],
+				['Dinus Game',					'Dinus Game',		'freakyMenu Universe Engine music',												'https://gamebanana.com/members/2053946',						'27FF27'],
+				['idiotxd',						'idiotxd',			'His own freakyMenu music and Universe Banner',									'https://x.com/IdiottLool',										'5656FF'],
+				['JordanSantiago',				'jor',				'Most of the code of UE comes from JS',											'https://gamebanana.com/tools/13575',							'32CD32'],
+				[''],
+				["UE PR's"],
+				['CharGoldenYT',				'char',				"Fixing Erect chaning difficulty and QOL",										'https://bsky.app/profile/chargoldenyt.bsky.social',			'FFA600'],
+				['MoxieCoder',					'moxie',			"Lua Jit Fork superpowers04 PR",												'https://x.com/moxie_specalist',								'00FFFF'],
+				['  soushimiya',				'invis',			"Crediting Rozebud",															'https://github.com/soushimiya',								'FFFFFF'],
+				[''],
+				['Psych Engine Team'],
+				['Shadow Mario',				'shadowmario',		'Main Programmer of Psych Engine',												'https://twitter.com/Shadow_Mario_',							'444444'],
+				['RiverOaken',					'river',			'Main Artist/Animator of Psych Engine',											'https://twitter.com/RiverOaken',								'B42F71'],
+				['shubs',						'shubs',			'Additional Programmer of Psych Engine',										'https://twitter.com/yoshubs',									'5E99DF'],
+				[''],
+				['Former Engine Members'],
+				['bb-panzu',					'bb',				'Ex-Programmer of Psych Engine',												'https://twitter.com/bbsub3',									'3E813A'],
+				[""],
+				['Engine Contributors'],
+				['iFlicky',						'flicky',			'Composer of Psync and Tea Time\nMade the Dialogue Sounds',						'https://twitter.com/flicky_i',									'9E29CF'],
+				['SqirraRNG',					'sqirra',			'Crash Handler and Base code for\nChart Editor\'s Waveform',					'https://twitter.com/gedehari',									'E1843A'],
+				['EliteMasterEric',				'mastereric',		'Runtime Shaders support',														'https://twitter.com/EliteMasterEric',							'FFBD40'],
+				['PolybiusProxy',				'proxy',			'.MP4 Video Loader Library (hxCodec)',											'https://twitter.com/polybiusproxy',							'DCD294'],
+				['KadeDev',						'kade',				'Fixed some cool stuff on Chart Editor\nand other PRs',							'https://twitter.com/kade0912',									'64A250'],
+				['Keoiki',						'keoiki',			'Note Splash Animations',														'https://twitter.com/Keoiki_',									'D2D2D2'],
+				["superpowers04",				"superpowers04",	"LUA JIT Fork",																	"https://x.com/superpowers04",									"B957ED"],
+				['Smokey',						'smokey',			'Sprite Atlas Support',															'https://twitter.com/Smokey_5_',								'483D92'],
+				[""],
+				["Funkin' Crew"],
+				["ninjamuffin99",				"ninjamuffin99",	"Programmer of Friday Night Funkin'",											"https://x.com/ninja_muffin99",									"CF2D2D"],
+				["PhantomArcade",				"phantomarcade",	"Animator of Friday Night Funkin'",												"https://x.com/PhantomArcade3K",								"FADC45"],
+				["evilsk8r",					"evilsk8r",			"Artist of Friday Night Funkin'",												"https://x.com/evilsk8r",										"5ABD4B"],
+				["kawaisprite",					"kawaisprite",		"Composer of Friday Night Funkin'",												"https://x.com/kawaisprite",									"378FC7"],
+			];
+		}
+		else
+		{ //prevents crash lol
+			pisspoop = [
+				['', 'invis', 'this is just here to prevent crash when theres no credits lol', '', '000000']
+			];
+		}
 
 		for (i in pisspoop)
 		{
@@ -449,14 +278,12 @@ class CreditsState extends MusicBeatState
 					colorTween.cancel();
 				}
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if (ClientPrefs.fm)
-				{
+				if (ClientPrefs.moveCreditMods)
+					MusicBeatState.switchState(new options.SelectThing());
+				else if (ClientPrefs.fm)
 					MusicBeatState.switchState(new CoolMenuState());
-				}
 				else
-				{
 					MusicBeatState.switchState(new MainMenuState());
-				}
 				quitting = true;
 			}
 		}
