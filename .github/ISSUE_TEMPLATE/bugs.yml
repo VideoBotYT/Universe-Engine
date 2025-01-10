@@ -20,10 +20,11 @@ body:
   - type: dropdown
     id: modding
     attributes:
-      label: "Are you modding a build from source or with Lua?"
+      label: "Are you modding a build from source or with Lua or a Prebuild version?"
       options:
         - Lua
         - Source
+        - Prebuild
     validations:
       required: true
 
