@@ -42,6 +42,8 @@ import flixel.util.FlxAxes;
 import vlc.MP4Handler;
 #end
 import flixel.addons.display.FlxBackdrop;
+import hxwindowmode.WindowColorMode;
+import flixel.tweens.misc.NumTween;
 
 using StringTools;
 
@@ -96,6 +98,16 @@ class TitleState extends MusicBeatState
 	var creativity:FlxSprite;
 	var bg:FlxSprite;
 
+	var pRESSENTERTOBEGIN:FlxSprite;
+	var yOUR:FlxSprite;
+	var nORMAL:FlxSprite;
+	var cOLLECTIONS:FlxSprite;
+	var mOD:FlxSprite;
+	var grid:FlxBackdrop;
+	var daveberry:FlxBackdrop;
+	var square1:FlxBackdrop;
+	var square2:FlxBackdrop;
+
 	override public function create():Void
 	{
 		DiscordClient.changePresence("In the Intro", null);
@@ -132,18 +144,19 @@ class TitleState extends MusicBeatState
 		FlxG.keys.preventDefaultKeys = [TAB];
 
 		PlayerSettings.init();
-
+		
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 		unWackyourwacky = FlxG.random.getObject(getUETextShit());
-
+		
 		// DEBUG BULLSHIT
-
+		
 		swagShader = new ColorSwap();
 		super.create();
-
+		
 		FlxG.save.bind('funkin', 'universe');
-
+		
 		ClientPrefs.loadPrefs();
+		WindowColorMode.setWindowBorderColor(ClientPrefs.windowColor, true, true);
 
 		Highscore.load();
 
@@ -205,7 +218,7 @@ class TitleState extends MusicBeatState
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new FlashingState());
 		}
-		else if (FlxG.save.data.officialLauncher == null && !OfficialLauncherState.leftState) //Thing Remove popup officlal launcher
+		else if (FlxG.save.data.officialLauncher == null && !OfficialLauncherState.leftState) // Thing Remove popup officlal launcher
 		{
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
@@ -277,7 +290,7 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(titleJSON.bpm);
 		persistentUpdate = true;
 
-		if (ClientPrefs.mmm != "AAC V4")
+		if (ClientPrefs.mmm != "AAC V4" && ClientPrefs.mmm != "Normal Collections")
 		{
 			if (ClientPrefs.darkmode)
 			{
@@ -315,6 +328,21 @@ class TitleState extends MusicBeatState
 				logoBl.scale.set(1.1, 1.1);
 			}
 		}
+
+		if (ClientPrefs.mmm == "Normal Collections")
+		{
+			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('title/bg/bg-' + FlxG.random.int(1, 5)));
+			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.screenCenter();
+			add(bg);
+
+			pRESSENTERTOBEGIN = new FlxSprite().loadGraphic(Paths.image('title/PRESSENTERTOBEGIN'));
+			yOUR = new FlxSprite().loadGraphic(Paths.image('title/YOUR'));
+			nORMAL = new FlxSprite().loadGraphic(Paths.image('title/NORMAL'));
+			cOLLECTIONS = new FlxSprite().loadGraphic(Paths.image('title/COLLECTIONS'));
+			mOD = new FlxSprite().loadGraphic(Paths.image('title/MOD'));
+		}
+
 		// logoBl.color = FlxColor.BLACK;
 
 		swagShader = new ColorSwap();
@@ -353,7 +381,7 @@ class TitleState extends MusicBeatState
 				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		}
-		if (ClientPrefs.mmm != "AAC V4")
+		if (ClientPrefs.mmm != "AAC V4" && ClientPrefs.mmm != "Normal Collections")
 		{
 			gfDance.antialiasing = ClientPrefs.globalAntialiasing;
 			if (ClientPrefs.ft == true)
@@ -443,6 +471,44 @@ class TitleState extends MusicBeatState
 			creativity.scale.set(3, 3);
 		}
 
+		if (ClientPrefs.mmm == "Normal Collections")
+		{
+			grid = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+			grid.velocity.set(40, 20);
+			grid.alpha = 0;
+			FlxTween.tween(grid, {alpha: 0.5}, 2, {ease: FlxEase.linear});
+			add(grid);
+			// funny
+			daveberry = new FlxBackdrop(Paths.image("title/daveberry"));
+			daveberry.alpha = 0.1;
+			daveberry.color = 0xFF008BFF;
+			daveberry.velocity.set(25, -25);
+			// add(daveberry);
+
+			square1 = new FlxBackdrop(Paths.image("title/SQUARE"));
+			square1.alpha = 0.25;
+			square1.velocity.set(0, 50);
+			add(square1);
+
+			square2 = new FlxBackdrop(Paths.image("title/SQUARE"));
+			square2.angle = 180;
+			square2.alpha = 0.25;
+			square2.velocity.set(0, -50);
+			add(square2);
+
+			pRESSENTERTOBEGIN.y = 1000;
+			yOUR.y = 1000;
+			nORMAL.y = 1000;
+			cOLLECTIONS.y = 1000;
+			mOD.y = 1000;
+
+			add(pRESSENTERTOBEGIN);
+			add(yOUR);
+			add(nORMAL);
+			add(cOLLECTIONS);
+			add(mOD);
+		}
+
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
@@ -487,7 +553,10 @@ class TitleState extends MusicBeatState
 		titleText.updateHitbox();
 		titleText.x = titleText.x + 25;
 		// titleText.screenCenter(X);
-		add(titleText);
+		if (ClientPrefs.mmm != "Normal Collections")
+		{
+			add(titleText);
+		}
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 		logo.screenCenter();
@@ -596,6 +665,23 @@ class TitleState extends MusicBeatState
 				creativity.scale.set(crsizeLerp, crsizeLerp);
 			}
 		}
+		if (ClientPrefs.mmm == "Normal Collections")
+		{
+			if (logoCanBeat)
+			{
+				var pRESSENTERTOBEGINsizeLerp:Float = FlxMath.lerp(pRESSENTERTOBEGIN.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
+				var yOURsizeLerp:Float = FlxMath.lerp(yOUR.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
+				var nORMALsizeLerp:Float = FlxMath.lerp(nORMAL.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
+				var cOLLECTIONSsizeLerp:Float = FlxMath.lerp(cOLLECTIONS.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
+				var mODsizeLerp:Float = FlxMath.lerp(mOD.scale.x, 1, FlxMath.bound((elapsed * 7.5), 0, 1));
+
+				pRESSENTERTOBEGIN.scale.set(pRESSENTERTOBEGINsizeLerp, pRESSENTERTOBEGINsizeLerp);
+				yOUR.scale.set(yOURsizeLerp, yOURsizeLerp);
+				nORMAL.scale.set(nORMALsizeLerp, nORMALsizeLerp);
+				cOLLECTIONS.scale.set(cOLLECTIONSsizeLerp, cOLLECTIONSsizeLerp);
+				mOD.scale.set(mODsizeLerp, mODsizeLerp);
+			}
+		}
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
 		if (gamepad != null)
@@ -616,17 +702,11 @@ class TitleState extends MusicBeatState
 				titleTimer -= 2;
 		}
 
-		if (skippedIntro && FlxG.keys.justPressed.ESCAPE && !ExitState.inExit)
-		{
-			ExitState.inExit = true;
-			openSubState(new ExitState());
-		}
-
 		// EASTER EGG
 
 		if (initialized && !transitioning && skippedIntro)
 		{
-			if (newTitle && !pressedEnter && !ExitState.inExit)
+			if (newTitle && !pressedEnter)
 			{
 				var timer:Float = titleTimer;
 				if (timer >= 1)
@@ -638,7 +718,7 @@ class TitleState extends MusicBeatState
 				titleText.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], timer);
 			}
 
-			if (pressedEnter && !ExitState.inExit)
+			if (pressedEnter)
 			{
 				titleText.color = FlxColor.WHITE;
 				titleText.alpha = 1;
@@ -651,6 +731,15 @@ class TitleState extends MusicBeatState
 
 				transitioning = true;
 				// FlxG.sound.music.stop();
+
+				if (ClientPrefs.mmm == "Normal Collections")
+				{
+					FlxTween.tween(pRESSENTERTOBEGIN, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.05});
+					FlxTween.tween(yOUR, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.1});
+					FlxTween.tween(nORMAL, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.15});
+					FlxTween.tween(cOLLECTIONS, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.2});
+					FlxTween.tween(mOD, {y: 1500}, 2, {ease: FlxEase.backInOut, startDelay: 0.25});
+				}
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
@@ -734,7 +823,7 @@ class TitleState extends MusicBeatState
 				swagShader.hue += elapsed * 0.1;
 		}
 
-		if (ClientPrefs.ft && ClientPrefs.mmm != "AAC V4")
+		if (ClientPrefs.ft && ClientPrefs.mmm != "AAC V4" && ClientPrefs.mmm != "Normal Collections")
 		{
 			swagShader.hue += elapsed * 0.1;
 		}
@@ -807,16 +896,33 @@ class TitleState extends MusicBeatState
 				creativity.scale.set(1.13, 1.13);
 			}
 		}
-
-		if (!ExitState.inExit || ClientPrefs.mmm == "AAC V4")
+		if (ClientPrefs.mmm == "Normal Collections")
 		{
-			FlxTween.tween(FlxG.camera, {zoom: 1.025}, 0.25, {ease: FlxEase.linear, type: BACKWARD});
-			// FlxTween.tween(FlxG.camera, {angle: (curBeat % 2 == 0 ? 1.025 : -1.025)}, 0.25, {ease: FlxEase.expoOut, type: BACKWARD});
+			if (logoCanBeat)
+			{
+				pRESSENTERTOBEGIN.scale.set(1.16 + 0.06, 1.16 + 0.06);
+				yOUR.scale.set(1.06 + 0.03, 1.06 + 0.03);
+				nORMAL.scale.set(1.1 + 0.03, 1.1 + 0.03);
+				cOLLECTIONS.scale.set(1.13 + 0.03, 1.13 + 0.03);
+				mOD.scale.set(1.16 + 0.03, 1.16 + 0.03);
+			}
+		}
+		if (skippedIntro)
+		{
+			if (ClientPrefs.mmm == "Normal Collections")
+			{
+				FlxTween.tween(FlxG.camera, {angle: curBeat % 2 == 0 ? 2 : -2}, 1, {ease: FlxEase.expoOut, type: BACKWARD});
+				FlxTween.tween(FlxG.camera, {zoom: 1.125}, 1, {ease: FlxEase.expoOut, type: BACKWARD});
+			}
+			if (ClientPrefs.mmm == "AAC V4")
+			{
+				FlxTween.tween(FlxG.camera, {zoom: 1.025}, 1, {ease: FlxEase.expoOut, type: BACKWARD});
+			}
 		}
 		else
 		{
 			FlxTween.tween(FlxG.camera, {zoom: 1});
-			// FlxTween.tween(FlxG.camera, {angle: 0});
+			FlxTween.tween(FlxG.camera, {angle: 0});
 		}
 
 		if (!closedState)
@@ -943,6 +1049,14 @@ class TitleState extends MusicBeatState
 				FlxTween.tween(creativity, {"scale.x": 1, "scale.y": 1, alpha: 1}, 1, {ease: FlxEase.expoOut, startDelay: 0.5});
 				FlxTween.tween(blackDots, {alpha: 0.3}, 1, {ease: FlxEase.quadOut, startDelay: 0.6});
 			}
+			if (ClientPrefs.mmm == "Normal Collections")
+			{
+				FlxTween.tween(pRESSENTERTOBEGIN, {y: 0}, 2, {ease: FlxEase.backOut});
+				FlxTween.tween(yOUR, {y: 0}, 2.1, {ease: FlxEase.backOut});
+				FlxTween.tween(nORMAL, {y: 0}, 2.15, {ease: FlxEase.backOut});
+				FlxTween.tween(cOLLECTIONS, {y: 0}, 2.2 /*gd refernce?!??!*/, {ease: FlxEase.backOut});
+				FlxTween.tween(mOD, {y: 0}, 2.25, {ease: FlxEase.backOut});
+			}
 			if (playJingle) // Ignore deez
 			{
 				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
@@ -1028,6 +1142,17 @@ class TitleState extends MusicBeatState
 					fnf.origin.y = 283;
 					anammar.origin.y = 283;
 					creativity.origin.y = 283;
+				});
+			}
+			if (ClientPrefs.mmm == "Normal Collections")
+			{
+				var timer:FlxTimer = new FlxTimer().start(1.5, function(tmr:FlxTimer)
+				{
+					logoCanBeat = true;
+					yOUR.origin.y = 283;
+					nORMAL.origin.y = 283;
+					cOLLECTIONS.origin.y = 283;
+					mOD.origin.y = 283;
 				});
 			}
 			skippedIntro = true;

@@ -19,6 +19,7 @@ import flixel.util.FlxTimer;
 import lime.net.curl.CURLCode;
 import flixel.graphics.FlxGraphic;
 import flixel.util.FlxGradient;
+import fancyItems.FancyMenuItem;
 import WeekData;
 
 using StringTools;

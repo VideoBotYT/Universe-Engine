@@ -29,7 +29,7 @@ using StringTools;
 
 class UniverseOptionsMenu extends MusicBeatState
 {
-	var options:Array<String> = ['HUD', 'Gameplay', 'Game Options'];
+	var options:Array<String> = ['HUD', 'Gameplay', 'Game Options', 'Window Color'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 
 	private static var curSelected:Int = 0;
@@ -45,6 +45,8 @@ class UniverseOptionsMenu extends MusicBeatState
 				openSubState(new options.ue.UEGamePlay());
 			case 'Game Options':
 				openSubState(new options.ue.UEGameOptions());
+			case 'Window Color':
+				openSubState(new options.ue.WindowsColor());
 		}
 	}
 

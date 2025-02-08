@@ -53,6 +53,7 @@ import hscript.Expr;
 import Discord;
 import Discord.DiscordClient;
 #end
+import hxwindowmode.WindowColorMode;
 
 using StringTools;
 
@@ -161,7 +162,7 @@ class FunkinLua
 		set('score', 0);
 		set('misses', 0);
 		set('hits', 0);
-		
+
 		set('lerpScore', 0);
 
 		set('rating', 0);
@@ -264,7 +265,7 @@ class FunkinLua
 		// VIDEOBOT WHY WOULD YOU EVEN SIMPLIFY THESE DAMN NAMES
 		// THEYRE HARD TO FUCKING READ
 
-		//build target, even tho windows will be the main one, until someone ports ue to linux, mac, html5 (possibly not please) or android
+		// build target, even tho windows will be the main one, until someone ports ue to linux, mac, html5 (possibly not please) or android
 		#if windows
 		set('buildTarget', 'windows');
 		#elseif linux
@@ -344,8 +345,28 @@ class FunkinLua
 				FlxTween.tween(screen, {"x": 0, "y": 0}, duration, {ease: getFlxEaseByString(ease)});
 			}
 		});
+		Lua_helper.add_callback(lua, "windowColor", function(red:Int, green:Int, blue:Int, header:Bool, border:Bool)
+		{
+			WindowColorMode.setWindowBorderColor([red, green, blue], header, border);
+		});
+		Lua_helper.add_callback(lua, "addCamera", function(tag:String, defaultTarget:Bool, x:Int, y:Int, height:Int, zoom:Float)
+		{
+			var camera = new FlxCamera(x, y, height, zoom);
 
+			FlxG.cameras.add(camera);
+			PlayState.instance.variables.set(tag, camera);
+		});
+		Lua_helper.add_callback(lua, "removeCamera", function(tag:String)
+		{
+			var obj:Dynamic = PlayState.instance.variables.get(tag);
+			if (Std.isOfType(obj, FlxCamera))
+			{
+				FlxG.cameras.remove(cast obj);
+				PlayState.instance.variables.remove(obj);
+			}
+		});
 		// custom substate
+
 		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, pauseGame:Bool = false)
 		{
 			if (pauseGame)
@@ -1923,7 +1944,14 @@ class FunkinLua
 				CustomFadeTransition.nextCamera = null;
 
 			if (PlayState.isStoryMode)
-				MusicBeatState.switchState(new StoryMenuState());
+				if (ClientPrefs.fm)
+				{
+					MusicBeatState.switchState(new CoolStoryState());
+				}
+				else
+				{
+					MusicBeatState.switchState(new StoryMenuState());
+				}
 			else
 				MusicBeatState.switchState(new FreeplayState());
 

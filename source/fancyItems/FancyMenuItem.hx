@@ -1,4 +1,4 @@
-package;
+package fancyItems;
 
 import flixel.FlxG;
 import flixel.FlxSprite;

@@ -38,9 +38,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
 	// BIG FAIL
-	//private var descBox:FlxSprite;
-	//private var descText:FlxText;
-
+	// private var descBox:FlxSprite;
+	// private var descText:FlxText;
 	public static var inThePauseMenu:Bool = false;
 
 	public var pauseState:PauseSubState;
@@ -74,7 +73,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
 		option.scrollSpeed = 1;
 		option.minValue = -1;
-		option.maxValue = 1000000.0; //had to put a limit cause when hold right, it no go fast :(
+		option.maxValue = 1000000.0; // had to put a limit cause when hold right, it no go fast :(
 		option.changeValue = 0.05;
 		option.displayFormat = '%vX';
 		option.decimals = 2;
@@ -109,7 +108,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		optionsArray.push(option);
 
 		var option:GameplayOption = new GameplayOption('Modchart', 'modchart', 'bool', true);
-		option.onChange = onChangeCheat;
+		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
 
 		var option:GameplayOption = new GameplayOption('Play Both Sides', 'pbs', 'bool', false);
@@ -135,10 +134,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		var option:GameplayOption = new GameplayOption('Increase Playback on hit', 'ipbr', 'bool', false);
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
-		
-		var goption:GameplayOption = new GameplayOption('Increase PBR Value', 'ipbrv', 'string', 'Normal',
-		["Normal", "High", "Very High", "WTF", "Good Luck"]);
-		//BARAN TOLD ME TO ADD WTF :sob:
+
+		var goption:GameplayOption = new GameplayOption('Increase PBR Value', 'ipbrv', 'string', 'Normal', ["Normal", "High", "Very High", "WTF", "Good Luck"]);
+		// BARAN TOLD ME TO ADD WTF :sob:
 		optionsArray.push(goption);
 	}
 
@@ -178,7 +176,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			var optionText:Alphabet = new Alphabet(200, 360, optionsArray[i].name, true);
 			optionText.isMenuItem = true;
 			optionText.setScale(0.8);
-			optionText.targetY = i;
+			optionText.targetY = i - curSelected;
+			optionText.targetX = i + curSelected;
 			grpOptions.add(optionText);
 
 			if (optionsArray[i].type == 'bool')
@@ -209,15 +208,15 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		changeSelection();
 		reloadCheckboxes();
 
-		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];	
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
 		/*
-		descText = new FlxText(50, 600, 1180, "ballsack", 32);
-		descText.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		descText.scrollFactor.set();
-		descText.borderSize = 2.4;
-		add(descText);
-		*/
+			descText = new FlxText(50, 600, 1180, "ballsack", 32);
+			descText.setFormat(Paths.font("funkin.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			descText.scrollFactor.set();
+			descText.borderSize = 2.4;
+			add(descText);
+		 */
 	}
 
 	override function destroy()
@@ -477,12 +476,17 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		for (item in grpOptions.members)
 		{
 			item.targetY = bullShit - curSelected;
+			item.targetX = bullShit - curSelected;
 			bullShit++;
 
 			item.alpha = 0.6;
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
+			}
+			if (ClientPrefs.fm && item.targetY != 0)
+			{
+				item.targetX -= Std.int(Math.abs(item.targetY) * 10);
 			}
 		}
 		for (text in grpTexts)

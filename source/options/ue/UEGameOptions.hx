@@ -78,8 +78,8 @@ class UEGameOptions extends BaseOptionsMenu
 		var option:Option = new Option('Fancy Menus', "Makes the menus just more clean", 'fm', 'bool', true);
 		addOption(option);
 
-		var option:Option = new Option('Silly Bounce', "Makes the dots behind the main menu bounce", 'sillyBob', 'bool', true);
-		addOption(option);
+		/*var option:Option = new Option('Silly Bounce', "Makes the dots behind the main menu bounce", 'sillyBob', 'bool', true);
+		addOption(option);*/
 
 		var option:Option = new Option('Disable Second Page', "Disables the second page on the main menu.", 'disable2ndpage', 'bool', false);
 		addOption(option);

@@ -52,6 +52,8 @@
 	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild"/> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
 	<define name="CRASH_HANDLER" if="desktop release" />
 
+	<haxelib name="hxWindowColorMode"/>
+
 	<define name="PSYCH" />
 	<define name="PSYCHVERSION" value="0.6.3"/>
 

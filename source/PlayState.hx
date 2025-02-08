@@ -77,6 +77,8 @@ import sys.io.File;
 import vlc.MP4Handler;
 #end
 
+import hxwindowmode.WindowColorMode;
+
 using StringTools;
 
 class PlayState extends MusicBeatState
@@ -2509,7 +2511,7 @@ class PlayState extends MusicBeatState
 			+ ratingName
 			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
-		if (ClientPrefs.scoreZoom && !miss && !cpuControlled && ClientPrefs.gameplaySettings.get('modchart'))
+		if (ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
 			if (scoreTxtTween != null)
 			{
@@ -4402,6 +4404,8 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+		WindowColorMode.setWindowBorderColor(ClientPrefs.windowColor);
+
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if (ret != FunkinLua.Function_Stop && !transitioning)
 		{
@@ -4613,7 +4617,7 @@ class PlayState extends MusicBeatState
 				spawnNoteSplashOnNote(note);
 		}*/
 
-		if (!practiceMode && !cpuControlled && ClientPrefs.gameplaySettings.get('modchart'))
+		if (!practiceMode && !cpuControlled)
 		{
 			songScore += score;
 			if (!note.ratingDisabled)

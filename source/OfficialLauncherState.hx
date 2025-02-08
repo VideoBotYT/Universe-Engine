@@ -54,7 +54,7 @@ class OfficialLauncherState extends MusicBeatState
 				if(!back) {
 					ClientPrefs.officialLauncher = false;
 					ClientPrefs.saveSettings();
-					CoolUtil.browserLoad("https://github.com/VideoBotYT/Universe-Engine-Launhcer");
+					CoolUtil.browserLoad("https://github.com/VideoBotYT/Universe-Engine-Launhcer/releases");
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 					FlxFlicker.flicker(warnText, 1, 0.1, false, true, function(flk:FlxFlicker) {
 						new FlxTimer().start(0.5, function (tmr:FlxTimer) {

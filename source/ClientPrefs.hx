@@ -33,7 +33,7 @@ class ClientPrefs
 	public static var controllerMode:Bool = false;
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
-	//public static var checkForUpdates:Bool = true;
+	// public static var checkForUpdates:Bool = true;
 	public static var comboStacking = true;
 
 	public static var splashAlpha:Float = 0.6;
@@ -75,7 +75,7 @@ class ClientPrefs
 	public static var hideOriCredits:Bool = false;
 	public static var moveCreditMods:Bool = false;
 
-	//offical launcherl mao
+	// offical launcherl mao
 	public static var officialLauncher:Bool = true;
 
 	public static var sillyBob:Bool = true;
@@ -150,11 +150,14 @@ class ClientPrefs
 	public static var defaultArrowRGB:Array<Array<FlxColor>>;
 	public static var defaultPixelRGB:Array<Array<FlxColor>>;
 
+	public static var defaultWindowColor:Array<Int>;
+
 	public static function loadDefaultStuff()
 	{
 		defaultKeys = keyBinds.copy();
 		defaultArrowRGB = arrowRGB.copy();
 		defaultPixelRGB = arrowRGBPixel.copy();
+		defaultWindowColor = windowColor.copy();
 	}
 
 	public static function saveSettings()
@@ -195,6 +198,8 @@ class ClientPrefs
 		FlxG.save.data.hideOriCredits = hideOriCredits;
 		FlxG.save.data.moveCreditMods = moveCreditMods;
 
+		FlxG.save.data.windowColor = windowColor;
+
 		FlxG.save.data.officialLauncher = officialLauncher;
 
 		FlxG.save.data.arrowRGB = arrowRGB;
@@ -234,7 +239,7 @@ class ClientPrefs
 		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.hitsoundVolume = hitsoundVolume;
 		FlxG.save.data.pauseMusic = pauseMusic;
-		//FlxG.save.data.checkForUpdates = checkForUpdates;
+		// FlxG.save.data.checkForUpdates = checkForUpdates;
 		FlxG.save.data.comboStacking = comboStacking;
 
 		FlxG.save.flush();
@@ -319,6 +324,8 @@ class ClientPrefs
 			moveCreditMods = FlxG.save.data.moveCreditMods;
 		if (FlxG.save.data.officialLauncher != null)
 			officialLauncher = FlxG.save.data.officialLauncher;
+		if (FlxG.save.data.windowColor != null)
+			windowColor = FlxG.save.data.windowColor;
 
 		// Normal Psych Stuff
 		if (FlxG.save.data.arrowRGB != null)
@@ -482,11 +489,11 @@ class ClientPrefs
 			FlxG.sound.muted = FlxG.save.data.mute;
 		}
 		/*
-		if (FlxG.save.data.checkForUpdates != null)
-		{
-			checkForUpdates = FlxG.save.data.checkForUpdates;
-		}
-		*/
+			if (FlxG.save.data.checkForUpdates != null)
+			{
+				checkForUpdates = FlxG.save.data.checkForUpdates;
+			}
+		 */
 		if (FlxG.save.data.comboStacking != null)
 			comboStacking = FlxG.save.data.comboStacking;
 
@@ -552,4 +559,6 @@ class ClientPrefs
 		[0xFF71E300, 0xFFF6FFE6, 0xFF003100],
 		[0xFFFF884E, 0xFFFFFAF5, 0xFF6C0000]
 	];
+
+	public static var windowColor:Array<Int> = [112, 0, 218];
 }
