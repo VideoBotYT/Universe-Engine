@@ -157,6 +157,7 @@ class TitleState extends MusicBeatState
 		
 		ClientPrefs.loadPrefs();
 		WindowColorMode.setWindowBorderColor(ClientPrefs.windowColor, true, true);
+		WindowColorMode.redrawWindowHeader();
 
 		Highscore.load();
 

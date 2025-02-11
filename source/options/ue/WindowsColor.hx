@@ -6,16 +6,20 @@ import flixel.util.FlxColor;
 import flixel.addons.ui.FlxUISlider;
 import flixel.ui.FlxButton;
 import hxwindowmode.WindowColorMode;
+import flixel.addons.ui.FlxUI;
+import flixel.addons.ui.FlxUITabMenu;
 
 using StringTools;
 
 class WindowsColor extends MusicBeatSubstate
 {
+	var ui_box:FlxUITabMenu;
 	var defCol:Array<Int> = [112, 0, 218];
 	var sliderRed:FlxUISlider;
 	var sliderGreen:FlxUISlider;
 	var sliderBlue:FlxUISlider;
 	var reset:FlxButton;
+	var redraw:FlxButton;
 
 	var r:String;
 	var g:String;
@@ -25,40 +29,66 @@ class WindowsColor extends MusicBeatSubstate
 	{
 		super();
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFea71fd;
-		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bg);
+		var tabs = [
+			{name: "Sliders", label: "Sliders"},
+			{name: "Windows 10", label: "Windows 10"}
+		];
 
-		sliderRed = new FlxUISlider(this, 'r', FlxG.width / 2, FlxG.height / 2 - 40, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
+		ui_box = new FlxUITabMenu(null, tabs, true);
+		ui_box.resize(300, 300);
+		ui_box.x = FlxG.width - 400;
+		ui_box.y = 25;
+		add(ui_box);
+
+		FlxG.mouse.visible = true;
+
+		addSliderUI();
+		addWindows10UI();
+	}
+
+	function addSliderUI()
+	{
+		var sliderGroup = new FlxUI(null, ui_box);
+		sliderGroup.name = "Sliders";
+
+		sliderRed = new FlxUISlider(this, 'r', 20, 20, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderRed.nameLabel.text = 'RED';
 		sliderRed.value = ClientPrefs.windowColor[0];
-		sliderRed.screenCenter(X);
-		add(sliderRed);
 
-		sliderGreen = new FlxUISlider(this, 'g', FlxG.width / 2, sliderRed.y + 40, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
+		sliderGreen = new FlxUISlider(this, 'g', sliderRed.x, sliderRed.y + 60, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderGreen.nameLabel.text = 'GREEN';
 		sliderGreen.value = ClientPrefs.windowColor[1];
-		sliderGreen.screenCenter(X);
-		add(sliderGreen);
 
-		sliderBlue = new FlxUISlider(this, 'b', FlxG.width / 2, sliderGreen.y + 40, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
+		sliderBlue = new FlxUISlider(this, 'b', sliderGreen.x, sliderGreen.y + 60, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderBlue.nameLabel.text = 'BLUE';
 		sliderBlue.value = ClientPrefs.windowColor[2];
-		sliderBlue.screenCenter(X);
-		add(sliderBlue);
 
-		reset = new FlxButton(0, sliderBlue.y + 40, "Reset", function()
-		{
+		reset = new FlxButton(sliderBlue.x, sliderGreen.y + 140, "Reset", function(){
+			FlxG.sound.play(Paths.sound('cancelMenu'));
 			sliderRed.value = defCol[0];
 			sliderGreen.value = defCol[1];
 			sliderBlue.value = defCol[2];
 		});
-		reset.screenCenter(X);
-		add(reset);
 
-		FlxG.mouse.visible = true;
+		sliderGroup.add(sliderRed);
+		sliderGroup.add(sliderGreen);
+		sliderGroup.add(sliderBlue);
+		sliderGroup.add(reset);
+		ui_box.addGroup(sliderGroup);
+	}
+
+	function addWindows10UI()
+	{
+		var windows10Group = new FlxUI(null, ui_box);
+		windows10Group.name = "Windows 10";
+
+		redraw = new FlxButton(20, 20, "Redraw Border", function(){
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+			WindowColorMode.redrawWindowHeader();
+		});
+
+		windows10Group.add(redraw);
+		ui_box.addGroup(windows10Group);
 	}
 
 	override function update(elapsed:Float)
@@ -73,13 +103,6 @@ class WindowsColor extends MusicBeatSubstate
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			close();
 			return;
-		}
-		if (controls.RESET)
-		{
-			FlxG.sound.play(Paths.sound('cancelMenu'));
-			sliderRed.value = defCol[0];
-			sliderGreen.value = defCol[1];
-			sliderBlue.value = defCol[2];
 		}
 
 		super.update(elapsed);
