@@ -43,13 +43,13 @@ modcharting tool my beloved <3<3
 coolest thing there is in this engine.
 
 # CREDICE
-* [uwenalil](https://linktr.ee/uwenalil) -> Former dev, (No Longer) In charge of the LUA, HX files and other.
+* [uwenalil](https://daveberry.netlify.app) -> Former dev, (No Longer) In charge of the LUA, HX files and other.
 * [VideoBot](https://linktr.ee/videobot) -> First DEV, In charge of the HX files
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Second DEV, In charge of the LUA files and other
 
 ### Universe Bonus Stuff
 * [Support server (also uwens discord server)](discord.gg/S7Ycgznj2Z) -> https://discord.gg/S7Ycgznj2Z
-* [OFFICIAL Universe Engine Website](https://uwenalil.netlify.app/universe%20engine/universewiki) -> https://uwenalil.netlify.app/universe%20engine/universewiki
+* [OFFICIAL Universe Engine Website](https://daveberry.netlify.app/universe%20engine/universewiki) -> https://uwenalil.netlify.app/universe%20engine/universewiki
 * [Bonus Songs (MODCHARTS)](https://github.com/uwenalil/Universe-Bonus-Songs) -> https://github.com/uwenalil/Universe-Bonus-Songs
 * [Official Launcher](https://github.com/VideoBotYT/Universe-Engine-Launhcer) -> https://github.com/VideoBotYT/Universe-Engine-Launhcer
 
