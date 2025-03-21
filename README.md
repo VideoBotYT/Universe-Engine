@@ -47,8 +47,6 @@ coolest thing there is in this engine.
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Second DEV, In charge of the LUA files and other
 
 ### Universe Bonus Stuff
-* [OFFICIAL Universe Engine Website](https://daveberry.netlify.app/universe%20engine/universewiki) -> https://uwenalil.netlify.app/universe%20engine/universewiki
-* [Bonus Songs (MODCHARTS)](https://github.com/uwenalil/Universe-Bonus-Songs) -> https://github.com/uwenalil/Universe-Bonus-Songs
 * [Official Launcher](https://github.com/VideoBotYT/Universe-Engine-Launhcer) -> https://github.com/VideoBotYT/Universe-Engine-Launhcer
 
 <details>
