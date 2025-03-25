@@ -53,15 +53,15 @@ class WindowsColor extends MusicBeatSubstate
 
 		sliderRed = new FlxUISlider(this, 'r', 20, 20, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderRed.nameLabel.text = 'RED';
-		sliderRed.value = ClientPrefs.windowColor[0];
+		sliderRed.value = ClientPrefs.data.windowColor[0];
 
 		sliderGreen = new FlxUISlider(this, 'g', sliderRed.x, sliderRed.y + 60, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderGreen.nameLabel.text = 'GREEN';
-		sliderGreen.value = ClientPrefs.windowColor[1];
+		sliderGreen.value = ClientPrefs.data.windowColor[1];
 
 		sliderBlue = new FlxUISlider(this, 'b', sliderGreen.x, sliderGreen.y + 60, 0, 255, 250, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderBlue.nameLabel.text = 'BLUE';
-		sliderBlue.value = ClientPrefs.windowColor[2];
+		sliderBlue.value = ClientPrefs.data.windowColor[2];
 
 		reset = new FlxButton(sliderBlue.x, sliderGreen.y + 140, "Reset", function(){
 			FlxG.sound.play(Paths.sound('cancelMenu'));
@@ -94,8 +94,8 @@ class WindowsColor extends MusicBeatSubstate
 	override function update(elapsed:Float)
 	{
 		var colArray:Array<Int> = [Std.int(sliderRed.value), Std.int(sliderGreen.value), Std.int(sliderBlue.value)];
-		ClientPrefs.windowColor = colArray;
-		WindowColorMode.setWindowBorderColor(ClientPrefs.windowColor);
+		ClientPrefs.data.windowColor = colArray;
+		WindowColorMode.setWindowBorderColor(ClientPrefs.data.windowColor);
 
 		if (controls.BACK)
 		{

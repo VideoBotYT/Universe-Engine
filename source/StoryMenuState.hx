@@ -55,8 +55,6 @@ class StoryMenuState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		ShortcutMenuSubState.inShortcutMenu = false;
-
 		PlayState.isStoryMode = true;
 		WeekData.reloadWeekFiles(true);
 		if (curWeek >= WeekData.weeksList.length)
@@ -79,8 +77,8 @@ class StoryMenuState extends MusicBeatState
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
 		bgSprite = new FlxSprite(0, 56);
-		bgSprite.antialiasing = ClientPrefs.globalAntialiasing;
-		if (ClientPrefs.cm)
+		bgSprite.antialiasing = ClientPrefs.data.globalAntialiasing;
+		if (ClientPrefs.data.cm)
 		{
 			bgSprite.color = 0xFFfd719b;
 		}
@@ -122,7 +120,7 @@ class StoryMenuState extends MusicBeatState
 				grpWeekText.add(weekThing);
 
 				weekThing.screenCenter(X);
-				weekThing.antialiasing = ClientPrefs.globalAntialiasing;
+				weekThing.antialiasing = ClientPrefs.data.globalAntialiasing;
 				// weekThing.updateHitbox();
 
 				// Needs an offset thingie
@@ -133,7 +131,7 @@ class StoryMenuState extends MusicBeatState
 					lock.animation.addByPrefix('lock', 'lock');
 					lock.animation.play('lock');
 					lock.ID = i;
-					lock.antialiasing = ClientPrefs.globalAntialiasing;
+					lock.antialiasing = ClientPrefs.data.globalAntialiasing;
 					grpLocks.add(lock);
 				}
 				num++;
@@ -157,7 +155,7 @@ class StoryMenuState extends MusicBeatState
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
 		leftArrow.animation.play('idle');
-		leftArrow.antialiasing = ClientPrefs.globalAntialiasing;
+		leftArrow.antialiasing = ClientPrefs.data.globalAntialiasing;
 		difficultySelectors.add(leftArrow);
 
 		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
@@ -168,7 +166,7 @@ class StoryMenuState extends MusicBeatState
 		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
 
 		sprDifficulty = new FlxSprite(0, leftArrow.y);
-		sprDifficulty.antialiasing = ClientPrefs.globalAntialiasing;
+		sprDifficulty.antialiasing = ClientPrefs.data.globalAntialiasing;
 		difficultySelectors.add(sprDifficulty);
 
 		rightArrow = new FlxSprite(leftArrow.x + 376, leftArrow.y);
@@ -176,10 +174,10 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
-		rightArrow.antialiasing = ClientPrefs.globalAntialiasing;
+		rightArrow.antialiasing = ClientPrefs.data.globalAntialiasing;
 		difficultySelectors.add(rightArrow);
 
-		if (ClientPrefs.cm)
+		if (ClientPrefs.data.cm)
 		{
 			add(bgCute);
 		}
@@ -191,7 +189,7 @@ class StoryMenuState extends MusicBeatState
 		add(grpWeekCharacters);
 
 		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 425).loadGraphic(Paths.image('Menu_Tracks'));
-		tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		tracksSprite.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(tracksSprite);
 
 		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
@@ -227,7 +225,7 @@ class StoryMenuState extends MusicBeatState
 
 		// FlxG.watch.addQuick('font', scoreText.font);
 
-		if (!movedBack && !selectedWeek && !ShortcutMenuSubState.inShortcutMenu)
+		if (!movedBack && !selectedWeek)
 		{
 			var upP = controls.UI_UP_P;
 			var downP = controls.UI_DOWN_P;
@@ -284,11 +282,11 @@ class StoryMenuState extends MusicBeatState
 			}
 		}
 
-		if (controls.BACK && !movedBack && !selectedWeek && !ShortcutMenuSubState.inShortcutMenu)
+		if (controls.BACK && !movedBack && !selectedWeek)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
-			if (ClientPrefs.fm)
+			if (ClientPrefs.data.fm)
 			{
 				MusicBeatState.switchState(new CoolMenuState());
 			}
@@ -296,12 +294,6 @@ class StoryMenuState extends MusicBeatState
 			{
 				MusicBeatState.switchState(new MainMenuState());
 			}
-		}
-
-		if (FlxG.keys.justPressed.TAB)
-		{
-			openSubState(new ShortcutMenuSubState());
-			ShortcutMenuSubState.inShortcutMenu = true;
 		}
 
 		super.update(elapsed);

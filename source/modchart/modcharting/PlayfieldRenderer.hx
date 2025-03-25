@@ -264,7 +264,7 @@ class PlayfieldRenderer extends FlxSprite //extending flxsprite just so i can ed
                 var sustainTimeThingy:Float = 0;
 
                 //just causes too many issues lol, might fix it at some point
-                /*if (notes.members[i].animation.curAnim.name.endsWith('end') && ClientPrefs.downScroll)
+                /*if (notes.members[i].animation.curAnim.name.endsWith('end') && ClientPrefs.data.downScroll)
                 {
                     if (noteDist > 0)
                         sustainTimeThingy = (NoteMovement.getFakeCrochet()/4)/2; //fix stretched sustain ends (downscroll)

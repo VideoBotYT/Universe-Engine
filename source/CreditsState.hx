@@ -49,7 +49,7 @@ class CreditsState extends MusicBeatState
 		#end
 
 		persistentUpdate = true;
-		if (ClientPrefs.darkmode)
+		if (ClientPrefs.data.darkmode)
 		{
 			bg = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
 			add(bg);
@@ -100,7 +100,7 @@ class CreditsState extends MusicBeatState
 		}
 		#end
 
-		if (!ClientPrefs.hideOriCredits)
+		if (!ClientPrefs.data.hideOriCredits)
 		{
 			pisspoop = [
 				// Name - Icon name - Description - Link - BG Color
@@ -203,12 +203,13 @@ class CreditsState extends MusicBeatState
 					'https://gamebanana.com/tools/13575',
 					'32CD32'
 				],
+				["Slushi Engine", "invis", "The windows API is from there", "", "7a8584"],
 				[''],
 				["UE PR's"],
 				[
 					'CharGoldenYT',
 					'char',
-					"Fixing Erect chaning difficulty and QOL",
+					"Fixing Erect chaning difficulty and QOL, also did the animated icons support",
 					'https://bsky.app/profile/chargoldenyt.bsky.social',
 					'FFA600'
 				],
@@ -476,9 +477,9 @@ class CreditsState extends MusicBeatState
 					colorTween.cancel();
 				}
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if (ClientPrefs.moveCreditMods)
+				if (ClientPrefs.data.moveCreditMods)
 					MusicBeatState.switchState(new options.SelectThing());
-				else if (ClientPrefs.fm)
+				else if (ClientPrefs.data.fm)
 					MusicBeatState.switchState(new CoolMenuState());
 				else
 					MusicBeatState.switchState(new MainMenuState());

@@ -24,14 +24,18 @@ import flixel.FlxSubState;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.math.FlxPoint;
+import ueLua.MenuLua;
 
 using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var ueVersion:String = '0.6.0 (y25v01b)';
+	public static var ueVersion:String = '0.6.0 (y25v02a)';
 	public static var psychEngineVersion:String = '0.6.3'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
+
+	//lua
+	public var luaArray:Array<MenuLua> = [];
 
 	var reset = controls.RESET;
 
@@ -49,7 +53,7 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		if (ClientPrefs.moveCreditMods)
+		if (ClientPrefs.data.moveCreditMods)
 			optionShit = ['story_mode', 'freeplay', 'options'];
 		else
 			optionShit = ['story_mode', 'freeplay', 'mods', 'credits', 'options'];
@@ -57,7 +61,7 @@ class MainMenuState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		ShortcutMenuSubState.inShortcutMenu = false;
+		dev.DevSubState.inShortcutMenu = false;
 
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
@@ -72,7 +76,7 @@ class MainMenuState extends MusicBeatState
 
 		if (FlxG.sound.music == null)
 		{
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0.7);
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm), 0.7);
 		}
 
 		camGame = new FlxCamera();
@@ -90,7 +94,7 @@ class MainMenuState extends MusicBeatState
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 
-		if (ClientPrefs.darkmode)
+		if (ClientPrefs.data.darkmode)
 		{
 			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
 			bg.color = 0xFFFDE871;
@@ -98,19 +102,19 @@ class MainMenuState extends MusicBeatState
 			bg.setGraphicSize(Std.int(bg.width * 1.175));
 			bg.updateHitbox();
 			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
+			bg.antialiasing = ClientPrefs.data.globalAntialiasing;
+			//add(bg);
 		}
-		else if (ClientPrefs.cm)
+		else if (ClientPrefs.data.cm)
 		{
 			var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 			bg.scrollFactor.set(0, yScroll);
 			bg.setGraphicSize(Std.int(bg.width * 1.175));
 			bg.updateHitbox();
 			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 			bg.color = 0xFFfd719b;
-			add(bg);
+			//add(bg);
 		}
 		else
 		{
@@ -119,8 +123,8 @@ class MainMenuState extends MusicBeatState
 			bg.setGraphicSize(Std.int(bg.width * 1.175));
 			bg.updateHitbox();
 			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
-			add(bg);
+			bg.antialiasing = ClientPrefs.data.globalAntialiasing;
+			//add(bg);
 		}
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -128,7 +132,7 @@ class MainMenuState extends MusicBeatState
 		add(camFollow);
 		add(camFollowPos);
 
-		if (ClientPrefs.darkmode)
+		if (ClientPrefs.data.darkmode)
 		{
 			magenta = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
 			magenta.scrollFactor.set(0, yScroll);
@@ -136,7 +140,7 @@ class MainMenuState extends MusicBeatState
 			magenta.updateHitbox();
 			magenta.screenCenter();
 			magenta.visible = false;
-			magenta.antialiasing = ClientPrefs.globalAntialiasing;
+			magenta.antialiasing = ClientPrefs.data.globalAntialiasing;
 			magenta.color = 0xFFfd719b;
 			add(magenta);
 		}
@@ -148,7 +152,7 @@ class MainMenuState extends MusicBeatState
 			magenta.updateHitbox();
 			magenta.screenCenter();
 			magenta.visible = false;
-			magenta.antialiasing = ClientPrefs.globalAntialiasing;
+			magenta.antialiasing = ClientPrefs.data.globalAntialiasing;
 			magenta.color = 0xFFfd719b;
 			add(magenta);
 		}
@@ -180,7 +184,7 @@ class MainMenuState extends MusicBeatState
 			if (optionShit.length < 6)
 				scr = 0;
 			menuItem.scrollFactor.set(0, scr);
-			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
+			menuItem.antialiasing = ClientPrefs.data.globalAntialiasing;
 			// menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
@@ -204,7 +208,7 @@ class MainMenuState extends MusicBeatState
 		textBG.scrollFactor.set();
 		textBG.alpha = 0.6;
 		add(textBG);
-		var leText:String = "Press TAB to open the shortcut menu / Press RESET to restart the game";
+		var leText:String = "Press RESET to restart the game";
 		var size:Int = 18;
 		var text:FlxText = new FlxText(0, textBG.y + 4, FlxG.width, leText, size);
 		text.screenCenter(X);
@@ -216,10 +220,10 @@ class MainMenuState extends MusicBeatState
 		arrow.screenCenter(Y);
 		arrow.angle = 90;
 		arrow.scale.set(0.75, 0.75);
-		arrow.antialiasing = ClientPrefs.globalAntialiasing;
+		arrow.antialiasing = ClientPrefs.data.globalAntialiasing;
 		arrow.scrollFactor.set();
 		add(arrow);
-		if (ClientPrefs.disable2ndpage)
+		if (ClientPrefs.data.disable2ndpage)
 			arrow.alpha = 0;
 
 		// NG.core.calls.event.logEvent('swag').send();
@@ -241,7 +245,10 @@ class MainMenuState extends MusicBeatState
 		}
 		#end
 
+		callOnLuas("onMainCreate", []);
+		
 		super.create();
+
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
@@ -268,7 +275,7 @@ class MainMenuState extends MusicBeatState
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
-		if (!selectedSomethin && !ShortcutMenuSubState.inShortcutMenu)
+		if (!selectedSomethin && !dev.DevSubState.inShortcutMenu)
 		{
 			if (controls.RESET)
 			{
@@ -283,7 +290,7 @@ class MainMenuState extends MusicBeatState
 				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
 			}
 
-			if (!ClientPrefs.disable2ndpage)
+			if (!ClientPrefs.data.disable2ndpage)
 			{
 				if (controls.UI_RIGHT_P)
 				{
@@ -330,7 +337,7 @@ class MainMenuState extends MusicBeatState
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-					if (ClientPrefs.flashing)
+					if (ClientPrefs.data.flashing)
 						FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite)
@@ -381,11 +388,13 @@ class MainMenuState extends MusicBeatState
 			}
 			#end
 
+			#if DEV
 			if (FlxG.keys.justPressed.TAB)
 			{
-				openSubState(new ShortcutMenuSubState());
-				ShortcutMenuSubState.inShortcutMenu = true;
+				openSubState(new dev.DevSubState());
+				dev.DevSubState.inShortcutMenu = true;
 			}
+			#end
 		}
 
 		super.update(elapsed);
@@ -437,5 +446,32 @@ class MainMenuState extends MusicBeatState
 	override public function onFocus():Void
 	{
 		super.onFocus();
+	}
+
+	public function callOnLuas(event:String, args:Array<Dynamic>, ignoreStops = true, exclusions:Array<String> = null):Dynamic
+	{
+		var returnVal:Dynamic = MenuLua.Function_Continue;
+		#if LUA_ALLOWED
+		if (exclusions == null)
+			exclusions = [];
+		for (script in luaArray)
+		{
+			if (exclusions.contains(script.scriptName))
+				continue;
+
+			var ret:Dynamic = script.call(event, args);
+			if (ret == MenuLua.Function_StopLua && !ignoreStops)
+				break;
+
+			// had to do this because there is a bug in haxe where Stop != Continue doesnt work
+			var bool:Bool = ret == MenuLua.Function_Continue;
+			if (!bool && ret != 0)
+			{
+				returnVal = cast ret;
+			}
+		}
+		#end
+		// trace(event, returnVal);
+		return returnVal;
 	}
 }

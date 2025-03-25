@@ -69,7 +69,7 @@ class DialogueEditorState extends MusicBeatState
 		add(character);
 
 		box = new FlxSprite(70, 370);
-		if (ClientPrefs.darkmode)
+		if (ClientPrefs.data.darkmode)
 		{
 			box.frames = Paths.getSparrowAtlas('speech_bubble2');
 		}
@@ -78,7 +78,7 @@ class DialogueEditorState extends MusicBeatState
 			box.frames = Paths.getSparrowAtlas('speech_bubble');
 		}
 		box.scrollFactor.set();
-		box.antialiasing = ClientPrefs.globalAntialiasing;
+		box.antialiasing = ClientPrefs.data.globalAntialiasing;
 		box.animation.addByPrefix('normal', 'speech bubble normal', 24);
 		box.animation.addByPrefix('angry', 'AHH speech bubble', 24);
 		box.animation.addByPrefix('center', 'speech bubble middle', 24);
@@ -428,7 +428,7 @@ class DialogueEditorState extends MusicBeatState
 			if (FlxG.keys.justPressed.ESCAPE)
 			{
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 1);
+				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm), 1);
 				transitioning = true;
 			}
 			var negaMult:Array<Int> = [1, -1];

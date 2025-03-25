@@ -64,10 +64,10 @@ class UEHitSound extends BaseOptionsMenu
 
 	function onChangePauseMusic()
 	{
-		if (ClientPrefs.pauseMusic == 'None')
+		if (ClientPrefs.data.pauseMusic == 'None')
 			FlxG.sound.music.volume = 0;
 		else
-			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)));
+			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)));
 
 		changedMusic = true;
 	}
@@ -75,7 +75,7 @@ class UEHitSound extends BaseOptionsMenu
 	override function destroy()
 	{
 		if (changedMusic)
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm));
 		super.destroy();
 	}
 
@@ -83,7 +83,7 @@ class UEHitSound extends BaseOptionsMenu
 	function onChangeFPSCounter()
 	{
 		if (Main.fpsVar != null)
-			Main.fpsVar.visible = ClientPrefs.showFPS;
+			Main.fpsVar.visible = ClientPrefs.data.showFPS;
 	}
 	#end
 
@@ -99,11 +99,11 @@ class UEHitSound extends BaseOptionsMenu
 
 	function onChangeHitSound()
 	{
-		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.data.ht), ClientPrefs.data.hitsoundVolume);
 	}
 
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.data.ht), ClientPrefs.data.hitsoundVolume);
 	}
 }

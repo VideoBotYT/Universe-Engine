@@ -74,9 +74,11 @@ class CoolMenuState extends MusicBeatState
 	var targetX:Float = 12;
 	var scale:Float = 1;
 
+	var debugged:Bool = false; // get debugged lol
+
 	override function create()
 	{
-		if (ClientPrefs.moveCreditMods)
+		if (ClientPrefs.data.moveCreditMods)
 			menuList = ['story_mode', 'freeplay', 'awards', 'donate', 'options'];
 		else
 			menuList = ['story_mode', 'freeplay', 'mods', 'credits', 'awards', 'donate', 'options'];
@@ -93,23 +95,23 @@ class CoolMenuState extends MusicBeatState
 
 		if (FlxG.sound.music == null)
 		{
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm), 0.7);
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm), 0.7);
 		}
 
-		ShortcutMenuSubState.inShortcutMenu = false;
+		dev.DevSubState.inShortcutMenu = false;
 		var yScroll:Float = Math.max(0.25 - (0.05 * (menuList.length - 4)), 0.1);
 		bg = new FlxSprite(-100).loadGraphic(Paths.image('fancyMain/bg/sky'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.updateHitbox();
 		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(bg);
 
 		city = new FlxSprite(-10).loadGraphic(Paths.image('fancyMain/bg/city'));
 		city.scrollFactor.set(0, yScroll);
 		city.setGraphicSize(Std.int(city.width * 0.85));
 		city.updateHitbox();
-		city.antialiasing = ClientPrefs.globalAntialiasing;
+		city.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(city);
 
 		phillyWindow = new FlxSprite(city.x, city.y).loadGraphic(Paths.image('fancyMain/bg/window'));
@@ -139,14 +141,14 @@ class CoolMenuState extends MusicBeatState
 		discLeft = new FlxSprite(FlxG.width / 2 - 1100, 0).loadGraphic(Paths.image("fancyMain/disc"));
 		discLeft.scrollFactor.set(0, 0);
 		discLeft.screenCenter(Y);
-		discLeft.antialiasing = ClientPrefs.globalAntialiasing;
+		discLeft.antialiasing = ClientPrefs.data.globalAntialiasing;
 		discLeft.scale.set(3, 3);
 		add(discLeft);
 
 		discRight = new FlxSprite(FlxG.width / 2 + 600, 0).loadGraphic(Paths.image("fancyMain/disc"));
 		discRight.scrollFactor.set(0, 0);
 		discRight.screenCenter(Y);
-		discRight.antialiasing = ClientPrefs.globalAntialiasing;
+		discRight.antialiasing = ClientPrefs.data.globalAntialiasing;
 		discRight.scale.set(3, 3);
 		add(discRight);
 
@@ -167,7 +169,7 @@ class CoolMenuState extends MusicBeatState
 			if (menuList.length < 6)
 				scr = 0;
 			menuItem.scrollFactor.set(0, scr);
-			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
+			menuItem.antialiasing = ClientPrefs.data.globalAntialiasing;
 			// menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
@@ -176,7 +178,7 @@ class CoolMenuState extends MusicBeatState
 		gradient.scrollFactor.set();
 		gradient.y = FlxG.height - gradient.height;
 		gradient.screenCenter(X);
-		gradient.antialiasing = ClientPrefs.globalAntialiasing;
+		gradient.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(gradient);
 
 		versionShitUE = new FlxText(FlxG.width - 2000, FlxG.height - 92, 0, "Universe Engine v: " + MainMenuState.ueVersion, 12);
@@ -207,7 +209,7 @@ class CoolMenuState extends MusicBeatState
 		textBG.scrollFactor.set();
 		textBG.alpha = 0;
 		add(textBG);
-		var leText:String = "Press TAB to open the shortcut menu / Press RESET to restart the game";
+		var leText:String = "Press RESET to restart the game";
 		var size:Int = 18;
 		text = new FlxText(textBG.x + 800, FlxG.height - 30, FlxG.width, leText, size);
 		text.setFormat(Paths.font("funkin.ttf"), size, FlxColor.WHITE, RIGHT);
@@ -238,7 +240,7 @@ class CoolMenuState extends MusicBeatState
 				FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
 
-		if (!ShortcutMenuSubState.inShortcutMenu && !selectedSomething)
+		if (!dev.DevSubState.inShortcutMenu && !selectedSomething)
 		{
 			if (controls.UI_UP_P)
 			{
@@ -272,14 +274,17 @@ class CoolMenuState extends MusicBeatState
 				MusicBeatState.switchState(new TitleState());
 			}
 
+			#if DEV
 			if (FlxG.keys.justPressed.TAB)
 			{
-				openSubState(new ShortcutMenuSubState());
-				ShortcutMenuSubState.inShortcutMenu = true;
+				openSubState(new dev.DevSubState());
+				dev.DevSubState.inShortcutMenu = true;
 			}
+			#end
 			#if desktop
-			else if (FlxG.keys.anyJustPressed(debugKeys))
+			else if (FlxG.keys.anyJustPressed(debugKeys) && !debugged)
 			{
+				debugged = true;
 				debugTween();
 			}
 			#end
@@ -358,9 +363,9 @@ class CoolMenuState extends MusicBeatState
 
 		FlxTween.tween(textBG, {y: FlxG.height + 100}, 1, {ease: FlxEase.backInOut});
 		FlxTween.tween(text, {x: textBG.x + 800}, 1, {ease: FlxEase.backInOut, startDelay: 0.25});
-		FlxTween.tween(versionShitUE, {x: FlxG.width + 200}, 1, {ease: FlxEase.backInOut, startDelay: 0.5});
-		FlxTween.tween(versionShitPE, {x: FlxG.width + 200}, 1, {ease: FlxEase.backInOut, startDelay: 0.75});
-		FlxTween.tween(versionShitFNF, {x: FlxG.width + 200}, 1, {ease: FlxEase.backInOut, startDelay: 1});
+		FlxTween.tween(versionShitUE, {x: FlxG.width - 2000}, 1, {ease: FlxEase.backInOut, startDelay: 0.5});
+		FlxTween.tween(versionShitPE, {x: FlxG.width - 2000}, 1, {ease: FlxEase.backInOut, startDelay: 0.75});
+		FlxTween.tween(versionShitFNF, {x: FlxG.width - 2000}, 1, {ease: FlxEase.backInOut, startDelay: 1});
 	}
 
 	function selectItem():Void
@@ -412,9 +417,9 @@ class CoolMenuState extends MusicBeatState
 				textTween = true;
 			}
 		});
-		FlxTween.tween(versionShitUE, {x: FlxG.width + 200}, 1, {ease: FlxEase.backInOut, startDelay: 0.5});
-		FlxTween.tween(versionShitPE, {x: FlxG.width + 200}, 1, {ease: FlxEase.backInOut, startDelay: 0.75});
-		FlxTween.tween(versionShitFNF, {x: FlxG.width + 200}, 1, {
+		FlxTween.tween(versionShitUE, {x: FlxG.width - 2000}, 1, {ease: FlxEase.backInOut, startDelay: 0.5});
+		FlxTween.tween(versionShitPE, {x: FlxG.width - 2000}, 1, {ease: FlxEase.backInOut, startDelay: 0.75});
+		FlxTween.tween(versionShitFNF, {x: FlxG.width - 2000}, 1, {
 			ease: FlxEase.backInOut,
 			startDelay: 1,
 			onComplete: function(tween:FlxTween)

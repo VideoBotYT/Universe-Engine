@@ -100,7 +100,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			else
 				MusicBeatState.switchState(new FreeplayState());
 
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm));
 			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
 		}
 
@@ -121,7 +121,7 @@ class GameOverSubstate extends MusicBeatSubstate
 					coolStartDeath(0.2);
 					
 					var exclude:Array<Int> = [];
-					//if(!ClientPrefs.cursing) exclude = [1, 3, 8, 13, 17, 21];
+					//if(!ClientPrefs.data.cursing) exclude = [1, 3, 8, 13, 17, 21];
 
 					FlxG.sound.play(Paths.sound('jeffGameover/jeffGameover-' + FlxG.random.int(1, 25, exclude)), 1, false, null, true, function() {
 						if(!isEnding)

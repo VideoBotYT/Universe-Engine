@@ -496,7 +496,7 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		CoolUtil.opponentModeActive = opponentMode;
 		#end
 
-		if (ClientPrefs.darkmode)
+		if (ClientPrefs.data.darkmode)
 		{
 			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
 			bg.alpha = 0.25;
@@ -509,7 +509,7 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('menuDesat'));
 			bg.alpha = 0.25;
 			bg.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 			add(bg);
 		}
 
@@ -567,7 +567,7 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		if (ModchartUtil.getDownscroll(this))
 			strumLine.y = FlxG.height - 150;
 		#elseif (PSYCH && !(PSYCHVERSION >= "0.7"))
-		strumLine = new FlxSprite(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
+		strumLine = new FlxSprite(ClientPrefs.data.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
 		if (ModchartUtil.getDownscroll(this))
 			strumLine.y = FlxG.height - 150;
 		#else
@@ -1537,7 +1537,7 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 						#else
 						if (sustainNote.mustPress)
 							sustainNote.x += FlxG.width / 2; // general offset
-						else if (ClientPrefs.middleScroll)
+						else if (ClientPrefs.data.middleScroll)
 						{
 							sustainNote.x += 310;
 							if (daNoteData > 1) // Up and Right
@@ -1556,7 +1556,7 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				#if (PSYCHVERSION >= "0.7")
 				else if (ClientPrefs.data.middleScroll)
 				#else
-				else if (ClientPrefs.middleScroll)
+				else if (ClientPrefs.data.middleScroll)
 				#end
 				{
 					swagNote.x += 310;
@@ -1590,7 +1590,7 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 		usedKeyCount = 4;
 		#end
 
-		var strumLineX:Float = #if (PSYCH && PSYCHVERSION >= "0.7") ClientPrefs.data.middleScroll #elseif (PSYCH && PSYCHVERSION < "0.7") ClientPrefs.middleScroll #elseif LEATHER utilities.Options.getData("middlescroll") #end#if PSYCH ?PlayState.STRUM_X_MIDDLESCROLL:PlayState.STRUM_X #end;
+		var strumLineX:Float = #if (PSYCH && PSYCHVERSION >= "0.7") ClientPrefs.data.middleScroll #elseif (PSYCH && PSYCHVERSION < "0.7") ClientPrefs.data.middleScroll #elseif LEATHER utilities.Options.getData("middlescroll") #end#if PSYCH ?PlayState.STRUM_X_MIDDLESCROLL:PlayState.STRUM_X #end;
 
 		var TRUE_STRUM_X:Float = strumLineX;
 
@@ -1611,7 +1611,7 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				if (ClientPrefs.data.middleScroll)
 					targetAlpha = 0.35;
 				#elseif (PSYCH && !(PSYCHVERSION >= "0.7"))
-				if (ClientPrefs.middleScroll)
+				if (ClientPrefs.data.middleScroll)
 					targetAlpha = 0.35;
 				#end
 			}
@@ -1648,8 +1648,8 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 				babyArrow.downScroll = ClientPrefs.data.downScroll;
 			babyArrow.alpha = targetAlpha;
 			#elseif (PSYCH && !(PSYCHVERSION >= "0.7"))
-			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, i, player);
-			babyArrow.downScroll = ClientPrefs.downScroll;
+			var babyArrow:StrumNote = new StrumNote(ClientPrefs.data.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, i, player);
+			babyArrow.downScroll = ClientPrefs.data.downScroll;
 			babyArrow.alpha = targetAlpha;
 			#end
 
@@ -1658,7 +1658,7 @@ class ModchartEditorState extends #if SCEModchartingTools states.MusicBeatState 
 			#if (PSYCHVERSION >= "0.7" && PSYCH)
 			middleScroll = ClientPrefs.data.middleScroll;
 			#elseif (PSYCHVERSION < "0.7" && PSYCH)
-			middleScroll = ClientPrefs.middleScroll;
+			middleScroll = ClientPrefs.data.middleScroll;
 			#elseif LEATHER
 			middleScroll = utilities.Options.getData("middlescroll");
 			#end

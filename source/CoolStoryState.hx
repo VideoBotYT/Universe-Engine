@@ -64,8 +64,6 @@ class CoolStoryState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		ShortcutMenuSubState.inShortcutMenu = false;
-
 		PlayState.isStoryMode = true;
 		WeekData.reloadWeekFiles(true);
 		if (curWeek >= WeekData.weeksList.length)
@@ -87,12 +85,12 @@ class CoolStoryState extends MusicBeatState
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		bgSprite = new FlxSprite(0, FlxG.height / 2 + 1000);
-		bgSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		bgSprite.antialiasing = ClientPrefs.data.globalAntialiasing;
 		bgSprite.color = 0xFFF9CF51;
 
 		bg = new FlxSprite(0, 0).loadGraphic(Paths.image('aboutMenu', 'preload'));
 		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 		bg.color = 0x00FFFF;
 		add(bg);
 
@@ -103,14 +101,14 @@ class CoolStoryState extends MusicBeatState
 		bgGradient.y = FlxG.height - bgGradient.height;
 		bgGradient.screenCenter(X);
 		bgGradient.alpha = 0;
-		bgGradient.antialiasing = ClientPrefs.globalAntialiasing;
+		bgGradient.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(bgGradient);
 
 		dots = new FlxSprite(0, 0).loadGraphic(Paths.image("blackDots"));
 		dots.screenCenter(Y);
 		dots.x = FlxG.width - dots.width - 400;
 		dots.scrollFactor.set();
-		dots.antialiasing = ClientPrefs.globalAntialiasing;
+		dots.antialiasing = ClientPrefs.data.globalAntialiasing;
 		dots.angle = 90;
 		dots.alpha = 0.5;
 		add(dots);
@@ -134,7 +132,7 @@ class CoolStoryState extends MusicBeatState
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
 		leftArrow.animation.play('idle');
-		leftArrow.antialiasing = ClientPrefs.globalAntialiasing;
+		leftArrow.antialiasing = ClientPrefs.data.globalAntialiasing;
 		difficultySelectors.add(leftArrow);
 
 		rightArrow = new FlxSprite(leftArrow.x + 376, leftArrow.y);
@@ -142,7 +140,7 @@ class CoolStoryState extends MusicBeatState
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
-		rightArrow.antialiasing = ClientPrefs.globalAntialiasing;
+		rightArrow.antialiasing = ClientPrefs.data.globalAntialiasing;
 		difficultySelectors.add(rightArrow);
 
 		var num:Int = 0;
@@ -159,7 +157,7 @@ class CoolStoryState extends MusicBeatState
 				weekThing.input = 2000;
 				grpWeekText.add(weekThing);
 
-				weekThing.antialiasing = ClientPrefs.globalAntialiasing;
+				weekThing.antialiasing = ClientPrefs.data.globalAntialiasing;
 				// weekThing.updateHitbox();
 
 				// Needs an offset thingie
@@ -170,7 +168,7 @@ class CoolStoryState extends MusicBeatState
 					lock.animation.addByPrefix('lock', 'lock');
 					lock.animation.play('lock');
 					lock.ID = i;
-					lock.antialiasing = ClientPrefs.globalAntialiasing;
+					lock.antialiasing = ClientPrefs.data.globalAntialiasing;
 					grpLocks.add(lock);
 				}
 				FlxTween.tween(weekThing, {"input": 240}, 2, {ease: FlxEase.circOut});
@@ -194,11 +192,11 @@ class CoolStoryState extends MusicBeatState
 		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
 
 		sprDifficulty = new FlxSprite(0, leftArrow.y);
-		sprDifficulty.antialiasing = ClientPrefs.globalAntialiasing;
+		sprDifficulty.antialiasing = ClientPrefs.data.globalAntialiasing;
 		difficultySelectors.add(sprDifficulty);
 
 		tracksSprite = new FlxSprite(bgSprite.x + 550, bgSprite.y + 425).loadGraphic(Paths.image('Menu_Tracks'));
-		tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		tracksSprite.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(tracksSprite);
 
 		txtTracklist = new FlxText(bgSprite.x + 550, tracksSprite.y + 60, 0, "", 32);
@@ -243,7 +241,7 @@ class CoolStoryState extends MusicBeatState
 
 		// FlxG.watch.addQuick('font', scoreText.font);
 
-		if (!movedBack && !selectedWeek && !ShortcutMenuSubState.inShortcutMenu)
+		if (!movedBack && !selectedWeek)
 		{
 			var upP = controls.UI_UP_P;
 			var downP = controls.UI_DOWN_P;
@@ -300,17 +298,11 @@ class CoolStoryState extends MusicBeatState
 			}
 		}
 
-		if (controls.BACK && !movedBack && !selectedWeek && !ShortcutMenuSubState.inShortcutMenu)
+		if (controls.BACK && !movedBack && !selectedWeek)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
 			exitTween();
-		}
-
-		if (FlxG.keys.justPressed.TAB)
-		{
-			openSubState(new ShortcutMenuSubState());
-			ShortcutMenuSubState.inShortcutMenu = true;
 		}
 
 		super.update(elapsed);
@@ -547,7 +539,7 @@ class CoolStoryState extends MusicBeatState
 
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			if (ClientPrefs.fm)
+			if (ClientPrefs.data.fm)
 			{
 				MusicBeatState.switchState(new CoolMenuState());
 			}

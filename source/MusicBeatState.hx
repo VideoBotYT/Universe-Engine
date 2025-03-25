@@ -14,6 +14,15 @@ import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
+import ueLua.MenuLua;
+import flixel.sound.FlxSound;
+
+#if sys
+import sys.FileSystem;
+import sys.io.File;
+#end
+
+using StringTools;
 
 class MusicBeatState extends modchart.modcharting.ModchartMusicBeatState
 {
@@ -32,10 +41,66 @@ class MusicBeatState extends modchart.modcharting.ModchartMusicBeatState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
+	// lua
+	public static var instance:MusicBeatState;
+
+	public var menuLuaArray:Array<MenuLua> = [];
+
+	#if (haxe >= "4.0.0")
+	public var menuvariables:Map<String, Dynamic> = new Map();
+	public var menuTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
+	public var menuSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
+	public var menuTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
+	public var menuSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
+	//public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
+	//public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
+	#else
+	public var menuvariables:Map<String, Dynamic> = new Map<String, Dynamic>();
+	public var menuTweens:Map<String, FlxTween> = new Map();
+	public var menuSprites:Map<String, ModchartSprite> = new Map();
+	public var menuTimers:Map<String, FlxTimer> = new Map();
+	public var menuSounds:Map<String, FlxSound> = new Map();
+	//public var modchartTexts:Map<String, ModchartText> = new Map();
+	//public var modchartSaves:Map<String, FlxSave> = new Map();
+	#end
+
 	override function create()
 	{
+		// lua
+		instance = this;
+
 		camBeat = FlxG.camera;
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
+
+		#if LUA_ALLOWED
+		var filesPushed:Array<String> = [];
+		var foldersToCheck:Array<String> = [Paths.getPreloadPath('menuScripts/')];
+
+		#if MODS_ALLOWED
+		foldersToCheck.insert(0, Paths.mods('menuScripts/'));
+		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
+			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/menuScripts/'));
+
+		for (mod in Paths.getGlobalMods())
+			foldersToCheck.insert(0, Paths.mods(mod + '/menuScripts/'));
+		#end
+
+		for (folder in foldersToCheck)
+		{
+			if (FileSystem.exists(folder))
+			{
+				for (file in FileSystem.readDirectory(folder))
+				{
+					if (file.endsWith('.lua') && !filesPushed.contains(file))
+					{
+						menuLuaArray.push(new MenuLua(folder + file));
+						filesPushed.push(file);
+					}
+				}
+			}
+		}
+		#end
+
 		super.create();
 
 		if (!skip)
@@ -120,7 +185,7 @@ class MusicBeatState extends modchart.modcharting.ModchartMusicBeatState
 	{
 		var lastChange = Conductor.getBPMFromSeconds(Conductor.songPosition);
 
-		var shit = ((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / lastChange.stepCrochet;
+		var shit = ((Conductor.songPosition - ClientPrefs.data.noteOffset) - lastChange.songTime) / lastChange.stepCrochet;
 		curDecStep = lastChange.stepTime + shit;
 		curStep = lastChange.stepTime + Math.floor(shit);
 	}
@@ -189,5 +254,16 @@ class MusicBeatState extends modchart.modcharting.ModchartMusicBeatState
 		if (PlayState.SONG != null && PlayState.SONG.notes[curSection] != null)
 			val = PlayState.SONG.notes[curSection].sectionBeats;
 		return val == null ? 4 : val;
+	}
+
+	public function getLuaObject(tag:String, text:Bool = true):FlxSprite
+	{
+		if (menuSprites.exists(tag))
+			return menuSprites.get(tag);
+		//if (text && menuTexts.exists(tag))
+		//	return menuTexts.get(tag);
+		if (menuvariables.exists(tag))
+			return menuvariables.get(tag);
+		return null;
 	}
 }

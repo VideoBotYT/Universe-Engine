@@ -27,7 +27,7 @@ class ModchartUtil
 		// not expecting all to work
 		#if PSYCH
 		#if (PSYCHVERSION <= "0.7")
-		return ClientPrefs.downScroll;
+		return ClientPrefs.data.downScroll;
 		#else
 		return ClientPrefs.data.downScroll;
 		#end
@@ -52,7 +52,7 @@ class ModchartUtil
 	{
 		#if PSYCH
 		#if (PSYCHVERSION <= "0.7")
-		return ClientPrefs.middleScroll;
+		return ClientPrefs.data.middleScroll;
 		#else
 		return ClientPrefs.data.middleScroll;
 		#end

@@ -52,7 +52,7 @@ class OfficialLauncherState extends MusicBeatState
 				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
 				if(!back) {
-					ClientPrefs.officialLauncher = false;
+					ClientPrefs.data.officialLauncher = false;
 					ClientPrefs.saveSettings();
 					CoolUtil.browserLoad("https://github.com/VideoBotYT/Universe-Engine-Launhcer/releases");
 					FlxG.sound.play(Paths.sound('confirmMenu'));

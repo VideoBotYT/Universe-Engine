@@ -249,12 +249,12 @@ class ChartingState extends MusicBeatState
 
 		vortex = FlxG.save.data.chart_vortex;
 		ignoreWarnings = FlxG.save.data.ignoreWarnings;
-		if (ClientPrefs.darkmode)
+		if (ClientPrefs.data.darkmode)
 		{
 			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
 			bg.color = 0xFF222222;
 			bg.scrollFactor.set();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 			add(bg);
 		}
 		else
@@ -262,7 +262,7 @@ class ChartingState extends MusicBeatState
 			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 			bg.scrollFactor.set();
 			bg.color = 0xFF222222;
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 			add(bg);
 		}
 
@@ -1703,7 +1703,7 @@ class ChartingState extends MusicBeatState
 				FlxG.sound.list.add(vocals);
 			}
 		}
-		catch(e:Dynamic)
+		catch (e:Dynamic)
 		{
 			vocals = null;
 		}
@@ -1819,7 +1819,6 @@ class ChartingState extends MusicBeatState
 			{
 				if (vocals != null)
 					vocals.volume = nums.value;
-					
 			}
 		}
 		else if (id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText))
@@ -2088,7 +2087,7 @@ class ChartingState extends MusicBeatState
 			{
 				PlayState.chartingMode = false;
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm));
 				FlxG.mouse.visible = false;
 				return;
 			}
@@ -2482,7 +2481,7 @@ class ChartingState extends MusicBeatState
 					{
 						if ((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress))
 						{
-							var soundToPlay = "hitsound-" + (ClientPrefs.ht);
+							var soundToPlay = "hitsound-" + (ClientPrefs.data.ht);
 							if (_song.player1 == 'gf')
 							{ // Easter egg
 								soundToPlay = 'GF_' + Std.string(data + 1);
@@ -2495,7 +2494,7 @@ class ChartingState extends MusicBeatState
 						data = note.noteData;
 						if (note.mustPress && lilBuddiesBox.checked)
 						{
-							if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader)
+							if (ClientPrefs.data.enableColorShader || ClientPrefs.data.showNotes && ClientPrefs.data.enableColorShader)
 							{
 								lilBf.color = note.rgbShader.r;
 							}
@@ -2503,7 +2502,7 @@ class ChartingState extends MusicBeatState
 						}
 						if (!note.mustPress && lilBuddiesBox.checked)
 						{
-							if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader)
+							if (ClientPrefs.data.enableColorShader || ClientPrefs.data.showNotes && ClientPrefs.data.enableColorShader)
 							{
 								lilOpp.color = note.rgbShader.r;
 							}
@@ -3009,6 +3008,73 @@ class ChartingState extends MusicBeatState
 		updateHeads();
 	}
 
+	function animIconCallback(p1Anim:Bool, p2Anim:Bool, mustHit:Bool)
+	{
+		if (p1Anim)
+		{
+			if (mustHit)
+			{
+				leftIcon.frames = Paths.getSparrowAtlas(leftIcon.imageFile);
+
+				leftIcon.animation.addByPrefix('idle', 'idle0', 24, true);
+
+				leftIcon.animation.play('idle');
+
+				leftIcon.offset.set(0, 0);
+
+				@:privateAccess {
+					leftIcon.iconOffsets = [0, 0];
+				}
+			}
+			else
+			{
+				rightIcon.frames = Paths.getSparrowAtlas(rightIcon.imageFile);
+
+				rightIcon.animation.addByPrefix('idle', 'idle0', 24, true);
+
+				rightIcon.animation.play('idle');
+
+				rightIcon.offset.set(0, 0);
+
+				@:privateAccess {
+					rightIcon.iconOffsets = [0, 0];
+				}
+			}
+		}
+
+		if (p2Anim)
+		{
+			if (!mustHit)
+			{
+				leftIcon.frames = Paths.getSparrowAtlas(leftIcon.imageFile);
+
+				leftIcon.animation.addByPrefix('idle', 'idle0', 24, true);
+
+				leftIcon.animation.play('idle');
+
+				leftIcon.offset.set(0, 0);
+
+				@:privateAccess {
+					leftIcon.iconOffsets = [0, 0];
+				}
+			}
+			else
+			{
+				rightIcon.frames = Paths.getSparrowAtlas(rightIcon.imageFile);
+
+				rightIcon.animation.addByPrefix('idle', 'idle0', 24, true);
+
+				rightIcon.animation.play('idle');
+
+				rightIcon.offset.set(0, 0);
+
+				@:privateAccess {
+					rightIcon.iconOffsets = [0, 0];
+				}
+			}
+		}
+	}
+
 	function updateHeads():Void
 	{
 		var healthIconP1:String = loadHealthIconFromCharacter(_song.player1);
@@ -3028,9 +3094,10 @@ class ChartingState extends MusicBeatState
 			if (_song.notes[curSec].gfSection)
 				leftIcon.changeIcon('gf');
 		}
+		animIconCallback(hasAnimatedIcon(_song.player1), hasAnimatedIcon(_song.player2), _song.notes[curSec].mustHitSection);
 	}
 
-	function loadHealthIconFromCharacter(char:String)
+	function loadCharacterJson(char:String):Character.CharacterFile
 	{
 		var characterPath:String = 'characters/' + char + '.json';
 		#if MODS_ALLOWED
@@ -3056,8 +3123,17 @@ class ChartingState extends MusicBeatState
 		var rawJson = OpenFlAssets.getText(path);
 		#end
 
-		var json:Character.CharacterFile = cast Json.parse(rawJson);
-		return json.healthicon;
+		return cast Json.parse(rawJson);
+	}
+
+	function hasAnimatedIcon(char:String):Bool
+	{
+		return loadCharacterJson(char).hasAnimatedIcon;
+	}
+
+	function loadHealthIconFromCharacter(char:String)
+	{
+		return loadCharacterJson(char).healthicon;
 	}
 
 	function updateNoteUI():Void

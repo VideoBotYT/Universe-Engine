@@ -484,7 +484,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			{
 				item.alpha = 1;
 			}
-			if (ClientPrefs.fm && item.targetY != 0)
+			if (ClientPrefs.data.fm && item.targetY != 0)
 			{
 				item.targetX -= Std.int(Math.abs(item.targetY) * 10);
 			}
@@ -600,12 +600,12 @@ class GameplayOption
 
 	public function getValue():Dynamic
 	{
-		return ClientPrefs.gameplaySettings.get(variable);
+		return ClientPrefs.data.gameplaySettings.get(variable);
 	}
 
 	public function setValue(value:Dynamic)
 	{
-		ClientPrefs.gameplaySettings.set(variable, value);
+		ClientPrefs.data.gameplaySettings.set(variable, value);
 	}
 
 	public function setChild(child:Alphabet)

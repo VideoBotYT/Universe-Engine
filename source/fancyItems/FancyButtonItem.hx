@@ -22,7 +22,7 @@ class FancyButtonItem extends FlxSprite
 		super(x, y);
 		loadGraphic(Paths.image('fancyMain/menu_' + option));
 		// trace('Test added: ' + WeekData.getWeekNumber(weekNum) + ' (' + weekNum + ')');
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = ClientPrefs.data.globalAntialiasing;
 	}
 
 	override function update(elapsed:Float)

@@ -90,7 +90,7 @@ class Main extends Sprite
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		if(fpsVar != null) {
-			fpsVar.visible = ClientPrefs.showFPS;
+			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
 		#end
 
@@ -131,6 +131,10 @@ class Main extends Sprite
 		}
 
 		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/VideoBotYT/Universe-Engine\n\n> Crash Handler written by: sqirra-rng";
+
+		#if desktop
+		DiscordClient.changePresence("Game Crashed!", e.error);
+		#end
 
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");

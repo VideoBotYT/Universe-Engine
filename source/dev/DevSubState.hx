@@ -1,4 +1,4 @@
-package;
+package dev;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -13,18 +13,19 @@ import flixel.util.FlxColor;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.util.FlxGradient;
-
-class ShortcutMenuSubState extends MusicBeatSubstate
+import flixel.addons.ui.FlxUITabMenu;
+import flixel.addons.ui.FlxUI;
+import flixel.addons.ui.FlxUICheckBox;
+//previoulsy used as ShortCut menu
+class DevSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	public static var inShortcutMenu = false;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Title Screen', 'Menus', 'Modes', 'Options'];
-	var menuItemsSongs:Array<String> = ['Story Mode', 'Freeplay', 'Back'];
-	var menuItemsMenu:Array<String> = ['Main Menu', 'Mods Menu', 'Back'];
-	var menuItemsOptions:Array<String> = ['Universe', 'Psych', 'Back'];
+
+	var menuItemsDev:Array<String> = ["Stage Editor", "Character Editor"];
 
 	var curSelected:Int = 0;
 
@@ -32,11 +33,15 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 
 	var grid:FlxBackdrop = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
 
+	var UI_Box:FlxUITabMenu;
+	static var enableStage:Bool;
+	public static var animatedIcons:Bool;
+
 	public function new()
 	{
 		super();
 
-		menuItems = menuItemsOG;
+		menuItems = menuItemsDev;
 
 		bg.alpha = 0;
 		bg.scrollFactor.set();
@@ -50,11 +55,26 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
 
+		var tabs = [
+			{name: "Dev Options", label: "Dev Options"},
+			{name: "Dev States", label:"Dev States"}
+		];
+
+		UI_Box = new FlxUITabMenu(null, tabs, true);
+		UI_Box.resize(300, 300);
+		UI_Box.x = FlxG.width - 400;
+		UI_Box.y = 25;
+		add(UI_Box);
+
+		FlxG.mouse.visible = true;
+
 		regenMenu();
+		addDevStateUI();
+		addDevOptionUI();
+		UI_Box.selected_tab_id = "Dev States";
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
-		FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath('shortcut'), "shared"), 0);
-		FlxG.sound.music.fadeIn(4, 0, 0.7);
+		FlxG.sound.music.fadeIn(2, 0.7, 0.2);
 	}
 
 	override function update(elapsed)
@@ -69,6 +89,8 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 		if (canceled)
 		{
 			inShortcutMenu = false;
+			FlxG.mouse.visible = false;
+			UI_Box.destroy();
 			for (i in 0...grpMenuShit.members.length)
 			{
 				var obj = grpMenuShit.members[0];
@@ -81,7 +103,6 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 				{
-					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
 					close();
 				}
 			});
@@ -94,89 +115,26 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
-		if (accepted && !ClientPrefs.controllerMode)
+		if (accepted && !ClientPrefs.data.controllerMode && enableStage)
 		{
 			var daSelected:String = menuItems[curSelected];
 			switch (daSelected)
 			{
-				case 'Title Screen':
-					FlxG.switchState(new TitleState());
-					FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
-					inShortcutMenu = false;
-				case 'Menus':
-					menuItems = menuItemsMenu;
-					regenMenu();
-				case 'Modes':
-					menuItems = menuItemsSongs;
-					regenMenu();
-				case 'Options':
-					menuItems = menuItemsOptions;
-					regenMenu();
-			}
-			
-			if (menuItems == menuItemsSongs)
-			{
-				switch (daSelected)
-				{
-					case 'Story Mode':
-						if (ClientPrefs.fm)
-						{
-							FlxG.switchState(new CoolStoryState());
-						}
-						else
-						{
-							FlxG.switchState(new StoryMenuState());
-						}
-						inShortcutMenu = false;
-					case 'Freeplay':
-						FlxG.switchState(new FreeplayState());
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
-						inShortcutMenu = false;
-					case 'Back':
-						menuItems = menuItemsOG;
-						regenMenu();
-				}
-			}
-			if (menuItems == menuItemsMenu)
-			{
-				switch (daSelected)
-				{
-					case 'Main Menu':
-						if (ClientPrefs.fm)
-						{
-							MusicBeatState.switchState(new CoolMenuState());
-						}
-						else
-						{
-							MusicBeatState.switchState(new MainMenuState());
-						}
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
-						inShortcutMenu = false;
-					case 'Mods Menu':
-						FlxG.switchState(new ModsMenuState());
-						FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
-						inShortcutMenu = false;
-					case 'Back':
-						menuItems = menuItemsOG;
-						regenMenu();
-				}
-			}
-			if (menuItems == menuItemsOptions)
-			{
-				switch (daSelected)
-				{
-					case 'Universe':
-						FlxG.switchState(new options.UniverseOptionsMenu());
-						inShortcutMenu = false;
-					case 'Psych':
-						FlxG.switchState(new options.OptionsState());
-						inShortcutMenu = false;
-					case 'Back':
-						menuItems = menuItemsOG;
-						regenMenu();
-				}
+				case "Stage Editor":
+					LoadingState.loadAndSwitchState(new editors.StageEditor());
+				case "Character Editor":
+					LoadingState.loadAndSwitchState(new editors.CharacterEditorState(Character.DEFAULT_CHARACTER, false));
 			}
 		}
+
+		if (stageEditorButton.checked)
+			enableStage = true;
+		else
+			enableStage = false;
+		if (iconButton.checked)
+			animatedIcons = true;
+		else
+			animatedIcons = false;
 	}
 
 	function changeSelection(change:Int = 0):Void
@@ -229,5 +187,33 @@ class ShortcutMenuSubState extends MusicBeatSubstate
 		}
 		curSelected = 0;
 		changeSelection();
+	}
+
+	var stageEditorButton:FlxUICheckBox;
+
+	function addDevStateUI()
+	{
+		var stateGroup = new FlxUI(null, UI_Box);
+		stateGroup.name = "Dev States";
+
+		stageEditorButton = new FlxUICheckBox(20, 20, null, null, "Stage Editor", 100);
+		stageEditorButton.checked = enableStage;
+
+		stateGroup.add(stageEditorButton);
+		UI_Box.addGroup(stateGroup);
+	}
+
+	var iconButton:FlxUICheckBox;
+
+	function addDevOptionUI()
+	{
+		var optionGroup = new FlxUI(null, UI_Box);
+		optionGroup.name = "Dev Options";
+
+		iconButton = new FlxUICheckBox(20, 20, null, null, "Animated Icons");
+		iconButton.checked = animatedIcons;
+
+		optionGroup.add(iconButton);
+		UI_Box.addGroup(optionGroup);
 	}
 }

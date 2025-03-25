@@ -56,10 +56,10 @@ class SelectThing extends MusicBeatState
 
 	override function create()
 	{
-		// FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic), "shared"), 0);
+		// FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic), "shared"), 0);
 		// FlxG.sound.music.fadeIn(4, 0, 0.7);
 
-		if (ClientPrefs.moveCreditMods)
+		if (ClientPrefs.data.moveCreditMods)
 			options = ['Universe Options', 'Psych Options', 'Mods', 'Credits'];
 		else
 			options = ['Universe Options', 'Psych Options'];
@@ -67,16 +67,14 @@ class SelectThing extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		ShortcutMenuSubState.inShortcutMenu = false;
-
 		DiscordClient.changePresence("Selecting options category", null);
 
-		if (ClientPrefs.darkmode)
+		if (ClientPrefs.data.darkmode)
 		{
 			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
 			bg.color = 0xFFea71fd;
 			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 			bg.updateHitbox();
 			add(bg);
 
@@ -91,7 +89,7 @@ class SelectThing extends MusicBeatState
 			var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 			bg.color = 0xFFea71fd;
 			bg.screenCenter();
-			bg.antialiasing = ClientPrefs.globalAntialiasing;
+			bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 			bg.updateHitbox();
 			add(bg);
 
@@ -133,47 +131,37 @@ class SelectThing extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
-		if (!ShortcutMenuSubState.inShortcutMenu)
+		if (controls.UI_UP_P)
 		{
-			if (controls.UI_UP_P)
-			{
-				changeSelection(-1);
-			}
-			if (controls.UI_DOWN_P)
-			{
-				changeSelection(1);
-			}
-
-			if (controls.BACK)
-			{
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if (PauseSubState.inPause)
-				{
-					PauseSubState.inPause = false;
-					StageData.loadDirectory(PlayState.SONG);
-					LoadingState.loadAndSwitchState(new PlayState());
-					FlxG.sound.music.volume = 0;
-				}
-				else if (ClientPrefs.fm)
-				{
-					MusicBeatState.switchState(new CoolMenuState());
-				}
-				else
-				{
-					MusicBeatState.switchState(new MainMenuState());
-				}
-			}
-			if (controls.ACCEPT)
-			{
-				openSelectedSubstate(options[curSelected]);
-			}
+			changeSelection(-1);
+		}
+		if (controls.UI_DOWN_P)
+		{
+			changeSelection(1);
 		}
 
-		if (FlxG.keys.justPressed.TAB)
+		if (controls.BACK)
 		{
-			ShortcutMenuSubState.inShortcutMenu = true;
-			openSubState(new ShortcutMenuSubState());
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+			if (PauseSubState.inPause)
+			{
+				PauseSubState.inPause = false;
+				StageData.loadDirectory(PlayState.SONG);
+				LoadingState.loadAndSwitchState(new PlayState());
+				FlxG.sound.music.volume = 0;
+			}
+			else if (ClientPrefs.data.fm)
+			{
+				MusicBeatState.switchState(new CoolMenuState());
+			}
+			else
+			{
+				MusicBeatState.switchState(new MainMenuState());
+			}
+		}
+		if (controls.ACCEPT)
+		{
+			openSelectedSubstate(options[curSelected]);
 		}
 	}
 

@@ -7,9 +7,7 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flash.display.BitmapData;
 import editors.ChartingState;
-
 import flixel.addons.effects.FlxSkewedSprite;
-
 import shaders.RGBPalette.RGBShaderReference;
 import shaders.RGBPalette;
 
@@ -84,6 +82,7 @@ class Note extends FlxSkewedSprite
 
 	public static final colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
 	public static var defaultNoteSkin(default, never):String = 'NOTE_assets';
+
 	private var pixelInt:Array<Int> = [0, 1, 2, 3];
 
 	public var noteSplashData:NoteSplashData = {
@@ -95,7 +94,7 @@ class Note extends FlxSkewedSprite
 		r: -1,
 		g: -1,
 		b: -1,
-		a: ClientPrefs.splashAlpha
+		a: ClientPrefs.data.splashAlpha
 	};
 
 	// Lua shit
@@ -134,6 +133,7 @@ class Note extends FlxSkewedSprite
 	public var rgbShader:RGBShaderReference;
 	public var pixelNote:Bool = false;
 	public var useRGBShader(default, set):Bool = true;
+
 	public static var globalRgbShaders:Array<RGBPalette> = [];
 
 	private function set_useRGBShader(value:Bool):Bool
@@ -176,9 +176,9 @@ class Note extends FlxSkewedSprite
 
 	public function defaultRGB()
 	{
-		var arr:Array<FlxColor> = ClientPrefs.arrowRGB[noteData];
+		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[noteData];
 		if (pixelNote)
-			arr = ClientPrefs.arrowRGBPixel[noteData];
+			arr = ClientPrefs.data.arrowRGBPixel[noteData];
 		if (noteData > -1 && noteData <= arr.length)
 		{
 			rgbShader.r = arr[0];
@@ -190,13 +190,13 @@ class Note extends FlxSkewedSprite
 	private function set_noteType(value:String):String
 	{
 		noteSplashData.texture = PlayState.SONG != null ? PlayState.SONG.splashSkin : 'noteSplashes';
-		
+
 		noteSplashTexture = PlayState.SONG.splashSkin;
-		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
+		if (noteData > -1 && noteData < ClientPrefs.data.arrowHSV.length)
 		{
-			colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
-			colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
-			colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+			colorSwap.hue = ClientPrefs.data.arrowHSV[noteData][0] / 360;
+			colorSwap.saturation = ClientPrefs.data.arrowHSV[noteData][1] / 100;
+			colorSwap.brightness = ClientPrefs.data.arrowHSV[noteData][2] / 100;
 		}
 
 		if (noteData > -1 && noteType != value)
@@ -246,7 +246,7 @@ class Note extends FlxSkewedSprite
 				var newRGB:RGBPalette = new RGBPalette();
 				globalRgbShaders[noteData] = newRGB;
 
-				var arr:Array<FlxColor> = (!PlayState.isPixelStage) ? ClientPrefs.arrowRGB[noteData] : ClientPrefs.arrowRGBPixel[noteData];
+				var arr:Array<FlxColor> = (!PlayState.isPixelStage) ? ClientPrefs.data.arrowRGB[noteData] : ClientPrefs.data.arrowRGBPixel[noteData];
 				if (noteData > -1 && noteData <= arr.length)
 				{
 					newRGB.r = arr[0];
@@ -257,7 +257,7 @@ class Note extends FlxSkewedSprite
 			return globalRgbShaders[noteData];
 		}
 		else
-			switch (ClientPrefs.noteColorStyle)
+			switch (ClientPrefs.data.noteColorStyle)
 			{
 				case 'Quant-Based':
 					if (globalRgbShaders[0] == null)
@@ -265,7 +265,7 @@ class Note extends FlxSkewedSprite
 						var newRGB:RGBPalette = new RGBPalette();
 						globalRgbShaders[0] = newRGB;
 
-						var arr:Array<FlxColor> = (!note.pixelNote) ? ClientPrefs.arrowRGB[3] : ClientPrefs.arrowRGBPixel[3];
+						var arr:Array<FlxColor> = (!note.pixelNote) ? ClientPrefs.data.arrowRGB[3] : ClientPrefs.data.arrowRGBPixel[3];
 						if (noteData > -1)
 						{
 							newRGB.r = arr[0];
@@ -294,7 +294,7 @@ class Note extends FlxSkewedSprite
 						var newRGB:RGBPalette = new RGBPalette();
 						globalRgbShaders[noteData] = newRGB;
 
-						var arr:Array<FlxColor> = (!note.pixelNote) ? ClientPrefs.arrowRGB[noteData] : ClientPrefs.arrowRGBPixel[noteData];
+						var arr:Array<FlxColor> = (!note.pixelNote) ? ClientPrefs.data.arrowRGB[noteData] : ClientPrefs.data.arrowRGBPixel[noteData];
 						if (noteData > -1 && noteData <= arr.length)
 						{
 							newRGB.r = arr[0];
@@ -317,12 +317,12 @@ class Note extends FlxSkewedSprite
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
 
-		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
+		x += (ClientPrefs.data.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
 		if (!inEditor)
-			this.strumTime += ClientPrefs.noteOffset;
+			this.strumTime += ClientPrefs.data.noteOffset;
 
 		this.noteData = noteData;
 
@@ -339,7 +339,7 @@ class Note extends FlxSkewedSprite
 				animToPlay = colArray[noteData % 4];
 				animation.play(animToPlay + 'Scroll');
 			}
-			if (ClientPrefs.enableColorShader)
+			if (ClientPrefs.data.enableColorShader)
 			{
 				try
 				{
@@ -362,10 +362,10 @@ class Note extends FlxSkewedSprite
 
 		if (isSustainNote && prevNote != null)
 		{
-			alpha = (ClientPrefs.longnotet);
-			multAlpha = (ClientPrefs.longnotet);
+			alpha = (ClientPrefs.data.longnotet);
+			multAlpha = (ClientPrefs.data.longnotet);
 			hitsoundDisabled = true;
-			if (ClientPrefs.downScroll)
+			if (ClientPrefs.data.downScroll)
 				flipY = true;
 
 			offsetX += width / 2;
@@ -427,9 +427,10 @@ class Note extends FlxSkewedSprite
 			suffix = '';
 
 		var skin:String = texture;
-		if(texture.length < 1) {
+		if (texture.length < 1)
+		{
 			skin = PlayState.SONG != null ? PlayState.SONG.arrowSkin : null;
-			if(skin == null || skin.length < 1)
+			if (skin == null || skin.length < 1)
 				skin = defaultNoteSkin;
 		}
 
@@ -484,7 +485,7 @@ class Note extends FlxSkewedSprite
 		{
 			frames = Paths.getSparrowAtlas(blahblah);
 			loadNoteAnims();
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = ClientPrefs.data.globalAntialiasing;
 		}
 		if (isSustainNote)
 		{
@@ -533,8 +534,9 @@ class Note extends FlxSkewedSprite
 	public static function getNoteSkinPostfix()
 	{
 		var skin:String = '';
-		if (ClientPrefs.noteSkin != 'Default')
-			skin = '-' + ClientPrefs.noteSkin.trim().toLowerCase().replace(' ', '_');
+		if (ClientPrefs.data != null)
+			if (ClientPrefs.data.noteSkin != 'Default')
+				skin = '-' + ClientPrefs.data.noteSkin.trim().toLowerCase().replace(' ', '_');
 		return skin;
 	}
 

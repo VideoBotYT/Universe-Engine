@@ -66,11 +66,11 @@ class WeekEditorState extends MusicBeatState
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
 		bgSprite = new FlxSprite(0, 56);
-		bgSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		bgSprite.antialiasing = ClientPrefs.data.globalAntialiasing;
 
 		weekThing = new MenuItem(0, bgSprite.y + 396, weekFileName);
 		weekThing.y += weekThing.height + 20;
-		weekThing.antialiasing = ClientPrefs.globalAntialiasing;
+		weekThing.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(weekThing);
 
 		var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
@@ -82,7 +82,7 @@ class WeekEditorState extends MusicBeatState
 		lock.frames = ui_tex;
 		lock.animation.addByPrefix('lock', 'lock');
 		lock.animation.play('lock');
-		lock.antialiasing = ClientPrefs.globalAntialiasing;
+		lock.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(lock);
 
 		missingFileText = new FlxText(0, 0, FlxG.width, "");
@@ -104,7 +104,7 @@ class WeekEditorState extends MusicBeatState
 		add(grpWeekCharacters);
 
 		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 435).loadGraphic(Paths.image('Menu_Tracks'));
-		tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		tracksSprite.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(tracksSprite);
 
 		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
@@ -127,7 +127,7 @@ class WeekEditorState extends MusicBeatState
 
 	function addEditorBox()
 	{
-		var tabs = [{name: 'Week', label: 'Week'}, {name: 'Other', label: 'Other'},];
+		var tabs = [{name: 'Week', label: 'Week'}, {name: 'Other', label: 'Other'}];
 		UI_box = new FlxUITabMenu(null, tabs, true);
 		UI_box.resize(250, 375);
 		UI_box.x = FlxG.width - UI_box.width;
@@ -496,7 +496,7 @@ class WeekEditorState extends MusicBeatState
 			if (FlxG.keys.justPressed.ESCAPE)
 			{
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm));
 			}
 		}
 
@@ -545,6 +545,13 @@ class WeekEditorState extends MusicBeatState
 			if (rawJson != null)
 			{
 				loadedWeek = cast Json.parse(rawJson);
+				if (loadedWeek.icons == null)
+				{
+					loadedWeek.icons = [];
+
+					for (song in loadedWeek.songs)
+						loadedWeek.icons.push({animIcon: false, idle: null, lose: null});
+				}
 				if (loadedWeek.weekCharacters != null && loadedWeek.weekName != null) // Make sure it's really a week
 				{
 					var cutName:String = _file.name.substr(0, _file.name.length - 5);
@@ -655,7 +662,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		if (ClientPrefs.darkmode)
+		if (ClientPrefs.data.darkmode)
 		{
 			bg = new FlxSprite().loadGraphic(Paths.image("aboutMenu", "preload"));
 		}
@@ -664,7 +671,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		}
 		bg.scrollFactor.set();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 		bg.color = FlxColor.WHITE;
 		add(bg);
 
@@ -701,7 +708,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 
 	function addEditorBox()
 	{
-		var tabs = [{name: 'Freeplay', label: 'Freeplay'},];
+		var tabs = [{name: 'Freeplay', label: 'Freeplay'}, {name: "Icons", label: "Icons"}];
 		UI_box = new FlxUITabMenu(null, tabs, true);
 		UI_box.resize(250, 200);
 		UI_box.x = FlxG.width - UI_box.width - 100;
@@ -710,6 +717,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 
 		UI_box.selected_tab_id = 'Week';
 		addFreeplayUI();
+		addIconUI();
 		add(UI_box);
 
 		var blackBlack:FlxSprite = new FlxSprite(0, 670).makeGraphic(FlxG.width, 50, FlxColor.BLACK);
@@ -756,9 +764,12 @@ class WeekEditorFreeplayState extends MusicBeatState
 		}
 	}
 
+	var hideFreeplayCheckbox:FlxUICheckBox;
+
 	var bgColorStepperR:FlxUINumericStepper;
 	var bgColorStepperG:FlxUINumericStepper;
 	var bgColorStepperB:FlxUINumericStepper;
+
 	var iconInputText:FlxUIInputText;
 
 	function addFreeplayUI()
@@ -803,9 +814,9 @@ class WeekEditorFreeplayState extends MusicBeatState
 			}
 		});
 
-		iconInputText = new FlxUIInputText(10, bgColorStepperR.y + 70, 100, '', 8);
+		iconInputText = new FlxUIInputText(10, bgColorStepperR.y + 90, 100, '', 8);
 
-		var hideFreeplayCheckbox:FlxUICheckBox = new FlxUICheckBox(10, iconInputText.y + 30, null, null, "Hide Week from Freeplay?", 100);
+		hideFreeplayCheckbox = new FlxUICheckBox(10, iconInputText.y + 30, null, null, "Hide Week from Freeplay?", 100);
 		hideFreeplayCheckbox.checked = weekFile.hideFreeplay;
 		hideFreeplayCheckbox.callback = function()
 		{
@@ -822,6 +833,117 @@ class WeekEditorFreeplayState extends MusicBeatState
 		tab_group.add(iconInputText);
 		tab_group.add(hideFreeplayCheckbox);
 		UI_box.addGroup(tab_group);
+	}
+
+	var inputTexts:Array<FlxUIInputText>;
+	var hasAnimatedIcon:FlxUICheckBox;
+	var animIconIdleName:FlxUIInputText;
+	var animIconLosingName:FlxUIInputText;
+
+	function addIconUI()
+	{
+		var tab_group = new FlxUI(null, UI_box);
+		tab_group.name = "Icons";
+
+		hasAnimatedIcon = new FlxUICheckBox(20, 20, null, null, "Is Animated Icon?", 100);
+		// if (weekFile.icons != null)
+		hasAnimatedIcon.checked = weekFile.icons[curSelected].animIcon;
+		hasAnimatedIcon.callback = function()
+		{
+			weekFile.icons[curSelected].animIcon = hasAnimatedIcon.checked;
+
+			animIconCallback(hasAnimatedIcon.checked);
+		};
+
+		animIconIdleName = new FlxUIInputText(hasAnimatedIcon.x + 40, hasAnimatedIcon.y + 40, 100, '', 8);
+
+		animIconIdleName.callback = function(value:String, idk:String)
+		{
+			weekFile.icons[curSelected].idle = animIconIdleName.text;
+
+			animIconCallback(hasAnimatedIcon.checked);
+		};
+
+		animIconLosingName = new FlxUIInputText(hasAnimatedIcon.x + 40, hasAnimatedIcon.y + 60, 100, '', 8);
+
+		animIconLosingName.callback = function(value:String, idk:String)
+		{
+			weekFile.icons[curSelected].lose = animIconLosingName.text;
+
+			animIconCallback(hasAnimatedIcon.checked);
+		};
+
+		tab_group.add(hasAnimatedIcon);
+		tab_group.add(animIconIdleName);
+		tab_group.add(animIconLosingName);
+		inputTexts = [iconInputText, animIconIdleName, animIconLosingName];
+		tab_group.add(new FlxText(hasAnimatedIcon.x + 10, hasAnimatedIcon.y + 20, 0, 'Animated Icon Names (Idle/Losing)'));
+		UI_box.addGroup(tab_group);
+	}
+
+	function animIconCallback(value:Bool = false)
+	{
+		var leHealthIcon:HealthIcon = iconArray[curSelected];
+
+		if (value)
+		{
+			try
+			{
+				@:privateAccess {
+					leHealthIcon.char = '';
+				} // Stupid bugfix pt.2
+
+				leHealthIcon.changeIcon(iconInputText.text);
+
+				leHealthIcon.frames = Paths.getSparrowAtlas(leHealthIcon.imageFile);
+
+				leHealthIcon.animation.addByPrefix('idle', weekFile.icons[curSelected].idle, 24, true);
+
+				leHealthIcon.animation.addByPrefix('losing', weekFile.icons[curSelected].lose, 24, true);
+
+				leHealthIcon.animation.play('idle');
+
+				leHealthIcon.offset.set(0, 0);
+
+				@:privateAccess {
+					leHealthIcon.iconOffsets = [0, 0];
+				}
+
+				if (!hasAnimatedIcon.checked)
+				{ // Stupid bugfix.
+
+					@:privateAccess {
+						leHealthIcon.char = '';
+					} // Stupid bugfix pt.2
+
+					leHealthIcon.changeIcon(iconInputText.text);
+
+					leHealthIcon.animation.play(iconInputText.text);
+				}
+			}
+			catch (e:Dynamic)
+			{
+				trace('Icon does not have an XML!');
+
+				@:privateAccess {
+					leHealthIcon.char = '';
+				} // Stupid bugfix pt.2
+
+				leHealthIcon.changeIcon(iconInputText.text);
+
+				leHealthIcon.animation.play(iconInputText.text);
+			}
+		}
+		else
+		{
+			@:privateAccess {
+				leHealthIcon.char = '';
+			} // Stupid bugfix pt.2
+
+			leHealthIcon.changeIcon(iconInputText.text);
+
+			leHealthIcon.animation.play(iconInputText.text);
+		}
 	}
 
 	function updateBG()
@@ -870,6 +992,18 @@ class WeekEditorFreeplayState extends MusicBeatState
 		bgColorStepperR.value = Math.round(weekFile.songs[curSelected][2][0]);
 		bgColorStepperG.value = Math.round(weekFile.songs[curSelected][2][1]);
 		bgColorStepperB.value = Math.round(weekFile.songs[curSelected][2][2]);
+		// if (weekFile.icons != null)
+		hasAnimatedIcon.checked = weekFile.icons[curSelected].animIcon;
+
+		if (weekFile.icons[curSelected].idle == null)
+			weekFile.icons[curSelected].idle = '';
+
+		if (weekFile.icons[curSelected].lose == null)
+			weekFile.icons[curSelected].lose = '';
+
+		animIconIdleName.text = weekFile.icons[curSelected].idle;
+
+		animIconLosingName.text = weekFile.icons[curSelected].lose;
 		updateBG();
 	}
 
@@ -885,14 +1019,39 @@ class WeekEditorFreeplayState extends MusicBeatState
 			return;
 		}
 
+		for (text in inputTexts)
+		{
+			if (text.hasFocus)
+			{
+				FlxG.sound.muteKeys = [];
+
+				FlxG.sound.volumeDownKeys = [];
+
+				FlxG.sound.volumeUpKeys = [];
+
+				break;
+			}
+		}
+
 		if (iconInputText.hasFocus)
 		{
-			FlxG.sound.muteKeys = [];
-			FlxG.sound.volumeDownKeys = [];
-			FlxG.sound.volumeUpKeys = [];
 			if (FlxG.keys.justPressed.ENTER)
 			{
 				iconInputText.hasFocus = false;
+			}
+		}
+		else if (animIconIdleName.hasFocus)
+		{
+			if (FlxG.keys.justPressed.ENTER)
+			{
+				animIconIdleName.hasFocus = false;
+			}
+		}
+		else if (animIconLosingName.hasFocus)
+		{
+			if (FlxG.keys.justPressed.ENTER)
+			{
+				animIconLosingName.hasFocus = false;
 			}
 		}
 		else
@@ -903,7 +1062,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 			if (FlxG.keys.justPressed.ESCAPE)
 			{
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+				FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm));
 			}
 
 			if (controls.UI_UP_P)

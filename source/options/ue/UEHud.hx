@@ -36,7 +36,7 @@ class UEHud extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		if (ClientPrefs.ueHud == true)
+		if (ClientPrefs.data.ueHud == true)
 		{
 			var option:Option = new Option('Hud Pos', "Don't even try to ask me to explain this", 'hudPosUE', 'string', 'LEFT', ['LEFT', 'CENTER', 'RIGHT']);
 			addOption(option);
@@ -52,7 +52,7 @@ class UEHud extends BaseOptionsMenu
 		var option:Option = new Option('Keystrokes', "If checked, you can see the keystrokes", 'keystrokes', 'bool', true);
 		addOption(option);
 
-		if (ClientPrefs.keystrokes == true)
+		if (ClientPrefs.data.keystrokes == true)
 		{
 			var option:Option = new Option('Keystrokes Alpha', 'Keystrokes Alpha, max 50%', 'keyA', 'percent', 0.3);
 			addOption(option);
@@ -93,10 +93,10 @@ class UEHud extends BaseOptionsMenu
 
 	function onChangePauseMusic()
 	{
-		if (ClientPrefs.pauseMusic == 'None')
+		if (ClientPrefs.data.pauseMusic == 'None')
 			FlxG.sound.music.volume = 0;
 		else
-			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)));
+			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)));
 
 		changedMusic = true;
 	}
@@ -104,7 +104,7 @@ class UEHud extends BaseOptionsMenu
 	override function destroy()
 	{
 		if (changedMusic)
-			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.mmm));
+			FlxG.sound.playMusic(Paths.music("freakyMenu-" + ClientPrefs.data.mmm));
 		super.destroy();
 	}
 
@@ -112,7 +112,7 @@ class UEHud extends BaseOptionsMenu
 	function onChangeFPSCounter()
 	{
 		if (Main.fpsVar != null)
-			Main.fpsVar.visible = ClientPrefs.showFPS;
+			Main.fpsVar.visible = ClientPrefs.data.showFPS;
 	}
 	#end
 
@@ -128,6 +128,6 @@ class UEHud extends BaseOptionsMenu
 
 	function onChangeHitSound()
 	{
-		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.ht), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(Paths.sound("hitsound-" + ClientPrefs.data.ht), ClientPrefs.data.hitsoundVolume);
 	}
 }
