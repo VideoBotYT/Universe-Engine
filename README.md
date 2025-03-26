@@ -43,6 +43,7 @@ modcharting tool my beloved <3<3
 coolest thing there is in this engine.
 
 # CREDICE
+* [Daveberry (uwenalil)](https://daveberry.netlify.app) -> Former DEV, No longer in charge with anything in the engine.
 * [VideoBot](https://linktr.ee/videobot) -> First DEV, In charge of the HX files
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Second DEV, In charge of the LUA files and other
 
