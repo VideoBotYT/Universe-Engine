@@ -47,7 +47,7 @@ coolest thing there is in this engine.
 * [BaranMuzu](https://www.youtube.com/@BaranMuzu) -> Second DEV, In charge of the LUA files and other
 
 ### Universe Bonus Stuff
-* Support server -> will have it's own dedicated server. not supported on previous link anymore because i left the server because owner used admin abuse on me.
+* [Support server](https://discord.gg/RaHmP5fgyA) -> https://discord.gg/RaHmP5fgyA (OFFICIAL DISCORD SERVER !!)
 * [Official Launcher](https://github.com/VideoBotYT/Universe-Engine-Launhcer) -> https://github.com/VideoBotYT/Universe-Engine-Launhcer
 
 <details>
